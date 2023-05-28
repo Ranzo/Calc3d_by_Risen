@@ -1,31 +1,25 @@
 import json
 import PySimpleGUI as Sgi
-import os.path
+import gettext
 
-from text_ru import amortization_calc, new_sets
+from texts import amortization_calc, new_sets
 from themes_list import themes_list
+from lang_list import lang_list
 
+with open('setts.json') as file:
+    old_data = json.load(file)
+    if old_data['settings']["locale"] == 'English':
+        locale = 'en_US'
+    else:
+        locale = 'ru_RU'
 
-def mk_dir_json():
-    if not os.path.exists(os.path.expanduser('~\Documents\Calc3DbyRisen')):
-        os.makedirs(os.path.expanduser('~\Documents\Calc3DbyRisen'))
-
-    if not os.path.isfile(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')):
-        with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json'), 'w') as file:
-            data = {"settings": {"theme": "Dark",
-                                 "p": "270",
-                                 "h": "3",
-                                 "d": "1.5",
-                                 "st": "1500",
-                                 "mk": "1000",
-                                 "a": "0",
-                                 "spi": "3",
-                                 "marg": "0"}}
-            json.dump(data, file, indent=2)
+lang = gettext.translation('locale', localedir='locale', languages=[locale])
+lang.install()
+_ = lang.gettext
 
 
 def window_setts():
-    with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')) as file:
+    with open('setts.json') as file:
         old_data = json.load(file)
         theme = old_data["settings"]["theme"]
         p = old_data["settings"]["p"]
@@ -34,6 +28,7 @@ def window_setts():
         st = old_data["settings"]["st"]
         mk = old_data["settings"]["mk"]
         a = old_data["settings"]["a"]
+        locale = old_data['settings']["locale"]
         try:
             spi = old_data["settings"]["spi"]
         except KeyError:
@@ -45,43 +40,51 @@ def window_setts():
             marg = 0
 
     layout1 = [
-        [Sgi.Text("ВНИМАНИЕ! Перед установкой параметра\n'Коэффициент выбраковки' прочитайте раздел\n"
-                  "Help, с описанием формулы расчета!\n", text_color="red")],
-        [Sgi.Text('Мощность принтера, Вт'), Sgi.Push(), Sgi.InputText(p, size=(10, 10), justification='right')],
-        [Sgi.Text('Тариф электроэнергии, кВт/ч'), Sgi.Push(), Sgi.InputText(h, size=(10, 10), justification='right')],
-        [Sgi.Text('Коэффициент выбраковки'), Sgi.Push(), Sgi.InputText(d, size=(10, 10), justification='right')],
-        [Sgi.Text('Стоимость катушки, руб.'), Sgi.Push(), Sgi.InputText(st, size=(10, 10), justification='right')],
-        [Sgi.Text('Вес катушки, гр.'), Sgi.Push(), Sgi.Combo(['225', '250', '450', '500', '750', '850', '1000', '2250',
-                                                              '2500'], size=(8, 20), default_value=mk)],
-        [Sgi.Text('Наценка, %.'), Sgi.Push(), Sgi.InputText(marg, size=(10, 10), justification='right')],
+        [Sgi.Text(_("ВНИМАНИЕ! Перед установкой параметра\n'Коэффициент выбраковки' прочитайте раздел\n"
+                    "Help, с описанием формулы расчета!\n"), text_color="red")],
+        [Sgi.Text(_('Мощность принтера, Вт')), Sgi.Push(), Sgi.InputText(p, size=(10, 10), justification='right')],
+        [Sgi.Text(_('Тариф электроэнергии, кВт/ч')), Sgi.Push(),
+         Sgi.InputText(h, size=(10, 10), justification='right')],
+        [Sgi.Text(_('Коэффициент выбраковки')), Sgi.Push(), Sgi.InputText(d, size=(10, 10), justification='right')],
+        [Sgi.Text(_('Стоимость катушки, руб.')), Sgi.Push(), Sgi.InputText(st, size=(10, 10), justification='right')],
+        [Sgi.Text(_('Вес катушки, гр.')), Sgi.Push(),
+         Sgi.Combo(['225', '250', '450', '500', '750', '850', '1000', '2250',
+                    '2500'], size=(8, 20), default_value=mk)],
+        [Sgi.Text(_('Наценка, %.')), Sgi.Push(), Sgi.InputText(marg, size=(10, 10), justification='right')],
         [Sgi.Text('')]
     ]
     layout2 = [
-        [Sgi.Text('Стоимость вашего принтера, руб.'), Sgi.Push(), Sgi.InputText(a, size=(10, 10),
-                                                                                justification='right')],
-        [Sgi.Text('Срок полезного использования, лет.'), Sgi.Push(), Sgi.InputText(spi, size=(10, 10),
+        [Sgi.Text(_('Стоимость вашего принтера, руб.')), Sgi.Push(), Sgi.InputText(a, size=(10, 10),
                                                                                    justification='right')],
+        [Sgi.Text(_('Срок полезного использования, лет.')), Sgi.Push(), Sgi.InputText(spi, size=(10, 10),
+                                                                                      justification='right')],
         [Sgi.Text('_' * 45)], [Sgi.Text(amortization_calc)],
         [Sgi.Text('')]
     ]
     layout3 = [
-        [Sgi.Text('Оформление')],
-        [Sgi.Text("Выбор темы"), Sgi.Push(), Sgi.Combo(themes_list, size=(20, 20), default_value=theme)],
+        [Sgi.Text(_('Оформление'))],
+        [Sgi.Text(_("Выбор темы")), Sgi.Push(), Sgi.Combo(themes_list, size=(20, 20), default_value=theme)],
+        [Sgi.Text(_("Язык")), Sgi.Push(), Sgi.Combo(lang_list, size=(20, 20), default_value=locale)],
     ]
 
     tab_group = [
         [Sgi.TabGroup(
-            [[Sgi.Tab('Основные настройки', layout1), Sgi.Tab('Амортизация', layout2), Sgi.Tab('Оформление', layout3)]]
-        ), [Sgi.Push(), Sgi.Button('Применить')]]]
+            [[Sgi.Tab(_('Основные настройки'), layout1), Sgi.Tab(_('Амортизация'), layout2),
+              Sgi.Tab(_('Оформление'), layout3)]]
+        ), [Sgi.Push(), Sgi.Button(_('Применить'))]]]
 
-    window = Sgi.Window("Настройки", tab_group, modal=True)
+    window = Sgi.Window(_("Настройки"), tab_group, modal=True)
     while True:
         event, values = window.read()
-        if event == 'Применить':
+        if event == _('Применить'):
             if values[8] == theme:
                 new_theme = theme
             else:
                 new_theme = values[8]
+            if values[9] == locale:
+                new_locale = locale
+            else:
+                new_locale = values[9]
             if values[0] == p:
                 new_p = p
             else:
@@ -114,7 +117,8 @@ def window_setts():
                 new_spi = spi
             else:
                 new_spi = values[7]
-            with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json'), 'w') as file:
+
+            with open('setts.json', 'w') as file:
                 data = {"settings": {"theme": new_theme,
                                      "p": new_p,
                                      "h": new_h,
@@ -123,7 +127,9 @@ def window_setts():
                                      "mk": new_mk,
                                      "a": new_a,
                                      "spi": new_spi,
-                                     "marge": new_marg
+                                     "marge": new_marg,
+                                     "locale": new_locale
+
                                      }
                         }
                 json.dump(data, file, indent=2)
