@@ -3,12 +3,24 @@ import webbrowser
 import json
 import PySimpleGUI as Sgi
 import os
+import gettext
 
-from text_ru import ver
+from texts import ver
+
+with open(os.path.expanduser('setts.json')) as file:
+    old_data = json.load(file)
+    if old_data['settings']["locale"] == 'English':
+        locale = 'en_US'
+    else:
+        locale = 'ru_RU'
+
+lang = gettext.translation('locale', localedir='locale', languages=[locale])
+lang.install()
+_ = lang.gettext
 
 
 def upd_check():
-    with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')) as json_file:
+    with open(os.path.expanduser('setts.json')) as json_file:
         data = json.load(json_file)
         set_theme = data["settings"]["theme"]
 
@@ -19,34 +31,34 @@ def upd_check():
 
         Sgi.theme(set_theme)
         layout = [
-            [Sgi.Text("Обновление")],
-            [Sgi.Text("Вышла новая версия программы\nНужно обновиться")],
-            [Sgi.Button(' Скачать '), Sgi.Push(), Sgi.Button(' Отмена ')]
+            [Sgi.Text(_("Обновление"))],
+            [Sgi.Text(_("Вышла новая версия программы\nНужно обновиться"))],
+            [Sgi.Button(_(' Скачать ')), Sgi.Push(), Sgi.Button(_(' Отмена '))]
         ]
 
-        window = Sgi.Window("Проверка обновления", layout, modal=True)
+        window = Sgi.Window(_("Проверка обновления"), layout, modal=True)
 
         while True:
             event, button = window.read()
-            if event == ' Скачать ':
+            if event == _(' Скачать '):
                 webbrowser.open('https://risenhome.xyz/calc.html', new=2, autoraise=True)
                 window.close()
-            elif event == ' Отмена ':
+            elif event == _(' Отмена '):
                 window.close()
             elif event == "Exit" or event == Sgi.WIN_CLOSED:
                 break
     else:
         Sgi.theme(set_theme)
         layout = [
-            [Sgi.Text(f"Последняя версия: {version_new}\nВаша версия: {version_old}\n\nОбновление не требуется")],
-            [Sgi.Button(' Закрыть ')]
+            [Sgi.Text(_(f"Последняя версия: {version_new}\nВаша версия: {version_old}\n\nОбновление не требуется"))],
+            [Sgi.Button(_(' Закрыть '))]
         ]
 
-        window = Sgi.Window("Проверка обновления", layout, modal=True)
+        window = Sgi.Window(_("Проверка обновления"), layout, modal=True)
 
         while True:
             event, button = window.read()
-            if event == ' Закрыть ':
+            if event == _(' Закрыть '):
                 window.close()
             elif event == "Exit" or event == Sgi.WIN_CLOSED:
                 break
@@ -64,19 +76,19 @@ def upd_start():
 
         Sgi.theme(set_theme)
         layout = [
-            [Sgi.Text("Обновление")],
-            [Sgi.Text("Вышла новая версия программы\nНужно обновиться")],
-            [Sgi.Button(' Скачать '), Sgi.Push(), Sgi.Button(' Отмена ')]
+            [Sgi.Text(_("Обновление"))],
+            [Sgi.Text(_("Вышла новая версия программы\nНужно обновиться"))],
+            [Sgi.Button(_(' Скачать ')), Sgi.Push(), Sgi.Button(' Отмена ')]
         ]
 
-        window = Sgi.Window("Вышла новая версия!", layout, modal=True)
+        window = Sgi.Window(_("Вышла новая версия!"), layout, modal=True)
 
         while True:
             event, button = window.read()
-            if event == ' Скачать ':
+            if event == _(' Скачать '):
                 webbrowser.open('https://risenhome.xyz', new=2, autoraise=True)
                 window.close()
-            elif event == ' Отмена ':
+            elif event == _(' Отмена '):
                 window.close()
             elif event == "Exit" or event == Sgi.WIN_CLOSED:
                 break

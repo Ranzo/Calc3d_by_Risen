@@ -1,24 +1,37 @@
 import datetime
 import json
 import os
-import requests
 import PySimpleGUI as Sgi
+import gettext
+import requests
 
 from calculating import calculating, amortization, cost_prise
-from setts import window_setts, mk_dir_json
-from text_ru import calc, about, not_connect, new_marge, ver
-from update import upd_start, upd_check
+from setts import window_setts
+from texts import calc, about, new_marge, ver, not_connect
+from update import upd_check
 
 now = datetime.datetime.now()
 
 
+with open('setts.json') as file:
+    old_data = json.load(file)
+    if old_data['settings']["locale"] == 'English':
+        locale = 'en_US'
+    else:
+        locale = 'ru_RU'
+
+lang = gettext.translation('locale', localedir='locale', languages=[locale])
+lang.install()
+_ = lang.gettext
+
+
 def create_window():
-    with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')) as file:
-        theme = json.load(file)['settings']['theme']
+    with open(os.path.expanduser('setts.json')) as f:
+        theme = json.load(f)['settings']['theme']
     Sgi.theme(theme)
     menu_def = [
-        ['File', ['Настройки'], ['Выход']],
-        ['Help', ['Как рассчитывается стоимость', 'Обо мне', 'Проверить обновления']],
+        [_('Файл'), [_('Настройки')], [_('Выход')]],
+        [_('Помощь'), [_('Как рассчитывается стоимость'), _('Обо мне'), _('Проверить обновления')]],
     ]
 
     layout = [
@@ -26,50 +39,45 @@ def create_window():
         [Sgi.Txt('_' * 46)],
         [Sgi.Text('0', size=(7, 1), font=('Consolas', 32),
                   text_color='white', key='result', auto_size_text=True, justification='right', expand_x=True),
-         Sgi.Text('руб.', font=('Consolas', 32), text_color='white', key='result')],
-        [Sgi.Text('Себестоимость:', font=12, text_color='white'),
+         Sgi.Text(_('руб.'), font=('Consolas', 32), text_color='white', key='result')],
+        [Sgi.Text(_('Себестоимость:'), font=12, text_color='white'),
          Sgi.Text('0', size=(7, 1), font=12, text_color='white', key='cost', auto_size_text=True,
                   justification='right', expand_x=True),
-         Sgi.Text('руб.', font=('Consolas', 12), text_color='white', key='cost')],
+         Sgi.Text(_('руб.'), font=('Consolas', 12), text_color='white', key='cost')],
         [Sgi.Txt('_' * 46, pad=(10, 5))],
-        [Sgi.Text('Время печати'), Sgi.Push(), Sgi.InputText('0', size=(5, 20)), Sgi.Text('ч.'),
-         Sgi.InputText('0', size=(5, 0)), Sgi.Text('мин.  ')],
-        [Sgi.Text('Вес детали'), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text('гр.     ')],
-        [Sgi.Text('Количество экземпляров'), Sgi.Push(), Sgi.InputText('1', size=(10, 20), justification='right', ),
-         Sgi.Text('шт.    ')],
+        [Sgi.Text(_('Время печати')), Sgi.Push(), Sgi.InputText('0', size=(5, 20)), Sgi.Text(_('ч.')),
+         Sgi.InputText('0', size=(5, 0)), Sgi.Text(_('мин.  '))],
+        [Sgi.Text(_('Вес детали')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
+         Sgi.Text(_('гр.     '))],
+        [Sgi.Text(_('Количество экземпляров')), Sgi.Push(), Sgi.InputText('1', size=(10, 20), justification='right', ),
+         Sgi.Text(_('шт.    '))],
         [Sgi.Txt('_' * 46)],
-        [Sgi.Text('Моделирование'), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text('руб.   ')],
-        [Sgi.Text('Постобработка'), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text('руб.   ')],
+        [Sgi.Text(_('Моделирование')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
+         Sgi.Text(_('руб.   '))],
+        [Sgi.Text(_('Постобработка')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
+         Sgi.Text(_('руб.   '))],
         [Sgi.Txt('_' * 46)],
-        [Sgi.Txt(' ' * 15), Sgi.ReadFormButton('Расчитать', size=(10, 2)), Sgi.Cancel('Выход', size=(10, 2))]
+        [Sgi.Txt(' ' * 15), Sgi.ReadFormButton(_('Расчитать'), size=(10, 2)), Sgi.Cancel(_('Выход'), size=(10, 2))]
 
     ]
     return Sgi.Window(f'Calc3D by Risen ver.{ver}', layout, icon='logo.ico')
 
 
 def main():
-    mk_dir_json()
     window = create_window()
-    try:
-        upd_start()
-    except requests.exceptions.ConnectionError:
-        Sgi.popup_ok(not_connect)
 
     while True:
         event, values = window.read()
 
-        if event == "Настройки":
+        if event == _("Настройки"):
             window_setts()
             window.close()
             window = create_window()
 
-        elif event == "Как рассчитывается стоимость":
+        elif event == _("Как рассчитывается стоимость"):
             Sgi.popup_ok(calc)
 
-        elif event == "Обо мне":
+        elif event == _("Обо мне"):
             Sgi.popup(about)
 
         elif event == "Проверить обновления":
@@ -78,9 +86,9 @@ def main():
             except requests.exceptions.ConnectionError:
                 Sgi.popup_ok(not_connect)
 
-        elif event == 'Расчитать':
-            with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')) as file:
-                params = json.load(file)["settings"]
+        elif event == _('Расчитать'):
+            with open(os.path.expanduser('setts.json')) as f:
+                params = json.load(f)["settings"]
             try:
                 hours = float(values[1])
             except ValueError:
@@ -113,7 +121,7 @@ def main():
             window.find_element('result').Update(result)
             window.find_element('cost').Update(cost)
 
-        elif event in (Sgi.WIN_CLOSED, 'Выход'):
+        elif event in (Sgi.WIN_CLOSED, _('Выход')):
             break
 
 
