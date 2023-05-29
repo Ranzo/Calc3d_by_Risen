@@ -114,7 +114,7 @@ def main():
                               values[6], values[4])  # p, t, h, md, d, st, mk, am, post, x
 
             try:
-                result = calculating(cost, values[5], params['marge'])  # cost, mod, marg
+                result = calculating(abs(cost), values[5], params['marge'])  # cost, mod, marg
             except KeyError:
                 Sgi.popup_ok(new_marge)
                 result = 0

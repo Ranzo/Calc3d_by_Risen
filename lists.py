@@ -21,3 +21,4 @@ themes_list = ['Black', 'BlueMono', 'BluePurple', 'BrightColors', 'BrownBlue', '
                'Material1', 'Material2', 'NeutralBlue', 'Purple', 'Python', 'PythonPlus', 'Reddit', 'Reds',
                'SandyBeach', 'SystemDefault', 'SystemDefault1', 'SystemDefaultForReal', 'Tan', 'TanBlue',
                'TealMono', 'Topanga']
+lang_list = ['Русский', 'English']

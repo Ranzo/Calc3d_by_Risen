@@ -15,7 +15,7 @@ def cost_prise(p, t, h, md, d, st, mk, am, post, x):
         x = int(x)  # количество экземпляров
     except ValueError:
         x = 1
-    result = (p / 1000 * t / 60 * h) + (md * d * (st / mk) + am + post) * x
+    result = (abs(p) / 1000 * abs(t) / 60 * abs(h)) + (abs(md) * abs(d) * (abs(st) / abs(mk)) + abs(am) + abs(post)) * x
     return round(result, 2)
 
 

@@ -3,8 +3,8 @@ import PySimpleGUI as Sgi
 import gettext
 
 from texts import amortization_calc, new_sets
-from themes_list import themes_list
-from lang_list import lang_list
+from lists import themes_list, lang_list
+
 
 with open('setts.json') as file:
     old_data = json.load(file)
