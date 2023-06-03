@@ -47,8 +47,8 @@ def create_window():
         [Sgi.Txt('_' * 46, pad=(10, 5))],
         [Sgi.Text(_('Время печати')), Sgi.Push(), Sgi.InputText('0', size=(5, 20)), Sgi.Text(_('ч.')),
          Sgi.InputText('0', size=(5, 0)), Sgi.Text(_('мин.  '))],
-        [Sgi.Text(_('Вес детали')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text(_('гр.     '))],
+        [Sgi.Text(_('Масса детали')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
+         Sgi.Text(_('г.      '))],
         [Sgi.Text(_('Количество экземпляров')), Sgi.Push(), Sgi.InputText('1', size=(10, 20), justification='right', ),
          Sgi.Text(_('шт.    '))],
         [Sgi.Txt('_' * 46)],
@@ -57,7 +57,7 @@ def create_window():
         [Sgi.Text(_('Постобработка')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
          Sgi.Text(_('руб.   '))],
         [Sgi.Txt('_' * 46)],
-        [Sgi.Txt(' ' * 15), Sgi.ReadFormButton(_('Расчитать'), size=(10, 2)), Sgi.Cancel(_('Выход'), size=(10, 2))]
+        [Sgi.Txt(' ' * 15), Sgi.ReadFormButton(_('Рассчитать'), size=(10, 2)), Sgi.Cancel(_('Выход'), size=(10, 2))]
 
     ]
     return Sgi.Window(f'Calc3D by Risen ver.{ver}', layout, icon='logo.ico')
@@ -86,7 +86,7 @@ def main():
             except requests.exceptions.ConnectionError:
                 Sgi.popup_ok(not_connect)
 
-        elif event == _('Расчитать'):
+        elif event == _('Рассчитать'):
             with open(os.path.expanduser('setts.json')) as f:
                 params = json.load(f)["settings"]
             try:
