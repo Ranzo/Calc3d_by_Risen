@@ -22,3 +22,5 @@ themes_list = ['Black', 'BlueMono', 'BluePurple', 'BrightColors', 'BrownBlue', '
                'SandyBeach', 'SystemDefault', 'SystemDefault1', 'SystemDefaultForReal', 'Tan', 'TanBlue',
                'TealMono', 'Topanga']
 lang_list = ['Русский', 'English']
+
+currency_list = ['руб.', '$', '€']

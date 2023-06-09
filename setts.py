@@ -1,21 +1,37 @@
 import json
 import PySimpleGUI as Sgi
 import gettext
+import os
 
 from texts import amortization_calc, new_sets
-from lists import themes_list, lang_list
+from lists import themes_list, lang_list, currency_list
 
 
-with open('setts.json') as file:
-    old_data = json.load(file)
-    if old_data['settings']["locale"] == 'English':
-        locale = 'en_US'
-    else:
-        locale = 'ru_RU'
+def language():
+    with open(os.path.expanduser('setts.json')) as file:
+        old_data = json.load(file)
+        if old_data['settings']["locale"] == 'English':
+            locale = 'en_US'
+        else:
+            locale = 'ru_RU'
+    return locale
 
-lang = gettext.translation('locale', localedir='locale', languages=[locale])
+
+lang = gettext.translation('locale', localedir='locale', languages=[language()])
 lang.install()
 _ = lang.gettext
+
+
+def currency_setts():
+    with open('setts.json') as file:
+        old_data = json.load(file)
+        if old_data['settings']["currency"] == 'руб.':
+            currency = 'руб.'
+        elif old_data['settings']["currency"] == '$':
+            currency = '$'
+        else:
+            currency = '€'
+    return currency
 
 
 def window_setts():
@@ -29,6 +45,7 @@ def window_setts():
         mk = old_data["settings"]["mk"]
         a = old_data["settings"]["a"]
         locale = old_data['settings']["locale"]
+        currency = old_data['settings']["currency"]
         try:
             spi = old_data["settings"]["spi"]
         except KeyError:
@@ -46,7 +63,8 @@ def window_setts():
         [Sgi.Text(_('Тариф электроэнергии, кВт/ч')), Sgi.Push(),
          Sgi.InputText(h, size=(10, 10), justification='right')],
         [Sgi.Text(_('Коэффициент выбраковки')), Sgi.Push(), Sgi.InputText(d, size=(10, 10), justification='right')],
-        [Sgi.Text(_('Стоимость катушки, руб.')), Sgi.Push(), Sgi.InputText(st, size=(10, 10), justification='right')],
+        [Sgi.Text(_('Стоимость катушки, ')+f'{currency_setts()}'), Sgi.Push(),
+         Sgi.InputText(st, size=(10, 10), justification='right')],
         [Sgi.Text(_('Вес катушки, гр.')), Sgi.Push(),
          Sgi.Combo(['225', '250', '450', '500', '750', '850', '1000', '2250',
                     '2500'], size=(8, 20), default_value=mk)],
@@ -54,8 +72,8 @@ def window_setts():
         [Sgi.Text('')]
     ]
     layout2 = [
-        [Sgi.Text(_('Стоимость вашего принтера, руб.')), Sgi.Push(), Sgi.InputText(a, size=(10, 10),
-                                                                                   justification='right')],
+        [Sgi.Text(_('Стоимость вашего принтера, ')+f'{currency_setts()}'), Sgi.Push(), Sgi.InputText(a, size=(10, 10),
+                                                                                          justification='right')],
         [Sgi.Text(_('Срок полезного использования, лет.')), Sgi.Push(), Sgi.InputText(spi, size=(10, 10),
                                                                                       justification='right')],
         [Sgi.Text('_' * 45)], [Sgi.Text(amortization_calc)],
@@ -65,6 +83,7 @@ def window_setts():
         [Sgi.Text(_('Оформление'))],
         [Sgi.Text(_("Выбор темы")), Sgi.Push(), Sgi.Combo(themes_list, size=(20, 20), default_value=theme)],
         [Sgi.Text(_("Язык")), Sgi.Push(), Sgi.Combo(lang_list, size=(20, 20), default_value=locale)],
+        [Sgi.Text(_("Валюта")), Sgi.Push(), Sgi.Combo(currency_list, size=(20, 20), default_value=currency_setts())],
     ]
 
     tab_group = [
@@ -85,6 +104,10 @@ def window_setts():
                 new_locale = locale
             else:
                 new_locale = values[9]
+            if values[10] == currency:
+                new_currency = currency
+            else:
+                new_currency = values[10]
             if values[0] == p:
                 new_p = p
             else:
@@ -128,7 +151,8 @@ def window_setts():
                                      "a": new_a,
                                      "spi": new_spi,
                                      "marge": new_marg,
-                                     "locale": new_locale
+                                     "locale": new_locale,
+                                     "currency": new_currency
 
                                      }
                         }
