@@ -6,15 +6,10 @@ import os
 import gettext
 
 from texts import ver
+from setts import language
 
-with open(os.path.expanduser('setts.json')) as file:
-    old_data = json.load(file)
-    if old_data['settings']["locale"] == 'English':
-        locale = 'en_US'
-    else:
-        locale = 'ru_RU'
 
-lang = gettext.translation('locale', localedir='locale', languages=[locale])
+lang = gettext.translation('locale', localedir='locale', languages=[language()])
 lang.install()
 _ = lang.gettext
 
@@ -50,7 +45,7 @@ def upd_check():
     else:
         Sgi.theme(set_theme)
         layout = [
-            [Sgi.Text(_(f"Последняя версия: {version_new}\nВаша версия: {version_old}\n\nОбновление не требуется"))],
+            [Sgi.Text(_('Последняя версия: ')+f'{version_new}'+_('\nВаша версия: ')+f'{version_old}'+_('\n\nОбновление не требуется'))],
             [Sgi.Button(_(' Закрыть '))]
         ]
 

@@ -6,21 +6,14 @@ import gettext
 import requests
 
 from calculating import calculating, amortization, cost_prise
-from setts import window_setts
+from setts import window_setts, language, currency_setts
 from texts import calc, about, new_marge, ver, not_connect
-from update import upd_check
+from update import upd_check, upd_start
 
 now = datetime.datetime.now()
 
 
-with open('setts.json') as file:
-    old_data = json.load(file)
-    if old_data['settings']["locale"] == 'English':
-        locale = 'en_US'
-    else:
-        locale = 'ru_RU'
-
-lang = gettext.translation('locale', localedir='locale', languages=[locale])
+lang = gettext.translation('locale', localedir='locale', languages=[language()])
 lang.install()
 _ = lang.gettext
 
@@ -39,11 +32,11 @@ def create_window():
         [Sgi.Txt('_' * 46)],
         [Sgi.Text('0', size=(7, 1), font=('Consolas', 32),
                   text_color='white', key='result', auto_size_text=True, justification='right', expand_x=True),
-         Sgi.Text(_('руб.'), font=('Consolas', 32), text_color='white', key='result')],
+         Sgi.Text(currency_setts(), font=('Consolas', 32), text_color='white', key='result')],
         [Sgi.Text(_('Себестоимость:'), font=12, text_color='white'),
          Sgi.Text('0', size=(7, 1), font=12, text_color='white', key='cost', auto_size_text=True,
                   justification='right', expand_x=True),
-         Sgi.Text(_('руб.'), font=('Consolas', 12), text_color='white', key='cost')],
+         Sgi.Text(currency_setts(), font=('Consolas', 12), text_color='white', key='cost')],
         [Sgi.Txt('_' * 46, pad=(10, 5))],
         [Sgi.Text(_('Время печати')), Sgi.Push(), Sgi.InputText('0', size=(5, 20)), Sgi.Text(_('ч.')),
          Sgi.InputText('0', size=(5, 0)), Sgi.Text(_('мин.  '))],
@@ -53,9 +46,9 @@ def create_window():
          Sgi.Text(_('шт.    '))],
         [Sgi.Txt('_' * 46)],
         [Sgi.Text(_('Моделирование')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text(_('руб.   '))],
+         Sgi.Text(f'{currency_setts()}   ')],
         [Sgi.Text(_('Постобработка')), Sgi.Push(), Sgi.InputText('0', size=(10, 20), justification='right', ),
-         Sgi.Text(_('руб.   '))],
+         Sgi.Text(f'{currency_setts()}   ')],
         [Sgi.Txt('_' * 46)],
         [Sgi.Txt(' ' * 15), Sgi.ReadFormButton(_('Рассчитать'), size=(10, 2)), Sgi.Cancel(_('Выход'), size=(10, 2))]
 
@@ -64,6 +57,7 @@ def create_window():
 
 
 def main():
+    upd_start()
     window = create_window()
 
     while True:
