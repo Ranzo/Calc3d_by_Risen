@@ -25,12 +25,19 @@ _ = lang.gettext
 def currency_setts():
     with open('setts.json') as file:
         old_data = json.load(file)
-        if old_data['settings']["currency"] == 'руб.':
-            currency = 'руб.'
-        elif old_data['settings']["currency"] == '$':
-            currency = '$'
-        else:
-            currency = '€'
+        try:
+            if old_data['settings']["currency"] == 'руб.':
+                currency = 'руб.'
+            elif old_data['settings']["currency"] == '$':
+                currency = '$'
+            else:
+                currency = '€'
+
+        except KeyError:
+            if old_data['settings']["locale"] == "рус.":
+                currency = 'руб.'
+            else:
+                currency = '$'
     return currency
 
 
@@ -45,7 +52,10 @@ def window_setts():
         mk = old_data["settings"]["mk"]
         a = old_data["settings"]["a"]
         locale = old_data['settings']["locale"]
-        currency = old_data['settings']["currency"]
+        try:
+            currency = old_data['settings']["currency"]
+        except KeyError:
+            currency = "руб."
         try:
             spi = old_data["settings"]["spi"]
         except KeyError:
