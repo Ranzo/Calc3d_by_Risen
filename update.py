@@ -2,6 +2,7 @@ import requests
 import webbrowser
 import json
 import PySimpleGUI as Sgi
+import os
 import gettext
 
 from texts import ver

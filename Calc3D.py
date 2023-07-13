@@ -19,7 +19,7 @@ _ = lang.gettext
 
 
 def create_window():
-    with open('setts.json') as f:
+    with open(os.path.expanduser('setts.json')) as f:
         theme = json.load(f)['settings']['theme']
     Sgi.theme(theme)
     menu_def = [
@@ -81,7 +81,7 @@ def main():
                 Sgi.popup_ok(not_connect)
 
         elif event == _('Рассчитать'):
-            with open('setts.json') as f:
+            with open(os.path.expanduser('setts.json')) as f:
                 params = json.load(f)["settings"]
             try:
                 hours = float(values[1])
