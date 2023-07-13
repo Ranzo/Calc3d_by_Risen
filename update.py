@@ -2,7 +2,6 @@ import requests
 import webbrowser
 import json
 import PySimpleGUI as Sgi
-import os
 import gettext
 
 from texts import ver
@@ -15,7 +14,7 @@ _ = lang.gettext
 
 
 def upd_check():
-    with open(os.path.expanduser('setts.json')) as json_file:
+    with open('setts.json') as json_file:
         data = json.load(json_file)
         set_theme = data["settings"]["theme"]
 
@@ -60,7 +59,7 @@ def upd_check():
 
 
 def upd_start():
-    with open(os.path.expanduser('~\Documents\Calc3DbyRisen\setts.json')) as json_file:
+    with open('setts.json') as json_file:
         data = json.load(json_file)
         set_theme = data["settings"]["theme"]
 

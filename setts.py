@@ -8,7 +8,7 @@ from lists import themes_list, lang_list, currency_list
 
 
 def language():
-    with open(os.path.expanduser('setts.json')) as file:
+    with open('setts.json') as file:
         old_data = json.load(file)
         if old_data['settings']["locale"] == 'English':
             locale = 'en_US'
