@@ -3,7 +3,10 @@ def cost_prise(p, t, h, md, d, st, mk, am, post, x):
     t = int(t)  # время печати, в минутах!!!
     h = float(h)  # тариф электроэнергии
     md = float(md)  # вес детали
-    d = float(d)  # коэффициент выбраковки
+    if float(d) < 1:
+        d = 1
+    else:
+        d = float(d)  # коэффициент выбраковки
     st = float(st)  # стоимость катушки
     mk = float(mk)  # вес катушки
     am = float(am)  # амортизация
@@ -15,7 +18,7 @@ def cost_prise(p, t, h, md, d, st, mk, am, post, x):
         x = int(x)  # количество экземпляров
     except ValueError:
         x = 1
-    result = (abs(p) / 1000 * abs(t) / 60 * abs(h)) + (abs(md) * abs(d) * (abs(st) / abs(mk)) + abs(am) + abs(post)) * abs(x)
+    result = ((abs(p) / 1000) * (abs(t) / 60) * abs(h) * abs(x)) + (abs(md) * abs(d) * (abs(st) / abs(mk) * abs(x)) + abs(am) + abs(post) * abs(x))
     return round(result, 2)
 
 
