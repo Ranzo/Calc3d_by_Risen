@@ -8,7 +8,7 @@ import requests
 from calculating import calculating, amortization, cost_prise
 from setts import window_setts, language, currency_setts
 from texts import calc, about, new_marge, ver, not_connect
-from update import upd_check, upd_start
+from update import upd_check
 
 now = datetime.datetime.now()
 
@@ -57,7 +57,6 @@ def create_window():
 
 
 def main():
-    upd_start()
     window = create_window()
 
     while True:
