@@ -3,44 +3,20 @@
 исходя из стоимости пластика, веса, тарифа электроэнергии и прочего...
 
 ## Содержание
-- [Формула расчета](#формула-расчета)
+
+- [Wiki проекта](#wiki-проекта)
 - [Как скачать](#как-скачать)
 - [FAQ](#faq)
 - [Зачем это всё](#почему-я-решил-реализовать-этот-проект?)
 - [Команда проекта](#команда-проекта)
 - [Лицензия](#лицензия)
-- 
-## Формула расчета
+- [Поддержать проект](#поддержать-проект)
 
-```
-S = ((p/1000*t/60*h)+(md*d*st/mk)+(a+post))*x+mod
-```
-где
-```
- S - стоимость печати, руб.
+## Wiki проекта
 
-        p - мощность принтера, Вт
+- [Как каклькулятор расчитывает стоимость](https://git.risenhome.xyz/risen/Antivoice/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0-%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%D0%B0)
 
-        t - время печати, мин.
 
-        h - тариф на электроэнергию, кВт/ч
-
-        md - вес детали, гр.
-
-        d - множитель отбраковки.
-
-        st - стоимость катушки пластика, руб.
-
-        mk - вес пластика в катушке, гр.
-
-        a - амортизация принтера, руб.
-
-        post - стоимость постобработки, руб.
-
-        х - количество печатаемых дубликатов, шт.
-
-        mod - стоимость моделирования, руб
-```
 
 
 ## Как скачать
@@ -50,7 +26,8 @@ S = ((p/1000*t/60*h)+(md*d*st/mk)+(a+post))*x+mod
 
 
 ## FAQ  
-Раздел в процессе написания
+В этом разделе будут добавляться самые часты вопросы.
+
 
 ## Почему я решил реализовать этот проект?
 Не нашел в интернете таких калькуляторов офлайн. Решил сделать для себя, заодно потренироваться в программировании.
@@ -62,6 +39,7 @@ S = ((p/1000*t/60*h)+(md*d*st/mk)+(a+post))*x+mod
 - [Risen (Colin Robinson)](tg://resolve?domain=RisenYT) — разработчик-любитель
 
 ## Лицензия
+
 MIT 
 ```
 Copyright (c) <2024> <Risen>
@@ -95,4 +73,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
-OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.```
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
+
+## Поддержать проект
+
+Если вы хотите поддержать проект, то можете воспользоваться данными инструментами:
+
+[Ссылка на Т-банк](https://www.tinkoff.ru/cf/AzAcanQBWZx)
+
+или qr-код:
+
+<div id="header" align="left">
+<img src="https://risenhome.xyz/images/photo_2024-08-17_15-54-57.jpg" width="200" height=""/>
+</div>
