@@ -5,3 +5,4 @@
 Calc3D.spec
 /releases
 *.ui
+__pycache__
