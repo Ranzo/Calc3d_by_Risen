@@ -27,7 +27,7 @@ double calculating(double cost, double mod, double marg) {
 }
 
 // Функция amortization
-double amortization(double a, double t, double spi, int year) {
+double amortization(double a, double t, double spi) {
 
     // количество минут в году
     double minutes_in_year = 525600;    

@@ -51,13 +51,8 @@ int main() {
     printf("Постобработка (руб): ");
     scanf("%lf", &post);
 
-    // Получение текущего года
-    time_t now = time(NULL);
-    struct tm *local = localtime(&now);
-    int year = local->tm_year + 1900;
-
     // Расчет амортизации
-    double am = amortization(a, t, spi, year);
+    double am = amortization(a, t, spi);
 
     // Расчет себестоимости
     double cost = cost_prise(p, t, h, md, d, st, mk, am, post, x);
