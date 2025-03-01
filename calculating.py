@@ -18,7 +18,7 @@ def cost_prise(p, t, h, md, d, st, mk, am, post, x):
         x = int(x)  # количество экземпляров
     except ValueError:
         x = 1
-    result = ((abs(p) / 1000) * (abs(t) / 60) * abs(h) * abs(x)) + (abs(md) * abs(d) * (abs(st) / abs(mk) * abs(x)) + abs(am) + abs(post) * abs(x))
+    result = ((abs(p) / 1000) * (abs(t) / 60) * abs(h) * abs(x)) + (abs(md) * abs(d) * (abs(st) / abs(mk) * abs(x)) + (abs(am) + abs(post)) * abs(x))
     return round(result, 2)
 
 
@@ -40,10 +40,14 @@ def amortization(a, t, spi, year):
         minutes_in_year = 527040 / 2
     else:
         minutes_in_year = 525600 / 2
+
     try:
         year_norm = 100 / float(spi)
     except ZeroDivisionError:
         year_norm = 100 / 1
+
     year_am = float(a) / 100 * round(year_norm, 1)
+
     am_per_minute = year_am / minutes_in_year * t
+
     return round(am_per_minute, 2)
