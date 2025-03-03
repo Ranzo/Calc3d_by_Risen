@@ -42,7 +42,7 @@
 
 MIT 
 
-Copyright (c) <2025> <Risen>
+Copyright (c) Risen (Colin Robinson)
 
 
 ## Поддержать проект
