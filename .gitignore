@@ -6,3 +6,4 @@ Calc3D.spec
 /releases
 __pycache__
 /.vscode
+src/build/*
