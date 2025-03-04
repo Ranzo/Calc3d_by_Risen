@@ -14,7 +14,7 @@
 
 ## Wiki проекта
 
-- [Как каклькулятор расчитывает стоимость](https://git.risenhome.xyz/risen/Antivoice/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0-%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%D0%B0)
+- [Как каклькулятор расчитывает стоимость](https://git.risenhome.xyz/risen/Calc3D_by_Risen/wiki/%D0%A4%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D0%B0-%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82%D0%B0)
 
 
 
