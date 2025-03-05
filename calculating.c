@@ -2,16 +2,16 @@
 
 // Функция cost_prise
 double cost_prise(double p, double t, double h, double md, double d, double st, double mk, double am, double post, int x) {
-    p = fabs(p);  // номинальная мощность принтера
-    t = fabs(t);  // время печати, в минутах
-    h = fabs(h);  // тариф электроэнергии
-    md = fabs(md);  // вес детали
-    d = (d < 1) ? 1 : fabs(d);  // коэффициент выбраковки
-    st = fabs(st);  // стоимость катушки
-    mk = fabs(mk);  // вес катушки
-    am = fabs(am);  // амортизация
-    post = fabs(post);  // постобработка
-    x = abs(x);  // количество экземпляров
+    p = fabs(p);  // номинальная мощность принтера (insignet int 0-5000)
+    t = fabs(t);  // время печати, в минутах (insignet int)
+    h = fabs(h);  // тариф электроэнергии, руб. (double)
+    md = fabs(md);  // вес детали, гр. (double)
+    d = (d < 1) ? 1 : fabs(d);  // коэффициент выбраковки (double)
+    st = fabs(st);  // стоимость катушки, руб (double 0-10000)
+    mk = fabs(mk);  // вес катушки, гр. (1- 10000)
+    am = fabs(am);  // амортизация, руб. (double)
+    post = fabs(post);  // постобработка, руб. (double)
+    x = abs(x);  // количество экземпляров, шт. (insignet int)
 
     double result = ((p / 1000) * (t / 60) * h + (md * d * (st / mk)) + (am + post)) * x;
     return round(result * 100) / 100;  // округление до 2 знаков после запятой
