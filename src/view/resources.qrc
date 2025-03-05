@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="/">
+        <file>img/calc.png</file>
+        <file>img/exit.png</file>
+        <file>img/rubl.png</file>
+        <file>img/logo-1.png</file>
+        <file>img/logo-2.png</file>
+        <file>img/logo-3.png</file>
+        <file>img/logo-4.png</file>
+        <file>img/logo-5.png</file>
+        <file>img/logo-6.png</file>
+        <file>img/logo-7.png</file>
+        <file>img/logo-8.png</file>
+  </qresource>
+</RCC>

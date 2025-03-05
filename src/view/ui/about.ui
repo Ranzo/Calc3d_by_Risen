@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>About</class>
- <widget class="QDialog" name="About">
+ <widget class="QDialog" name="progInfo">
+<property name="styleSheet">
+  <string notr="true">
+    background-color: rgb(42, 45, 46);
+    color: white; 
+  </string>
+</property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +17,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>О прграмме</string>
+   <string>О программе</string>
   </property>
   <property name="windowIcon">
    <iconset>

@@ -35,6 +35,12 @@
    <set>QMainWindow::DockOption::AllowTabbedDocks|QMainWindow::DockOption::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
+<property name="styleSheet">
+  <string notr="true">
+    background-color: rgb(42, 45, 46);
+    color: white; 
+  </string>
+</property>
    <widget class="QLabel" name="quantity">
     <property name="geometry">
      <rect>
@@ -132,6 +138,9 @@
       <height>25</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">alternate-background-color: rgb(77, 77, 77);</string>
+    </property>
     <property name="acceptDrops">
      <bool>true</bool>
     </property>
@@ -152,12 +161,12 @@
     </property>
     <item>
      <property name="text">
-      <string>Ender3/Ender3pro</string>
+      <string>None</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>FlyBeer</string>
+      <string>Checked</string>
      </property>
     </item>
    </widget>
@@ -315,6 +324,9 @@
       <width>21</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
     </property>
     <property name="font">
      <font>
@@ -883,7 +895,7 @@
      <property name="title">
       <string>Пресеты принтера</string>
      </property>
-     <addaction name="add_printer"/>
+     <addaction name="add_preset"/>
      <addaction name="edit_printer"/>
      <addaction name="del_printer"/>
     </widget>
@@ -939,7 +951,7 @@
     <string>Настройки</string>
    </property>
   </action>
-  <action name="add_printer">
+  <action name="add_preset">
    <property name="text">
     <string>Добавить принтер</string>
    </property>

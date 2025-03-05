@@ -20,17 +20,24 @@ set(MAIN_SOURCES
         view/main_window.cpp
         view/main_window.h
 
+        view/about_dialog.cpp
+        view/formula_dialog.cpp
+        view/update_dialog.cpp
+        view/printer_settings.cpp
+        view/add_preset.cpp
+        view/delete_preset.cpp
+        view/edit_preset.cpp
+
         view/ui/about.ui
         view/ui/main_window.ui
         view/ui/del_preset.ui
         view/ui/edit_preset.ui
         view/ui/formula.ui
         view/ui/settings_preset.ui
-        view/ui/settings.ui
+        view/ui/printer_settings.ui
         view/ui/updates.ui
-        view/ui/add_printer.ui
+        view/ui/add_preset.ui
 )
-
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Calc3D
@@ -42,6 +49,12 @@ else()
     ${MAIN_SOURCES}
 )
 endif()
+
+qt_add_resources(Calc3D "app_resources"
+  PREFIX "/"
+  FILES
+    view/resources.qrc
+)
 
 target_link_libraries(Calc3D PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core)
 
