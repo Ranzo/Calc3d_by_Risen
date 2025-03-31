@@ -1,433 +1,335 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddPrinter</class>
- <widget class="QDialog" name="AddPrinter">
-<property name="styleSheet">
-  <string notr="true">
+  <class>AddPrinter</class>
+  <widget class="QDialog" name="AddPrinter">
+    <property name="styleSheet">
+      <string notr="true">
     background-color: rgb(42, 45, 46);
     color: white; 
-  </string>
-</property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>376</width>
-    <height>196</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Добавление принтера</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>img/logo-1.png</normaloff>img/logo-1.png</iconset>
-  </property>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>341</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton">
+      </string>
+    </property>
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>376</width>
+        <height>196</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Добавление принтера</string>
+    </property>
+    <property name="windowIcon">
+      <iconset>
+        <normaloff>:/img/logo-1.png</normaloff>
+      </iconset>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>160</y>
+          <width>341</width>
+          <height>27</height>
+        </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+          <widget class="QPushButton" name="pushButton">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Сохранить</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QPushButton" name="pushButton_2">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Отмена</string>
+            </property>
+          </widget>
+        </item>
+      </layout>
+    </widget>
+    <widget class="QLabel" name="power_printer">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>261</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 80, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Сохранить</string>
+        <string>Срок полезного использования, лет</string>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_2">
+    </widget>
+    <widget class="QDoubleSpinBox" name="input_age">
+      <property name="geometry">
+        <rect>
+          <x>290</x>
+          <y>90</y>
+          <width>71</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 80, 0);</string>
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::UpDownArrows</enum>
+      </property>
+      <property name="minimum">
+        <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+        <double>99999.000000000000000</double>
+      </property>
+      <property name="value">
+        <double>0.000000000000000</double>
+      </property>
+    </widget>
+    <widget class="QLabel" name="power_printer_2">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Отмена</string>
+        <string>Стоимость принетра, руб</string>
       </property>
-     </widget>
-    </item>
-   </layout>
+    </widget>
+    <widget class="QDoubleSpinBox" name="input_price">
+      <property name="geometry">
+        <rect>
+          <x>290</x>
+          <y>120</y>
+          <width>71</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::UpDownArrows</enum>
+      </property>
+      <property name="minimum">
+        <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+        <double>99999.000000000000000</double>
+      </property>
+      <property name="value">
+        <double>0.000000000000000</double>
+      </property>
+    </widget>
+    <widget class="QLabel" name="power_printer_3">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+        <string>Мощность принтера, Вт</string>
+      </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="input_power">
+      <property name="geometry">
+        <rect>
+          <x>290</x>
+          <y>60</y>
+          <width>71</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::UpDownArrows</enum>
+      </property>
+      <property name="minimum">
+        <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+        <double>99999.000000000000000</double>
+      </property>
+      <property name="value">
+        <double>0.000000000000000</double>
+      </property>
+    </widget>
+    <widget class="QLabel" name="power_printer_4">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+        <string>Название пресета</string>
+      </property>
+    </widget>
+    <widget class="QTextEdit" name="input_name">
+      <property name="enabled">
+        <bool>true</bool>
+      </property>
+      <property name="geometry">
+        <rect>
+          <x>180</x>
+          <y>20</y>
+          <width>181</width>
+          <height>21</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
+          <kerning>false</kerning>
+        </font>
+      </property>
+      <property name="tabletTracking">
+        <bool>false</bool>
+      </property>
+      <property name="acceptDrops">
+        <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="autoFormatting">
+        <set>QTextEdit::AutoBulletList</set>
+      </property>
+      <property name="tabChangesFocus">
+        <bool>true</bool>
+      </property>
+      <property name="documentTitle">
+        <string notr="true"/>
+      </property>
+      <property name="undoRedoEnabled">
+        <bool>false</bool>
+      </property>
+      <property name="lineWrapMode">
+        <enum>QTextEdit::WidgetWidth</enum>
+      </property>
+      <property name="markdown">
+        <string/>
+      </property>
+      <property name="acceptRichText">
+        <bool>false</bool>
+      </property>
+      <property name="cursorWidth">
+        <number>1</number>
+      </property>
+      <property name="textInteractionFlags">
+        <set>Qt::TextEditorInteraction</set>
+      </property>
+      <property name="placeholderText">
+        <string>Название принтера</string>
+      </property>
+    </widget>
   </widget>
-  <widget class="QLabel" name="power_printer">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>261</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>Срок полезного использования, лет</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="input_power">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>90</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-     <stylestrategy>PreferAntialias</stylestrategy>
-    </font>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="toolTipDuration">
-    <number>0</number>
-   </property>
-   <property name="whatsThis">
-    <string/>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(77, 77, 77);</string>
-   </property>
-   <property name="inputMethodHints">
-    <set>Qt::ImhDigitsOnly</set>
-   </property>
-   <property name="lineWidth">
-    <number>0</number>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAsNeeded</enum>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="tabStopDistance">
-    <double>80.000000000000000</double>
-   </property>
-   <property name="maximumBlockCount">
-    <number>3</number>
-   </property>
-   <property name="centerOnScroll">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string notr="true">0</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="power_printer_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>120</y>
-     <width>181</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>Стоимость принетра, руб</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="input_power_2">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>120</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-     <stylestrategy>PreferAntialias</stylestrategy>
-    </font>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="toolTipDuration">
-    <number>0</number>
-   </property>
-   <property name="whatsThis">
-    <string/>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(77, 77, 77);</string>
-   </property>
-   <property name="inputMethodHints">
-    <set>Qt::ImhDigitsOnly</set>
-   </property>
-   <property name="lineWidth">
-    <number>0</number>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAsNeeded</enum>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="tabStopDistance">
-    <double>80.000000000000000</double>
-   </property>
-   <property name="maximumBlockCount">
-    <number>3</number>
-   </property>
-   <property name="centerOnScroll">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string notr="true">0</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="power_printer_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>60</y>
-     <width>181</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>Мощность принтера, Вт</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="input_power_3">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>60</y>
-     <width>71</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-     <stylestrategy>PreferAntialias</stylestrategy>
-    </font>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="toolTipDuration">
-    <number>0</number>
-   </property>
-   <property name="whatsThis">
-    <string/>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(77, 77, 77);</string>
-   </property>
-   <property name="inputMethodHints">
-    <set>Qt::ImhDigitsOnly</set>
-   </property>
-   <property name="lineWidth">
-    <number>0</number>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAsNeeded</enum>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="tabStopDistance">
-    <double>80.000000000000000</double>
-   </property>
-   <property name="maximumBlockCount">
-    <number>3</number>
-   </property>
-   <property name="centerOnScroll">
-    <bool>false</bool>
-   </property>
-   <property name="placeholderText">
-    <string notr="true">0</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="power_printer_4">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>181</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string>Название пресета</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>20</y>
-     <width>181</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <stylestrategy>PreferAntialias</stylestrategy>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="tabletTracking">
-    <bool>false</bool>
-   </property>
-   <property name="acceptDrops">
-    <bool>true</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(77, 77, 77);</string>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="autoFormatting">
-    <set>QTextEdit::AutoBulletList</set>
-   </property>
-   <property name="tabChangesFocus">
-    <bool>true</bool>
-   </property>
-   <property name="documentTitle">
-    <string notr="true"/>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QTextEdit::WidgetWidth</enum>
-   </property>
-   <property name="markdown">
-    <string/>
-   </property>
-   <property name="acceptRichText">
-    <bool>false</bool>
-   </property>
-   <property name="cursorWidth">
-    <number>1</number>
-   </property>
-   <property name="textInteractionFlags">
-    <set>Qt::TextEditorInteraction</set>
-   </property>
-   <property name="placeholderText">
-    <string>Название принтера</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections/>
+  <resources/>
+  <connections/>
 </ui>

@@ -18,53 +18,49 @@ class PrinterSettingsDialog : public QDialog {
   ~PrinterSettingsDialog();
 
   // Методы доступа к данным
-  inline double getTariff() const {
-    return ui->input_tarif->toPlainText().toDouble();
-  }
+  inline double getTariff() const { return ui->input_tarif->value(); }
 
   inline double getRejectCoefficient() const {
-    return ui->input_q_trash->toPlainText().toDouble();
+    return ui->input_q_trash->value();
   }
 
   inline double getFilamentCost() const {
-    return ui->input_price_pastik->toPlainText().toDouble();
+    return ui->input_price_pastik->value();
   }
 
   inline double getMarkupPercent() const {
-    return ui->input_overprice->toPlainText().toDouble();
+    return ui->input_overprice->value();
   }
 
-  inline int getFilamentWeight() const {
-    return ui->plastik_menu->currentText().toInt();
-  }
+  inline int getFilamentWeight() const { return ui->plastik_menu->value(); }
 
   // Методы установки значений
-  inline void setTariff(double value) {
-    ui->input_tarif->setPlainText(QString::number(value));
-  }
+  inline void setTariff(double value) { ui->input_tarif->setValue(value); }
 
   inline void setRejectCoefficient(double value) {
-    ui->input_q_trash->setPlainText(QString::number(value));
+    ui->input_q_trash->setValue(value);
   }
 
   inline void setFilamentCost(double value) {
-    ui->input_price_pastik->setPlainText(QString::number(value));
+    ui->input_price_pastik->setValue(value);
   }
 
   inline void setMarkupPercent(double value) {
-    ui->input_overprice->setPlainText(QString::number(value));
+    ui->input_overprice->setValue(value);
   }
 
   inline void setFilamentWeight(int value) {
-    int index = ui->plastik_menu->findText(QString::number(value));
-    if (index != -1) ui->plastik_menu->setCurrentIndex(index);
+    ui->plastik_menu->setValue(value);
   }
+
+  void loadSettings(QHash<QString, QVariant> settings);
+
+ signals:
+  void settingsSaved(double tarif, double qTrash, double pricePlastik,
+                     double overprice, int weightPlastik);
 
  private:
   Ui::PrinterSettingsDialog *ui;
-
-  // QDoubleValidator *doubleValidator;
-  void setupValidators();
 };
 
 #endif  // PrinterSettingsDialog_H

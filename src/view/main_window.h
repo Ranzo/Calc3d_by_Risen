@@ -5,13 +5,14 @@
 #include <QPushButton>
 #include <memory>
 
+#include "../logic/facade.h"
 #include "about_dialog.h"
-#include "formula_dialog.h"
-#include "update_dialog.h"
-#include "printer_settings.h"
-#include "delete_preset.h"
 #include "add_preset.h"
+#include "delete_preset.h"
 #include "edit_preset.h"
+#include "formula_dialog.h"
+#include "printer_settings.h"
+#include "update_dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,7 +24,7 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  MainWindow(QWidget *parent = nullptr);
+  MainWindow(std::shared_ptr<Facade> facade, QWidget *parent = nullptr);
   ~MainWindow();
 
  private:
@@ -33,7 +34,11 @@ class MainWindow : public QMainWindow {
   UpdatesDialog *updateInfo;
   PrinterSettingsDialog *printerSettings;
   AddPresetDialog *addPresetDialog;
-  DeletePresetDialog *deletePresetDialog;
   EditPresetDialog *editPresetDialog;
+  DeletePresetDialog *deletePresetDialog;
+
+  std::shared_ptr<Facade> facade;
+
+  void refreshPrinterList();
 };
 #endif  // MAINWINDOW_H

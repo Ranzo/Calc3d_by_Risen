@@ -7,3 +7,4 @@ Calc3D.spec
 __pycache__
 /.vscode
 src/build/*
+VALGRIND

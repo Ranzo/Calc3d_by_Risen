@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>About</class>
- <widget class="QDialog" name="progInfo">
-<property name="styleSheet">
-  <string notr="true">
+  <class>About</class>
+  <widget class="QDialog" name="progInfo">
+    <property name="styleSheet">
+      <string notr="true">
     background-color: rgb(42, 45, 46);
     color: white; 
-  </string>
-</property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>365</width>
-    <height>97</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>О программе</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>img/logo-1.png</normaloff>img/logo-1.png</iconset>
-  </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>331</width>
-     <height>231</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Калькулятор Calc3D by Risen предназначен для быстрой оценки стоимости печати на 3D принтере,
+      </string>
+    </property>
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>365</width>
+        <height>97</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>О программе</string>
+    </property>
+    <property name="windowIcon">
+      <iconset>
+        <normaloff>:/img/logo-1.png</normaloff>
+      </iconset>
+    </property>
+    <widget class="QLabel" name="label">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>331</width>
+          <height>231</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+        </font>
+      </property>
+      <property name="text">
+        <string>Калькулятор Calc3D by Risen предназначен для быстрой оценки стоимости печати на 3D принтере,
 исходя из стоимости пластика, веса, тарифа электроэнергии и прочего...</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::AutoText</enum>
-   </property>
-   <property name="scaledContents">
-    <bool>false</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
+      </property>
+      <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+      </property>
+      <property name="scaledContents">
+        <bool>false</bool>
+      </property>
+      <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+        <bool>true</bool>
+      </property>
+    </widget>
   </widget>
- </widget>
- <resources/>
- <connections/>
+  <resources/>
+  <connections/>
 </ui>

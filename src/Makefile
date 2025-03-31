@@ -20,43 +20,24 @@ all:
 	cd $(BUILD_DIR) && \
 	cmake ../../src && \
 	make 
-	# valgrind -q -s --leak-check=full --trace-children=yes --track-origins=yes  --log-file=./VALGRIND ./build/3DViewer
+	# valgrind -q -s --leak-check=full --trace-children=yes --track-origins=yes  --log-file=./VALGRIND ./$(BUILD_DIR)/$(EXEC_NAME)
 	./$(BUILD_DIR)/$(EXEC_NAME)
-
-#########################################
-#----------- Installation --------------#
-#########################################
-.PHONY: install uninstall
-install: clean all
-
-uninstall:
-	cd ../ && rm -rf $(INSTALL_DIR)
-
-#########################################
-#----------- Documentation -------------#
-#########################################
-dvi: 
-	# doxygen
-	# open docs/html/index.html
-
-clean_dvi:
-	rm -rf ./docs
 
 #########################################
 #---------------- Checks ---------------#
 #########################################
 .PHONY: check
 check:
-	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cc' -print | xargs cppcheck $(CPPCHECK_FLAGS)
+	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cpp' -print | xargs cppcheck $(CPPCHECK_FLAGS)
 	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.h' -print | xargs cppcheck $(CPPCHECK_FLAGS)
-	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cc' -print  -exec clang-format -style='{BasedOnStyle: Google}' -n {} \;
+	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cpp' -print  -exec clang-format -style='{BasedOnStyle: Google}' -n {} \;
 	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.h' -print  -exec clang-format -style='{BasedOnStyle: Google}' -n {} \;
 
 .PHONY: check_fix
 check_fix:
-	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cc' -print | xargs cppcheck $(CPPCHECK_FLAGS)
+	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cpp' -print | xargs cppcheck $(CPPCHECK_FLAGS)
 	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.h' -print | xargs cppcheck $(CPPCHECK_FLAGS)
-	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cc' -print  -exec clang-format -style='{BasedOnStyle: Google}' -i {} \;
+	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.cpp' -print  -exec clang-format -style='{BasedOnStyle: Google}' -i {} \;
 	find . \( -path "./build" -o -path "./include" \) -prune -o -type f -regex '.*\.h' -print  -exec clang-format -style='{BasedOnStyle: Google}' -i {} \;
 
 .PHONY: clean 

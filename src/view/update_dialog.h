@@ -9,23 +9,19 @@ class Updates;
 }
 
 class UpdatesDialog : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit UpdatesDialog(QWidget *parent = nullptr);
-    ~UpdatesDialog();
+ public:
+  explicit UpdatesDialog(QWidget *parent = nullptr);
+  ~UpdatesDialog();
 
-    // Методы для обновления информации о версиях
-    void setCurrentVersion(const QString &version);
-    void setLatestVersion(const QString &version);
+ private slots:
+  void onCloseClicked();
+  void onVisitWebsiteClicked();
 
-private slots:
-    void onCloseClicked();
-    void onVisitWebsiteClicked();
-
-private:
-    Ui::Updates *ui;
-    const QUrl WEBSITE_URL = QUrl("https://your-update-website.com");
+ private:
+  Ui::Updates *ui;
+  const QUrl WEBSITE_URL = QUrl("https://calc3d.ru/");
 };
 
-#endif // UPDATESDIALOG_H
+#endif  // UPDATESDIALOG_H

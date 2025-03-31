@@ -1,107 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Formula</class>
- <widget class="QDialog" name="Formula">
-<property name="styleSheet">
-  <string notr="true">
+  <class>Formula</class>
+  <widget class="QDialog" name="Formula">
+    <property name="styleSheet">
+      <string notr="true">
     background-color: rgb(42, 45, 46);
     color: white; 
-  </string>
-</property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>367</width>
-    <height>377</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Формула расчета</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>img/logo-1.png</normaloff>img/logo-1.png</iconset>
-  </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>10</y>
-     <width>171</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: white;</string> 
-   </property>
-   <property name="text">
-    <string>## Формула расчета</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::MarkdownText</enum>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>50</y>
-     <width>341</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Sans Serif</family>
-     <pointsize>10</pointsize>
-     <bold>true</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>S = ((p/1000*t/60*h)+(md*d*st/mk)+(a+post))*x+mod</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::MarkdownText</enum>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>false</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>341</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>где
+      </string>
+    </property>
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>367</width>
+        <height>377</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Формула расчета</string>
+    </property>
+    <property name="windowIcon">
+      <iconset>
+        <normaloff>:/img/logo-1.png</normaloff>
+      </iconset>
+    </property>
+    <widget class="QLabel" name="label">
+      <property name="geometry">
+        <rect>
+          <x>100</x>
+          <y>10</y>
+          <width>171</width>
+          <height>41</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>9</pointsize>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: white;</string>
+      </property>
+      <property name="text">
+        <string>## Формула расчета</string>
+      </property>
+      <property name="textFormat">
+        <enum>Qt::MarkdownText</enum>
+      </property>
+      <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+      <property name="geometry">
+        <rect>
+          <x>30</x>
+          <y>50</y>
+          <width>341</width>
+          <height>21</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <family>Sans Serif</family>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+          <kerning>false</kerning>
+        </font>
+      </property>
+      <property name="autoFillBackground">
+        <bool>false</bool>
+      </property>
+      <property name="text">
+        <string>S = ((p/1000*t/60*h)+(md*d*st/mk)+(a+post))*x+mod</string>
+      </property>
+      <property name="textFormat">
+        <enum>Qt::MarkdownText</enum>
+      </property>
+      <property name="scaledContents">
+        <bool>true</bool>
+      </property>
+      <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+        <bool>false</bool>
+      </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+      <property name="geometry">
+        <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>341</width>
+          <height>281</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+        </font>
+      </property>
+      <property name="text">
+        <string>где
 ```
 S - стоимость печати, руб.
 p - мощность принтера, Вт
@@ -116,37 +117,37 @@ post - стоимость постобработки, руб.
 х - количество печатаемых дубликатов, шт.
 mod - стоимость моделирования, руб
 ```</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::MarkdownText</enum>
-   </property>
-   <property name="scaledContents">
-    <bool>false</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
+      </property>
+      <property name="textFormat">
+        <enum>Qt::MarkdownText</enum>
+      </property>
+      <property name="scaledContents">
+        <bool>false</bool>
+      </property>
+      <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+        <bool>true</bool>
+      </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+        <rect>
+          <x>100</x>
+          <y>340</y>
+          <width>161</width>
+          <height>25</height>
+        </rect>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 80, 0);</string>
+      </property>
+      <property name="text">
+        <string>Закрыть</string>
+      </property>
+    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>340</y>
-     <width>161</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 80, 0);</string>
-   </property>
-   <property name="text">
-    <string>Закрыть</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections/>
+  <resources/>
+  <connections/>
 </ui>

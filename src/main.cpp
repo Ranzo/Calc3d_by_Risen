@@ -4,8 +4,15 @@
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
-  // MainWindow window(s21::Controller::GetInstance());
-  MainWindow window;
-  window.show();
-  return app.exec();
+  try {
+    auto facade = Facade::GetInstance();
+    MainWindow window(facade);
+    window.show();
+    return app.exec();
+  } catch (const std::exception &ex) {
+    QMessageBox::critical(nullptr, QApplication::tr("Fatal Error"),
+                          QApplication::tr("Application failed with error:\n%1")
+                              .arg(QString::fromUtf8(ex.what())));
+    return EXIT_FAILURE;
+  }
 }

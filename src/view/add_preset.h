@@ -2,8 +2,8 @@
 #define ADDPRINTERDIALOG_H
 
 #include <QDialog>
-#include <QDoubleValidator>
-#include <QIntValidator>
+#include <QMessageBox>
+#include <QShowEvent>
 
 #include "ui/ui_add_preset.h"
 
@@ -18,21 +18,24 @@ class AddPresetDialog : public QDialog {
   explicit AddPresetDialog(QWidget *parent = nullptr);
   ~AddPresetDialog();
 
-  QString getPresetName() const { return ui->textEdit->toPlainText(); }
+  QString getPresetName() const { return ui->input_name->toPlainText(); }
 
-  int getPower() const { return ui->input_power_3->toPlainText().toInt(); }
+  double getPower() const { return ui->input_power->value(); }
 
-  int getLifespan() const { return ui->input_power->toPlainText().toInt(); }
+  double getLifespan() const { return ui->input_age->value(); }
 
-  double getPrinterCost() const {
-    return ui->input_power_2->toPlainText().toDouble();
-  }
+  double getPrinterPrice() const { return ui->input_price->value(); }
+
+ signals:
+  void printerAdded(const QString &name, double power, double age, double cost);
+
+ protected:
+  void showEvent(QShowEvent *event) override;
 
  private:
-  void setupValidators();
   Ui::AddPrinter *ui;
-  // QIntValidator *intValidator;
-  // QDoubleValidator *doubleValidator;
+
+  void resetForm();
 };
 
 #endif  // ADDPRINTERDIALOG_H

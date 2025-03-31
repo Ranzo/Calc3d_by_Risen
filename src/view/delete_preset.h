@@ -15,17 +15,11 @@ class DeletePresetDialog : public QDialog {
   explicit DeletePresetDialog(QWidget *parent = nullptr);
   ~DeletePresetDialog();
 
-  void loadPresets(const QList<QStringList> &data);
-  QString getSelectedPreset() const;
-  int getSelectedRow() const;
+  void loadPresets(const QList<QString> &data);
 
  signals:
-  void deleteRequested(int row);
-  void editRequested(int row);
-
- private slots:
-  void onDeleteClicked();
-  void onEditClicked();
+  void deleteRequested(const QString &printerName);
+  void editRequested(const QString &printerName);
 
  private:
   void setupTable();

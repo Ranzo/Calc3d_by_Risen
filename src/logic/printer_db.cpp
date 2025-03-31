@@ -1,28 +1,31 @@
 #include "printer_db.h"
 
-Database::Database(const QString &path) {
+Database::Database(const QString &dir) {
+  QString dbPath = dir + "/printers.sqlite";
+  qDebug() << "Database path:" << dbPath;
   db = QSqlDatabase::addDatabase("QSQLITE");
-  db.setDatabaseName(path);
+  db.setDatabaseName(dbPath);
 }
 
 bool Database::init() {
   if (!db.open()) {
     qWarning() << "Error opening database:" << db.lastError();
-    // TODO return ERROR
     return false;
   }
 
   QSqlQuery query;
-  return query.exec(
+  query.exec(
       "CREATE TABLE IF NOT EXISTS printers ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT,"
       "name TEXT NOT NULL UNIQUE,"
-      "power REAL NOT NULL,"  //! int??
-      "age INTEGER NOT NULL,"
-      "cost REAL NOT NULL");
+      "power REAL NOT NULL,"
+      "age REAL NOT NULL,"
+      "cost REAL NOT NULL)");
+
+  return true;
 }
 
-bool Database::addPrinter(const QString &name, double power, int age,
+bool Database::addPrinter(const QString &name, double power, double age,
                           double cost) {
   QSqlQuery query;
   query.prepare(
@@ -39,7 +42,7 @@ QList<QString> Database::getPrinterList() {
   QList<QString> printers;
   QSqlQuery query("SELECT name FROM printers");
   while (query.next()) {
-    printers.append({query.value(0).toString()});
+    printers.append({query.value("name").toString()});
   }
   return printers;
 }
@@ -49,35 +52,58 @@ bool Database::deletePrinterByName(const QString &name) {
   query.bindValue(":name", name);
 
   if (!query.exec()) {
-    // TODO exc
     qWarning() << "Delete failed:" << query.lastError().text();
     return false;
   }
-
-  // была ли удалена хотя бы одна запись?
+  qDebug() << "Delete printer:" << name;
   return query.numRowsAffected() > 0;
 }
 
-bool Database::updatePrinter(const QString &name,
-                                    const QHash<QString, QVariant> &updates) {
-  QStringList setClauses;
+bool Database::updatePrinterByName(const QString &oldName,
+                                   const QString &newName, double power,
+                                   int age, double cost) {
   QSqlQuery query;
 
-  for (auto it = updates.begin(); it != updates.end(); ++it) {
-    setClauses << QString("%1 = :%2").arg(it.key(), it.key());
-    query.bindValue(":" + it.key(), it.value());
+  query.prepare(
+      "UPDATE printers SET "
+      "name = :newName, "
+      "power = :power, "
+      "age = :age, "
+      "cost = :cost "
+      "WHERE name = :oldName");
+
+  query.bindValue(":oldName", oldName);
+  query.bindValue(":newName", newName);
+  query.bindValue(":power", power);
+  query.bindValue(":age", age);
+  query.bindValue(":cost", cost);
+
+  if (!query.exec()) {
+    qCritical() << "Error updating printer:" << oldName;
+    return false;
   }
 
-  query.prepare("UPDATE printers SET " + setClauses.join(", ") +
-                " WHERE name = :name");
+  return query.numRowsAffected() > 0;
+}
+
+QHash<QString, QVariant> Database::getPrinterByName(const QString &name) {
+  QHash<QString, QVariant> printerData;
+
+  QSqlQuery query;
+  query.prepare("SELECT * FROM printers WHERE name = :name");
   query.bindValue(":name", name);
 
-  return query.exec();
+  if (!query.exec()) {
+    qWarning() << "Error getting printer:" << query.lastError().text();
+    return printerData;
+  }
 
-  //! Как создать новое из фасада:
-  // !проще забрать сразу все
-  //   QHash<QString, QVariant> updates;
-  // updates["power"] = 350.0;
-  // updates["cost"] = 27000.0;
-  // db->updatePrinterPartial("MyPrinter", updates);
+  if (query.next()) {
+    printerData["name"] = query.value("name").toString();
+    printerData["power"] = query.value("power").toDouble();
+    printerData["age"] = query.value("age").toDouble();
+    printerData["cost"] = query.value("cost").toDouble();
+  }
+
+  return printerData;
 }

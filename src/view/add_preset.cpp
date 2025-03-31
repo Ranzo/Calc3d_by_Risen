@@ -2,27 +2,38 @@
 
 #include "ui/ui_add_preset.h"
 
-AddPresetDialog::AddPresetDialog(QWidget *parent)
+AddPresetDialog::AddPresetDialog(QWidget* parent)
     : QDialog(parent), ui(new Ui::AddPrinter) {
   ui->setupUi(this);
-  setWindowIcon(QIcon("img/logo-1.png"));
-  // TODO validators
-  //   setupValidators();
+  setFixedSize(size());
 
   connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
-    // TODO save new printer settings
-    qDebug() << "SAVE SETTINGS";
+    QString name = ui->input_name->toPlainText().trimmed();
+    double power = ui->input_power->value();
+    double age = ui->input_age->value();
+    double cost = ui->input_price->value();
+
+    if (name.isEmpty())
+      QMessageBox::warning(this, "Ошибка", "Заполните все поля");
+    else {
+      emit printerAdded(name, power, age, cost);
+      close();
+    }
   });
+
   connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-AddPresetDialog::~AddPresetDialog() { delete ui; }
-
-void AddPresetDialog::setupValidators() {
-  // TODO make validators
-  qDebug() << "SET VALIDATORS";
-  //   ui->input_power_3->setValidator(SMTH);  // Мощность
-  //   ui->input_power->setValidator(SMTH);    // Срок службы
-
-  //   ui->input_power_2->setValidator(SMTH);  // Стоимость
+void AddPresetDialog::resetForm() {
+  ui->input_name->clear();
+  ui->input_power->setValue(0.0);
+  ui->input_age->setValue(0.0);
+  ui->input_price->setValue(0.0);
 }
+
+void AddPresetDialog::showEvent(QShowEvent* event) {
+  QDialog::showEvent(event);
+  resetForm();
+}
+
+AddPresetDialog::~AddPresetDialog() { delete ui; }

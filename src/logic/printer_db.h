@@ -7,11 +7,12 @@ class Database {
  public:
   Database(const QString &path);
   bool init();
-  bool addPrinter(const QString &name, double power, int age, double cost);
+  bool addPrinter(const QString &name, double power, double age, double cost);
+  QHash<QString, QVariant> getPrinterByName(const QString &name);
   bool deletePrinterByName(const QString &name);
   QList<QString> getPrinterList();
-  bool updatePrinter(const QString &name,
-                               const QHash<QString, QVariant> &updates);
+  bool updatePrinterByName(const QString &oldName, const QString &newName,
+                           double power, int age, double cost);
 
  private:
   QSqlDatabase db;
