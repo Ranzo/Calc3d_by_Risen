@@ -54,5 +54,5 @@ Copyright (c) Risen (Colin Robinson)
 или qr-код:
 
 <div id="header" align="left">
-<img src="https://git.risenhome.xyz/risen/Calc3D_by_Risen/raw/branch/master/photo_2024-08-17_15-54-57.jpg" width="200" height=""/>
+<img src="https://calc3d.ru/static/images/donate.png" width="200" height=""/>
 </div>
