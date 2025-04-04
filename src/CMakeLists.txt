@@ -45,6 +45,8 @@ set(MAIN_SOURCES
 
         logic/printer_db.cpp
         logic/printer_db.h
+        logic/plastic_db.cpp
+        logic/plastic_db.h
         logic/calculator.cpp
         logic/calculator.h
         logic/facade.cpp

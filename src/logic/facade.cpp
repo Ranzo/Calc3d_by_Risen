@@ -7,29 +7,29 @@ std::shared_ptr<Facade> Facade::GetInstance() {
 
 bool Facade::addPrinter(const QString &name, double power, int age,
                         double cost) {
-  return db->addPrinter(name, power, age, cost);
+  return printerDB->addPrinter(name, power, age, cost);
 }
 
-QList<QString> Facade::getPrinterList() { return db->getPrinterList(); }
+QList<QString> Facade::getPrinterList() { return printerDB->getPrinterList(); }
 
 bool Facade::deletePrinterByName(const QString &name) {
-  return db->deletePrinterByName(name);
+  return printerDB->deletePrinterByName(name);
 }
 
 void Facade::updatePrinterByName(const QString &oldName, const QString &newName,
                                  double power, int age, double cost) {
-  db->updatePrinterByName(oldName, newName, power, age, cost);
+  printerDB->updatePrinterByName(oldName, newName, power, age, cost);
 }
 
 QHash<QString, QVariant> Facade::getPrinterByName(const QString &name) {
-  return db->getPrinterByName(name);
+  return printerDB->getPrinterByName(name);
 }
 
 std::pair<double, double> Facade::calculate(const QString &printerName, int hrs,
                                             int min, double detailWeight,
                                             int quantity, double post,
                                             double mod) {
-  auto printerData = db->getPrinterByName(printerName);
+  auto printerData = printerDB->getPrinterByName(printerName);
   auto settingsData = settingPreset->getSettings();
   min = hrs * 60 + min;
 
@@ -55,12 +55,14 @@ QHash<QString, QVariant> Facade::getSettings() {
 Facade::Facade() {
   QString dir =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QDir().mkpath(dir); // создает, если папки не было
 
   try {
-    db = std::make_unique<Database>(dir);
+    printerDB = std::make_unique<PrinterDB>(dir);
+    plasticDB = std::make_unique<PlasticDB>(dir);
     settingPreset = std::make_unique<SettingPreset>(dir);
 
-    if (!db->init()) {
+    if (!printerDB->init() || !plasticDB->init()) {
       throw FacadeException(
           QString("Ошибка инициализации БД. Путь: %1").arg(dir));
     }
@@ -68,4 +70,23 @@ Facade::Facade() {
     throw FacadeException(
         QString("Ошибка инициализации Facade: %1").arg(ex.what()));
   }
+}
+
+bool Facade::addPlastic(const QString &name, double weight, double cost) {
+  return plasticDB->addPlastic(name, weight, cost);
+}
+
+QList<QString> Facade::getPlasticList() { return plasticDB->getPlasticList(); }
+
+bool Facade::deletePlasticByName(const QString &name) {
+  return plasticDB->deletePlasticByName(name);
+}
+
+void Facade::updatePlasticByName(const QString &oldName, const QString &newName,
+                                 double weight, double cost) {
+  plasticDB->updatePlasticByName(oldName, newName, weight, cost);
+}
+
+QHash<QString, QVariant> Facade::getPlasticByName(const QString &name) {
+  return plasticDB->getPlasticByName(name);
 }
