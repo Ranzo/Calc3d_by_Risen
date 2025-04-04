@@ -1,23 +1,26 @@
-#ifndef EDITPRINTERDIALOG_H
-#define EDITPRINTERDIALOG_H
+#ifndef ADDPRINTERDIALOG_H
+#define ADDPRINTERDIALOG_H
 
 #include <QDialog>
 #include <QDoubleValidator>
 #include <QIntValidator>
 #include <QMessageBox>
+#include <QShowEvent>
 
-#include "ui/ui_edit_preset.h"
+#include "ui/ui_add_printer.h"
 
 namespace Ui {
-class EditPrinter;
+class AddPrinter;
 }
 
-class EditPresetDialog : public QDialog {
+enum class PresetDialogStatus { Add, Edit };
+
+class AddPrinterDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit EditPresetDialog(QWidget *parent = nullptr);
-  ~EditPresetDialog();
+  explicit AddPrinterDialog(QWidget *parent = nullptr);
+  ~AddPrinterDialog();
 
   QString getPresetName() const { return ui->input_name->toPlainText(); }
 
@@ -27,15 +30,18 @@ class EditPresetDialog : public QDialog {
 
   double getPrinterPrice() const { return ui->input_price->value(); }
 
-  void setPreset(QHash<QString, QVariant> &preset);
+  void setEditMode(QHash<QString, QVariant> &preset);
+  void setAddMode();
 
  signals:
+  void printerAdded(const QString &name, double power, double age, double cost);
   void printerEdited(const QString &oldName, const QString &newName,
                      double power, double age, double cost);
 
  private:
-  Ui::EditPrinter *ui;
+  Ui::AddPrinter *ui;
   QString oldName;
+  PresetDialogStatus status =  PresetDialogStatus::Add;
 };
 
-#endif  // EDITPRINTERDIALOG_H
+#endif  // ADDPRINTERDIALOG_H

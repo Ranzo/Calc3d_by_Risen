@@ -6,28 +6,42 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   facade = fcd;
   ui->setupUi(this);
-  setFixedSize(373, 471);
+  setFixedSize(373, 521);
 
   progInfo = new AboutDialog(this);
   formulaInfo = new FormulaDialog(this);
   updateInfo = new UpdatesDialog(this);
   printerSettings = new PrinterSettingsDialog(this);
-  addPresetDialog = new AddPresetDialog(this);
-  deletePresetDialog = new DeletePresetDialog(this);
-  editPresetDialog = new EditPresetDialog(this);
+  addPrinterDialog = new AddPrinterDialog(this);
+  deletePrinterDialog = new DeletePrinterDialog(this);
+  addPlasticDialog = new AddPlasticDialog(this);
+  deletePlasticDialog = new DeletePlasticDialog(this);
 
   refreshPrinterList();
   printerSettings->loadSettings(facade->getSettings());
 
   connect(ui->settings_2, &QAction::triggered, this,
           [this]() { printerSettings->exec(); });
-  connect(ui->add_preset, &QAction::triggered, this,
-          [this]() { addPresetDialog->exec(); });
+  connect(ui->add_printer, &QAction::triggered, this, [this]() {
+    addPrinterDialog->setAddMode();
+    addPrinterDialog->exec();
+  });
 
   connect(ui->del_printer, &QAction::triggered, this, [this]() {
     QList<QString> printers = facade->getPrinterList();
 
-    deletePresetDialog->exec();
+    deletePrinterDialog->exec();
+  });
+
+  connect(ui->add_plastic, &QAction::triggered, this, [this]() {
+    addPlasticDialog->setAddMode();
+    addPlasticDialog->exec();
+  });
+
+  connect(ui->del_plastic, &QAction::triggered, this, [this]() {
+    QList<QString> plastics = facade->getPlasticList();
+
+    deletePlasticDialog->exec();
   });
 
   connect(ui->action_3, &QAction::triggered, this, [this]() { close(); });
@@ -54,7 +68,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   connect(ui->exit_btn, &QPushButton::clicked, this, [this]() { close(); });
 
   // Ловля стороних сигналов
-  connect(addPresetDialog, &AddPresetDialog::printerAdded, this,
+  connect(addPrinterDialog, &AddPrinterDialog::printerAdded, this,
           [this](const QString &name, double power, int age, double cost) {
             if (facade->addPrinter(name, power, age, cost))
               refreshPrinterList();
@@ -63,7 +77,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось добавить принтер");
           });
 
-  connect(deletePresetDialog, &DeletePresetDialog::deleteRequested, this,
+  connect(deletePrinterDialog, &DeletePrinterDialog::deleteRequested, this,
           [this](const QString &name) {
             if (facade->deletePrinterByName(name))
               refreshPrinterList();
@@ -72,14 +86,14 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось удалить принтер");
           });
 
-  connect(deletePresetDialog, &DeletePresetDialog::editRequested, this,
+  connect(deletePrinterDialog, &DeletePrinterDialog::editRequested, this,
           [this](const QString &name) {
             auto preset = facade->getPrinterByName(name);
-            editPresetDialog->setPreset(preset);
-            editPresetDialog->exec();
+            addPrinterDialog->setEditMode(preset);
+            addPrinterDialog->exec();
           });
 
-  connect(editPresetDialog, &EditPresetDialog::printerEdited, this,
+  connect(addPrinterDialog, &AddPrinterDialog::printerEdited, this,
           [this](const QString &oldName, const QString &newName, double power,
                  int age, double cost) {
             facade->updatePrinterByName(oldName, newName, power, age, cost);
@@ -103,7 +117,7 @@ void MainWindow::refreshPrinterList() {
   QList<QString> printers = facade->getPrinterList();
   ui->printer_menu->clear();
   ui->printer_menu->addItems(QStringList::fromList(printers));
-  deletePresetDialog->loadPresets(printers);
+  deletePrinterDialog->loadPresets(printers);
   if (printers.isEmpty()) {
     ui->printer_menu->setCurrentIndex(-1);
     ui->printer_menu->setPlaceholderText("Выбор принтера");

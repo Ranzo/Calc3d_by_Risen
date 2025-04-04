@@ -29,22 +29,26 @@ set(MAIN_SOURCES
         view/formula_dialog.cpp
         view/update_dialog.cpp
         view/printer_settings.cpp
-        view/add_preset.cpp
-        view/delete_preset.cpp
-        view/edit_preset.cpp
+        view/add_printer.cpp
+        view/delete_printer.cpp
+        view/add_plastic.cpp
+        view/delete_plastic.cpp
 
         view/ui/about.ui
         view/ui/main_window.ui
-        view/ui/del_preset.ui
-        view/ui/edit_preset.ui
         view/ui/formula.ui
         view/ui/settings_preset.ui
         view/ui/printer_settings.ui
         view/ui/updates.ui
-        view/ui/add_preset.ui
+        view/ui/add_printer.ui
+        view/ui/del_printer.ui
+        view/ui/add_plastic.ui
+        view/ui/del_plastic.ui
 
         logic/printer_db.cpp
         logic/printer_db.h
+        logic/plastic_db.cpp
+        logic/plastic_db.h
         logic/calculator.cpp
         logic/calculator.h
         logic/facade.cpp

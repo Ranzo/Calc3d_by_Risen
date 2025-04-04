@@ -8,12 +8,12 @@ namespace Ui {
 class DelPreset;
 }
 
-class DeletePresetDialog : public QDialog {
+class DeletePrinterDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit DeletePresetDialog(QWidget *parent = nullptr);
-  ~DeletePresetDialog();
+  explicit DeletePrinterDialog(QWidget *parent = nullptr);
+  ~DeletePrinterDialog();
 
   void loadPresets(const QList<QString> &data);
 

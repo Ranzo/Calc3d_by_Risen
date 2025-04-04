@@ -1,22 +1,25 @@
-#include "edit_preset.h"
+#include "add_printer.h"
 
-#include "ui/ui_edit_preset.h"
+#include "ui/ui_add_printer.h"
 
-EditPresetDialog::EditPresetDialog(QWidget* parent)
-    : QDialog(parent), ui(new Ui::EditPrinter) {
+AddPrinterDialog::AddPrinterDialog(QWidget* parent)
+    : QDialog(parent), ui(new Ui::AddPrinter) {
   ui->setupUi(this);
   setFixedSize(size());
 
   connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
-    QString newName = ui->input_name->toPlainText().trimmed();
+    QString name = ui->input_name->toPlainText().trimmed();
     double power = ui->input_power->value();
     double age = ui->input_age->value();
     double cost = ui->input_price->value();
 
-    if (newName.isEmpty())
+    if (name.isEmpty())
       QMessageBox::warning(this, "Ошибка", "Заполните все поля");
     else {
-      emit printerEdited(oldName, newName, power, age, cost);
+      if (status == PresetDialogStatus::Edit)
+        emit printerEdited(oldName, name, power, age, cost);
+      else
+        emit printerAdded(name, power, age, cost);
       close();
     }
   });
@@ -24,7 +27,18 @@ EditPresetDialog::EditPresetDialog(QWidget* parent)
   connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-void EditPresetDialog::setPreset(QHash<QString, QVariant>& preset) {
+void AddPrinterDialog::setAddMode() {
+  status = PresetDialogStatus::Add;
+
+  ui->input_name->clear();
+  ui->input_power->setValue(0.0);
+  ui->input_age->setValue(0.0);
+  ui->input_price->setValue(0.0);
+}
+
+void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
+  status = PresetDialogStatus::Edit;
+
   if (preset.contains("name")) {
     ui->input_name->setText(preset["name"].toString());
     oldName = ui->input_name->toPlainText().trimmed();
@@ -36,4 +50,4 @@ void EditPresetDialog::setPreset(QHash<QString, QVariant>& preset) {
     ui->input_price->setValue(preset["cost"].toDouble());
 }
 
-EditPresetDialog::~EditPresetDialog() { delete ui; }
+AddPrinterDialog::~AddPrinterDialog() { delete ui; }

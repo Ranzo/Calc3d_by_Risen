@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+  <class>AddPlastic</class>
+  <widget class="QDialog" name="AddPlastic">
+    <property name="styleSheet">
+      <string notr="true">
+    background-color: rgb(42, 45, 46);
+    color: white; 
+      </string>
+    </property>
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>376</width>
+        <height>156</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Добавление катушки</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>341</width>
+          <height>27</height>
+        </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+          <widget class="QPushButton" name="pushButton">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Сохранить</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QPushButton" name="pushButton_2">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Отмена</string>
+            </property>
+          </widget>
+        </item>
+      </layout>
+    </widget>
+    <widget class="QLabel" name="power_printer_4">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+        <string>Название катушки</string>
+      </property>
+    </widget>
+    <widget class="QTextEdit" name="input_name">
+      <property name="geometry">
+        <rect>
+          <x>180</x>
+          <y>20</y>
+          <width>181</width>
+          <height>21</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="placeholderText">
+        <string>Название катушки</string>
+      </property>
+    </widget>
+    <widget class="QLabel" name="weight_label">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+        <string>Вес, г</string>
+      </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="input_weight">
+      <property name="geometry">
+        <rect>
+          <x>290</x>
+          <y>60</y>
+          <width>71</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="minimum">
+        <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+        <double>99999.000000000000000</double>
+      </property>
+    </widget>
+    <widget class="QLabel" name="cost_label">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>181</width>
+          <height>17</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <bold>true</bold>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+        <string>Стоимость, руб</string>
+      </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="input_price">
+      <property name="geometry">
+        <rect>
+          <x>290</x>
+          <y>90</y>
+          <width>71</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77);</string>
+      </property>
+      <property name="minimum">
+        <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+        <double>99999.000000000000000</double>
+      </property>
+    </widget>
+  </widget>
+  <resources/>
+  <connections/>
+</ui>

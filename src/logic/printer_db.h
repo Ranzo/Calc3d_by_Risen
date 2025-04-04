@@ -3,9 +3,9 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-class Database {
+class PrinterDB {
  public:
-  Database(const QString &path);
+  PrinterDB(const QString &path);
   bool init();
   bool addPrinter(const QString &name, double power, double age, double cost);
   QHash<QString, QVariant> getPrinterByName(const QString &name);
