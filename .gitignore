@@ -4,5 +4,7 @@
 /dist
 Calc3D.spec
 /releases
-*.ui
 __pycache__
+/.vscode
+src/build/*
+VALGRIND
