@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(Calc3D VERSION 0.1 LANGUAGES CXX)
 
@@ -62,11 +62,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     MANUAL_FINALIZATION
     ${MAIN_SOURCES}
     ${RESOURCES}
+    app_icon.rc
 )
 else()
     add_executable(Calc3D
     ${MAIN_SOURCES}
     ${RESOURCES}
+    app_icon.rc
 )
 endif()
 
