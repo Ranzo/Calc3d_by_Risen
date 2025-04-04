@@ -2,6 +2,8 @@
 #define ADDPRINTERDIALOG_H
 
 #include <QDialog>
+#include <QDoubleValidator>
+#include <QIntValidator>
 #include <QMessageBox>
 #include <QShowEvent>
 
@@ -10,6 +12,8 @@
 namespace Ui {
 class AddPrinter;
 }
+
+enum class PresetDialogStatus { Add, Edit };
 
 class AddPresetDialog : public QDialog {
   Q_OBJECT
@@ -26,16 +30,18 @@ class AddPresetDialog : public QDialog {
 
   double getPrinterPrice() const { return ui->input_price->value(); }
 
+  void setEditMode(QHash<QString, QVariant> &preset);
+  void setAddMode();
+
  signals:
   void printerAdded(const QString &name, double power, double age, double cost);
-
- protected:
-  void showEvent(QShowEvent *event) override;
+  void printerEdited(const QString &oldName, const QString &newName,
+                     double power, double age, double cost);
 
  private:
   Ui::AddPrinter *ui;
-
-  void resetForm();
+  QString oldName;
+  PresetDialogStatus status =  PresetDialogStatus::Add;
 };
 
 #endif  // ADDPRINTERDIALOG_H

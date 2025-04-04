@@ -9,7 +9,6 @@
 #include "about_dialog.h"
 #include "add_preset.h"
 #include "delete_preset.h"
-#include "edit_preset.h"
 #include "formula_dialog.h"
 #include "printer_settings.h"
 #include "update_dialog.h"
@@ -34,7 +33,6 @@ class MainWindow : public QMainWindow {
   UpdatesDialog *updateInfo;
   PrinterSettingsDialog *printerSettings;
   AddPresetDialog *addPresetDialog;
-  EditPresetDialog *editPresetDialog;
   DeletePresetDialog *deletePresetDialog;
 
   std::shared_ptr<Facade> facade;

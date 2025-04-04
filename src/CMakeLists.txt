@@ -31,7 +31,6 @@ set(MAIN_SOURCES
         view/printer_settings.cpp
         view/add_preset.cpp
         view/delete_preset.cpp
-        view/edit_preset.cpp
 
         view/ui/about.ui
         view/ui/main_window.ui

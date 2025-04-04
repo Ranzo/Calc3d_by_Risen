@@ -14,7 +14,6 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   printerSettings = new PrinterSettingsDialog(this);
   addPresetDialog = new AddPresetDialog(this);
   deletePresetDialog = new DeletePresetDialog(this);
-  editPresetDialog = new EditPresetDialog(this);
 
   refreshPrinterList();
   printerSettings->loadSettings(facade->getSettings());
@@ -22,7 +21,9 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   connect(ui->settings_2, &QAction::triggered, this,
           [this]() { printerSettings->exec(); });
   connect(ui->add_preset, &QAction::triggered, this,
-          [this]() { addPresetDialog->exec(); });
+          [this]() { 
+            addPresetDialog->setAddMode();
+            addPresetDialog->exec(); });
 
   connect(ui->del_printer, &QAction::triggered, this, [this]() {
     QList<QString> printers = facade->getPrinterList();
@@ -75,11 +76,11 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   connect(deletePresetDialog, &DeletePresetDialog::editRequested, this,
           [this](const QString &name) {
             auto preset = facade->getPrinterByName(name);
-            editPresetDialog->setPreset(preset);
-            editPresetDialog->exec();
+            addPresetDialog->setEditMode(preset);
+            addPresetDialog->exec();
           });
 
-  connect(editPresetDialog, &EditPresetDialog::printerEdited, this,
+  connect(addPresetDialog, &AddPresetDialog::printerEdited, this,
           [this](const QString &oldName, const QString &newName, double power,
                  int age, double cost) {
             facade->updatePrinterByName(oldName, newName, power, age, cost);
