@@ -1,8 +1,8 @@
-#include "delete_preset.h"
+#include "delete_printer.h"
 
-#include "ui/ui_del_preset.h"
+#include "ui/ui_del_printer.h"
 
-DeletePresetDialog::DeletePresetDialog(QWidget *parent)
+DeletePrinterDialog::DeletePrinterDialog(QWidget *parent)
     : QDialog(parent), ui(new Ui::DelPreset) {
   ui->setupUi(this);
   setFixedSize(size());
@@ -27,9 +27,9 @@ DeletePresetDialog::DeletePresetDialog(QWidget *parent)
   connect(ui->reject_button, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-DeletePresetDialog::~DeletePresetDialog() { delete ui; }
+DeletePrinterDialog::~DeletePrinterDialog() { delete ui; }
 
-void DeletePresetDialog::setupTable() {
+void DeletePrinterDialog::setupTable() {
   ui->tableWidget->setColumnCount(1);
   ui->tableWidget->setHorizontalHeaderLabels({"Выберите принтер"});
   ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -37,7 +37,7 @@ void DeletePresetDialog::setupTable() {
   ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 }
 
-void DeletePresetDialog::loadPresets(const QList<QString> &data) {
+void DeletePrinterDialog::loadPresets(const QList<QString> &data) {
   ui->tableWidget->clearContents();
   ui->tableWidget->setRowCount(0);
 

@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include <QShowEvent>
 
-#include "ui/ui_add_preset.h"
+#include "ui/ui_add_printer.h"
 
 namespace Ui {
 class AddPrinter;
@@ -15,12 +15,12 @@ class AddPrinter;
 
 enum class PresetDialogStatus { Add, Edit };
 
-class AddPresetDialog : public QDialog {
+class AddPrinterDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit AddPresetDialog(QWidget *parent = nullptr);
-  ~AddPresetDialog();
+  explicit AddPrinterDialog(QWidget *parent = nullptr);
+  ~AddPrinterDialog();
 
   QString getPresetName() const { return ui->input_name->toPlainText(); }
 

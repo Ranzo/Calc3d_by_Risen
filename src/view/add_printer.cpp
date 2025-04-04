@@ -1,8 +1,8 @@
-#include "add_preset.h"
+#include "add_printer.h"
 
-#include "ui/ui_add_preset.h"
+#include "ui/ui_add_printer.h"
 
-AddPresetDialog::AddPresetDialog(QWidget* parent)
+AddPrinterDialog::AddPrinterDialog(QWidget* parent)
     : QDialog(parent), ui(new Ui::AddPrinter) {
   ui->setupUi(this);
   setFixedSize(size());
@@ -27,7 +27,7 @@ AddPresetDialog::AddPresetDialog(QWidget* parent)
   connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-void AddPresetDialog::setAddMode() {
+void AddPrinterDialog::setAddMode() {
   status = PresetDialogStatus::Add;
 
   ui->input_name->clear();
@@ -36,7 +36,7 @@ void AddPresetDialog::setAddMode() {
   ui->input_price->setValue(0.0);
 }
 
-void AddPresetDialog::setEditMode(QHash<QString, QVariant>& preset) {
+void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
   status = PresetDialogStatus::Edit;
 
   if (preset.contains("name")) {
@@ -50,4 +50,4 @@ void AddPresetDialog::setEditMode(QHash<QString, QVariant>& preset) {
     ui->input_price->setValue(preset["cost"].toDouble());
 }
 
-AddPresetDialog::~AddPresetDialog() { delete ui; }
+AddPrinterDialog::~AddPrinterDialog() { delete ui; }
