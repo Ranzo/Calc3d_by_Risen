@@ -46,17 +46,22 @@ jobs:
           7z a Calc3D_Release.zip *
         shell: cmd
 
-      # Создание релиза на Gitea
+      # Релиз в Gitea
       - name: Create Gitea Release
-        if: event_name == 'push'
         run: |
+          git fetch --tags
           for /f %%i in ('git describe --tags --abbrev=0') do set TAG_NAME=%%i
+          if not defined TAG_NAME (
+            echo "No tags found in repository"
+            exit /b 1
+          )
           echo "Using tag: %TAG_NAME%"
-          curl -X POST ^
+          curl -v -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             -H "Content-Type: application/json" ^
-            -d "{\"tag_name\":\"%TAG_NAME%\",\"target_commitish\":\"develop\",\"name\":\"Release %TAG_NAME%\",\"body\":\"Automated release for Calc3D %TAG_NAME%\",\"draft\":false,\"prerelease\":false}" ^
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" > release.json
+            -d "{\"tag_name\":\"%TAG_NAME%\",\"target_commitish\":\"${{ gitea.event.pull_request.head.sha }}\",\"name\":\"Release %TAG_NAME%\",\"body\":\"Automated release for Calc3D %TAG_NAME% from PR\",\"draft\":false,\"prerelease\":true}" ^
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" > release.json 2>&1
+          type release.json
           for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
           set RELEASE_ID=%RELEASE_ID: =%
           echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
@@ -72,26 +77,26 @@ jobs:
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
 
-      # Создание релиза на GitHub
-      - name: Create GitHub Release
-        if: event_name == 'push'
-        run: |
-          curl -X POST ^
-            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
-            -H "Content-Type: application/json" ^
-            -d "{\"tag_name\":\"v${{ github.run_number }}\",\"target_commitish\":\"develop\",\"name\":\"Release v${{ github.run_number }}\",\"body\":\"Automated release for Calc3D v${{ github.run_number }}\",\"draft\":false,\"prerelease\":false}" ^
-            "https://api.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases" > github_release.json
-          for /f "tokens=2 delims=:," %%i in ('type github_release.json ^| findstr /C:"\"id\""') do set GITHUB_RELEASE_ID=%%i
-          set GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID: =%
-          echo GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID% >> %GITHUB_ENV%
-        shell: cmd
-
-      - name: Upload GitHub Release Asset
-        if: event_name == 'push'
-        run: |
-          curl -X POST ^
-            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
-            -H "Content-Type: application/zip" ^
-            --data-binary @Release/Calc3D_Release.zip ^
-            "https://uploads.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases/%GITHUB_RELEASE_ID%/assets?name=Calc3D_Release.zip"
-        shell: cmd
+#      # Релиз в GitHub
+#      - name: Create GitHub Release
+#        if: event_name == 'push'
+#        run: |
+#          curl -X POST ^
+#            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
+#            -H "Content-Type: application/json" ^
+#            -d "{\"tag_name\":\"v${{ github.run_number }}\",\"target_commitish\":\"develop\",\"name\":\"Release v${{ github.run_number }}\",\"body\":\"Automated release for Calc3D v${{ github.run_number }}\",\"draft\":false,\"prerelease\":false}" ^
+#            "https://api.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases" > github_release.json
+#          for /f "tokens=2 delims=:," %%i in ('type github_release.json ^| findstr /C:"\"id\""') do set GITHUB_RELEASE_ID=%%i
+#          set GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID: =%
+#          echo GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID% >> %GITHUB_ENV%
+#        shell: cmd
+#
+#      - name: Upload GitHub Release Asset
+#        if: event_name == 'push'
+#        run: |
+#          curl -X POST ^
+#            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
+#            -H "Content-Type: application/zip" ^
+#            --data-binary @Release/Calc3D_Release.zip ^
+#            "https://uploads.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases/%GITHUB_RELEASE_ID%/assets?name=Calc3D_Release.zip"
+#        shell: cmd
