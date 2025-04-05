@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/Calc3D_autogen.dir/AutogenUsed.txt"
+  "CMakeFiles/Calc3D_autogen.dir/ParseCache.txt"
+  "Calc3D_autogen"
+  "CMakeFiles/Calc3D.dir/Calc3D_autogen/mocs_compilation.cpp.o"
+  "CMakeFiles/Calc3D.dir/Calc3D_autogen/mocs_compilation.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/logic/calculator.cpp.o"
+  "CMakeFiles/Calc3D.dir/logic/calculator.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/logic/facade.cpp.o"
+  "CMakeFiles/Calc3D.dir/logic/facade.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/logic/printer_db.cpp.o"
+  "CMakeFiles/Calc3D.dir/logic/printer_db.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/logic/setting_preset.cpp.o"
+  "CMakeFiles/Calc3D.dir/logic/setting_preset.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/main.cpp.o"
+  "CMakeFiles/Calc3D.dir/main.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/qrc_resources.cpp.o"
+  "CMakeFiles/Calc3D.dir/qrc_resources.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/about_dialog.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/about_dialog.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/add_preset.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/add_preset.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/delete_preset.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/delete_preset.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/edit_preset.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/edit_preset.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/formula_dialog.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/formula_dialog.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/main_window.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/main_window.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/printer_settings.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/printer_settings.cpp.o.d"
+  "CMakeFiles/Calc3D.dir/view/update_dialog.cpp.o"
+  "CMakeFiles/Calc3D.dir/view/update_dialog.cpp.o.d"
+  "Calc3D"
+  "Calc3D.pdb"
+  "qrc_resources.cpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/Calc3D.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

@@ -1,0 +1,97 @@
+name: Build and Release Calc3D
+
+on:
+  pull_request :
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: win_builder
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MinGW
+        run: |
+          set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
+        shell: cmd
+
+      - name: Configure CMake
+        run: |          
+          mkdir build
+          cd build
+          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
+        shell: cmd
+
+      - name: Build with MinGW
+        run: |          
+          cd build
+          mingw32-make
+        shell: cmd
+
+      - name: Prepare Release
+        run: |
+          mkdir Release
+          copy build\Calc3D.exe Release\
+          C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe Release\Calc3D.exe
+          copy C:\Qt\Tools\mingw1310_64\bin\libgcc_s_seh-1.dll Release\
+          copy C:\Qt\Tools\mingw1310_64\bin\libstdc++-6.dll Release\
+          copy C:\Qt\Tools\mingw1310_64\bin\libwinpthread-1.dll Release\
+        shell: cmd
+
+      - name: Archive Release
+        run: |
+          cd Release
+          7z a Calc3D_Release.zip *
+        shell: cmd
+
+      # Создание релиза на Gitea
+      - name: Create Gitea Release
+        if: event_name == 'push'
+        run: |
+          for /f %%i in ('git describe --tags --abbrev=0') do set TAG_NAME=%%i
+          echo "Using tag: %TAG_NAME%"
+          curl -X POST ^
+            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
+            -H "Content-Type: application/json" ^
+            -d "{\"tag_name\":\"%TAG_NAME%\",\"target_commitish\":\"develop\",\"name\":\"Release %TAG_NAME%\",\"body\":\"Automated release for Calc3D %TAG_NAME%\",\"draft\":false,\"prerelease\":false}" ^
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" > release.json
+          for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
+          set RELEASE_ID=%RELEASE_ID: =%
+          echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
+        shell: cmd
+
+      - name: Upload Gitea Release Asset
+        if: event_name == 'push'
+        run: |
+          curl -X POST ^
+            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
+            -H "Content-Type: application/zip" ^
+            --data-binary @Release/Calc3D_Release.zip ^
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
+        shell: cmd
+
+      # Создание релиза на GitHub
+      - name: Create GitHub Release
+        if: event_name == 'push'
+        run: |
+          curl -X POST ^
+            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
+            -H "Content-Type: application/json" ^
+            -d "{\"tag_name\":\"v${{ github.run_number }}\",\"target_commitish\":\"develop\",\"name\":\"Release v${{ github.run_number }}\",\"body\":\"Automated release for Calc3D v${{ github.run_number }}\",\"draft\":false,\"prerelease\":false}" ^
+            "https://api.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases" > github_release.json
+          for /f "tokens=2 delims=:," %%i in ('type github_release.json ^| findstr /C:"\"id\""') do set GITHUB_RELEASE_ID=%%i
+          set GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID: =%
+          echo GITHUB_RELEASE_ID=%GITHUB_RELEASE_ID% >> %GITHUB_ENV%
+        shell: cmd
+
+      - name: Upload GitHub Release Asset
+        if: event_name == 'push'
+        run: |
+          curl -X POST ^
+            -H "Authorization: token ${{ secrets.GITHUBTOKEN }}" ^
+            -H "Content-Type: application/zip" ^
+            --data-binary @Release/Calc3D_Release.zip ^
+            "https://uploads.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases/%GITHUB_RELEASE_ID%/assets?name=Calc3D_Release.zip"
+        shell: cmd
