@@ -74,7 +74,7 @@ jobs:
             exit /b 1
           )
           echo "Release ID: %RELEASE_ID%"
-          echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
+          echo RELEASE_ID=%RELEASE_ID%>> %GITHUB_ENV%
         shell: cmd
 
       - name: Upload Gitea Release Asset
