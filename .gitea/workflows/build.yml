@@ -50,10 +50,12 @@ jobs:
       - name: Create Gitea Release
         if: event_name == 'push'
         run: |
+          for /f %%i in ('git describe --tags --abbrev=0') do set TAG_NAME=%%i
+          echo "Using tag: %TAG_NAME%"
           curl -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             -H "Content-Type: application/json" ^
-            -d "{\"tag_name\":\"v${{ github.run_number }}\",\"target_commitish\":\"develop\",\"name\":\"Release v${{ github.run_number }}\",\"body\":\"Automated release for Calc3D v${{ github.run_number }}\",\"draft\":false,\"prerelease\":false}" ^
+            -d "{\"tag_name\":\"%TAG_NAME%\",\"target_commitish\":\"develop\",\"name\":\"Release %TAG_NAME%\",\"body\":\"Automated release for Calc3D %TAG_NAME%\",\"draft\":false,\"prerelease\":false}" ^
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" > release.json
           for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
           set RELEASE_ID=%RELEASE_ID: =%
