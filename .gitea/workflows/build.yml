@@ -22,7 +22,7 @@ jobs:
           set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
           mkdir build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
+          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src -DCMAKE_INCLUDE_PATH=".."
         shell: cmd
 
       - name: Build with MinGW
