@@ -17,11 +17,17 @@ jobs:
           set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
         shell: cmd
 
+      - name: Debug Working Directory
+        run: |
+          echo Current directory: %CD%
+          dir
+        shell: cmd
+
       - name: Configure CMake
         run: |
           mkdir build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" "%GITEA_WORKSPACE%"
+          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ..
         shell: cmd
 
       - name: Build with MinGW
@@ -46,6 +52,7 @@ jobs:
           7z a Calc3D_Release.zip *
         shell: cmd
 
+      # Создание релиза на Gitea
       - name: Create Gitea Release
         if: event_name == 'push'
         run: |
@@ -69,6 +76,7 @@ jobs:
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
 
+      # Создание релиза на GitHub
       - name: Create GitHub Release
         if: event_name == 'push'
         run: |
@@ -91,6 +99,3 @@ jobs:
             --data-binary @Release/Calc3D_Release.zip ^
             "https://uploads.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases/%GITHUB_RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
-
-
-        # rjvvtyn lkz njuj? nxj,s cltkfnm yjdsq rjvvbn
