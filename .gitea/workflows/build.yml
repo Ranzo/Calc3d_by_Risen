@@ -91,3 +91,5 @@ jobs:
             --data-binary @Release/Calc3D_Release.zip \
             "https://uploads.github.com/repos/${{ secrets.GITHUBORG }}/${{ secrets.GITHUBREPO }}/releases/%GITHUB_RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
+
+        # тестирование закрытия ишью и новый пайплайн
