@@ -50,7 +50,8 @@ jobs:
       - name: Create Gitea Release
         run: |
           git fetch --tags
-          for /f %%i in ('git describe --tags --abbrev=0') do set TAG_NAME=%%i
+          for /f %%i in ('git tag --sort=-v:refname') do set TAG_NAME=%%i & goto :found
+          :found
           if not defined TAG_NAME (
             echo "No tags found in repository"
             exit /b 1
@@ -65,16 +66,6 @@ jobs:
           for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
           set RELEASE_ID=%RELEASE_ID: =%
           echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
-        shell: cmd
-
-      - name: Upload Gitea Release Asset
-        if: event_name == 'push'
-        run: |
-          curl -X POST ^
-            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
-            -H "Content-Type: application/zip" ^
-            --data-binary @Release/Calc3D_Release.zip ^
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
 
 #      # Релиз в GitHub
