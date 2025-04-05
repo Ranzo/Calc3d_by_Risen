@@ -50,16 +50,14 @@ jobs:
       - name: Create Gitea Release
         run: |
           git fetch --tags
-          set TAG_NAME=1.0.0b
-          echo "Using tag: %TAG_NAME%"
+          set TAG_NAME=1.0.0b          
           curl -v -X GET ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/%TAG_NAME%" > release.json 2>&1
           type release.json
           for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
           set RELEASE_ID=%RELEASE_ID: =%
-          if not defined RELEASE_ID (
-            echo "Release with tag %TAG_NAME% not found, creating new one..."
+          if not defined RELEASE_ID (            
             curl -v -X POST ^
               -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
               -H "Content-Type: application/json" ^
@@ -73,7 +71,7 @@ jobs:
             echo "Failed to find or create release for tag %TAG_NAME%"
             exit /b 1
           )
-          echo "Release ID: %RELEASE_ID%"
+          echo "Release ID: '%RELEASE_ID%'"
           echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
         shell: cmd
 
