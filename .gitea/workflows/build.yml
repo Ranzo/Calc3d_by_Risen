@@ -18,15 +18,14 @@ jobs:
         shell: cmd
 
       - name: Configure CMake
-        run: |
-          set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
+        run: |          
           mkdir build
           cd build
           cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
         shell: cmd
 
       - name: Build with MinGW
-        run: |
+        run: |          
           cd build
           mingw32-make
         shell: cmd
