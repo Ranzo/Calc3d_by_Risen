@@ -46,7 +46,6 @@ jobs:
           7z a Calc3D_Release.zip *
         shell: cmd
 
-      # Создание релиза на Gitea
       - name: Create Gitea Release
         if: event_name == 'push'
         run: |
@@ -70,7 +69,6 @@ jobs:
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
         shell: cmd
 
-      # Создание релиза на GitHub
       - name: Create GitHub Release
         if: event_name == 'push'
         run: |
