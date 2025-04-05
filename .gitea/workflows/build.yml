@@ -81,11 +81,13 @@ jobs:
         run: |
           echo "Uploading asset to release ID: %RELEASE_ID%"
           dir Release\Calc3D_Release.zip
+          set UPLOAD_URL=https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip
+          echo "Upload URL: %UPLOAD_URL%"
           curl -v -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             -H "Content-Type: application/zip" ^
             --data-binary @Release/Calc3D_Release.zip ^
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" > upload_asset.json 2>&1
+            "%UPLOAD_URL%" > upload_asset.json 2>&1
           type upload_asset.json
         shell: cmd
 
