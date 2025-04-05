@@ -1,7 +1,7 @@
 name: Build and Release Calc3D
 
 on:
-  pull_request :
+  pull_request:
     branches:
       - master
 
@@ -77,7 +77,19 @@ jobs:
           echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
         shell: cmd
 
-#      # Релиз в GitHub
+      - name: Upload Gitea Release Asset
+        run: |
+          echo "Uploading asset to release ID: %RELEASE_ID%"
+          dir Release\Calc3D_Release.zip
+          curl -v -X POST ^
+            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
+            -H "Content-Type: application/zip" ^
+            --data-binary @Release/Calc3D_Release.zip ^
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" > upload_asset.json 2>&1
+          type upload_asset.json
+        shell: cmd
+
+#      # Релиз в GitHub (закомментировано)
 #      - name: Create GitHub Release
 #        if: event_name == 'push'
 #        run: |
