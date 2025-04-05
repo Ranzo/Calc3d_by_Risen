@@ -47,17 +47,19 @@ jobs:
         shell: cmd
 
       # Релиз в Gitea
-      - name: Create Gitea Release
+      - name: Create and Upload Gitea Release
         run: |
           git fetch --tags
-          set TAG_NAME=1.0.0b          
+          set TAG_NAME=1.0.0b
+          echo "Using tag: %TAG_NAME%"
           curl -v -X GET ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/%TAG_NAME%" > release.json 2>&1
           type release.json
           for /f "tokens=2 delims=:," %%i in ('type release.json ^| findstr /C:"\"id\""') do set RELEASE_ID=%%i
           set RELEASE_ID=%RELEASE_ID: =%
-          if not defined RELEASE_ID (            
+          if not defined RELEASE_ID (
+            echo "Release with tag %TAG_NAME% not found, creating new one..."
             curl -v -X POST ^
               -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
               -H "Content-Type: application/json" ^
@@ -72,14 +74,6 @@ jobs:
             exit /b 1
           )
           echo "Release ID: %RELEASE_ID%"
-          echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
-          echo %GITHUB_ENV%
-        shell: cmd
-
-      - name: Upload Gitea Release Asset
-        run: |
-          echo "Uploading asset to release ID: %RELEASE_ID%"
-          echo %GITHUB_ENV%
           dir Release\Calc3D_Release.zip
           curl -v -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
@@ -88,6 +82,18 @@ jobs:
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" > upload_asset.json 2>&1
           type upload_asset.json
         shell: cmd
+#
+#      - name: Upload Gitea Release Asset
+#        run: |
+#          echo "Uploading asset to release ID: %RELEASE_ID%"
+#          dir Release\Calc3D_Release.zip
+#          curl -v -X POST ^
+#            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
+#            -H "Content-Type: application/zip" ^
+#            --data-binary @Release/Calc3D_Release.zip ^
+#            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" > upload_asset.json 2>&1
+#          type upload_asset.json
+#        shell: cmd
 
 #      # Релиз в GitHub (закомментировано)
 #      - name: Create GitHub Release
