@@ -1,0 +1,21 @@
+<!DOCTYPE RCC><RCC version="1.0">
+  <qresource prefix="/">
+        <file>img/calc.png</file>
+        <file>img/calc.svg</file>
+        <file>img/exit.png</file>
+        <file>img/exit.svg</file>
+        <file>img/rubl.png</file>
+        <file>img/logo-1.png</file>
+        <file>img/logo-2.png</file>
+        <file>img/logo-3.png</file>
+        <file>img/logo-4.png</file>
+        <file>img/logo-5.png</file>
+        <file>img/logo-6.png</file>
+        <file>img/logo-7.png</file>
+        <file>img/logo-8.png</file>
+        <file>img/modeling.png</file>
+        <file>img/quantity.png</file>
+        <file>img/time.png</file>
+        <file>img/weight.png</file>
+  </qresource>
+</RCC>
