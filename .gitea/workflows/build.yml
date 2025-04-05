@@ -73,22 +73,20 @@ jobs:
             echo "Failed to find or create release for tag %TAG_NAME%"
             exit /b 1
           )
-          echo "Release ID: '%RELEASE_ID%'"
-          REM Исправленная запись в %GITHUB_ENV% без переноса строки
-          echo|set /p="RELEASE_ID=%RELEASE_ID%" >> %GITHUB_ENV%
+          echo "Release ID: %RELEASE_ID%"
+          echo RELEASE_ID=%RELEASE_ID% >> %GITHUB_ENV%
         shell: cmd
 
       - name: Upload Gitea Release Asset
         run: |
+          echo "Uploading asset to release ID: %RELEASE_ID%"
           echo "Uploading asset to release ID: '%RELEASE_ID%'"
           dir Release\Calc3D_Release.zip
-          set UPLOAD_URL=https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip
-          echo "Upload URL: %UPLOAD_URL%"
           curl -v -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             -H "Content-Type: application/zip" ^
             --data-binary @Release/Calc3D_Release.zip ^
-            "%UPLOAD_URL%" > upload_asset.json 2>&1
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" > upload_asset.json 2>&1
           type upload_asset.json
         shell: cmd
 
