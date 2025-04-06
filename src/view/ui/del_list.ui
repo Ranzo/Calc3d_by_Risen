@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-  <class>DelPreset</class>
-  <widget class="QDialog" name="DelPreset">
+  <class>DelList</class>
+  <widget class="QDialog" name="DelList">
     <property name="styleSheet">
       <string notr="true">
     background-color: rgb(42, 45, 46);
@@ -15,9 +15,6 @@
         <width>369</width>
         <height>347</height>
       </rect>
-    </property>
-    <property name="windowTitle">
-      <string>Настройки принтера</string>
     </property>
     <property name="windowIcon">
       <iconset>
@@ -48,32 +45,12 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-          <widget class="QPushButton" name="edit_button">
+          <widget class="QPushButton" name="close_button">
             <property name="styleSheet">
               <string notr="true">background-color: rgb(0, 80, 0);</string>
             </property>
             <property name="text">
-              <string>Изменить</string>
-            </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="QPushButton" name="delete_button">
-            <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 0, 0);</string>
-            </property>
-            <property name="text">
-              <string>Удалить</string>
-            </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="QPushButton" name="reject_button">
-            <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 80, 0);</string>
-            </property>
-            <property name="text">
-              <string>Отмена</string>
+              <string>Закрыть</string>
             </property>
           </widget>
         </item>
