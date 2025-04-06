@@ -30,9 +30,8 @@ set(MAIN_SOURCES
         view/update_dialog.cpp
         view/printer_settings.cpp
         view/add_printer.cpp
-        view/delete_printer.cpp
         view/add_plastic.cpp
-        view/delete_plastic.cpp
+        view/delete_list.cpp
 
         view/ui/about.ui
         view/ui/main_window.ui
@@ -41,9 +40,8 @@ set(MAIN_SOURCES
         view/ui/printer_settings.ui
         view/ui/updates.ui
         view/ui/add_printer.ui
-        view/ui/del_printer.ui
         view/ui/add_plastic.ui
-        view/ui/del_plastic.ui
+        view/ui/del_list.ui
 
         storage/printer_db.cpp
         storage/printer_db.h
