@@ -9,58 +9,49 @@ jobs:
   build-and-release:
     runs-on: win_builder
     steps:
-      - name: Debug Info
-        run: |
-          echo "Starting pipeline"
-          echo "Ref: ${{ gitea.ref }}"
-          echo "Branch: ${{ gitea.ref_name }}"
-          echo "Commit: ${{ gitea.sha }}"
-          echo "HOST: ${{ secrets.HOST }}"
-          echo "ORG: ${{ secrets.ORG }}"
-          echo "REPO: ${{ secrets.REPO }}"
-        shell: cmd
 
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up MinGW
+        shell: pwsh
         run: |
-          set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
-          echo "MinGW path set"
-        shell: cmd
+          $env:PATH = "C:\Qt\Tools\mingw1310_64\bin;" + $env:PATH
+          Write-Host "MinGW path set"
 
       - name: Configure CMake
+        shell: pwsh
         run: |
-          mkdir build
-          cd build
+          New-Item -ItemType Directory -Path "build" -Force
+          Set-Location -Path "build"
           cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
-        shell: cmd
 
       - name: Build with MinGW
+        shell: pwsh
         run: |
-          cd build
+          Set-Location -Path "build"
           mingw32-make
-        shell: cmd
 
       - name: Prepare Release
+        shell: pwsh
         run: |
-          mkdir Release
-          copy build\Calc3D.exe Release\
-          C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe Release\Calc3D.exe
-          copy C:\Qt\Tools\mingw1310_64\bin\libgcc_s_seh-1.dll Release\
-          copy C:\Qt\Tools\mingw1310_64\bin\libstdc++-6.dll Release\
-          copy C:\Qt\Tools\mingw1310_64\bin\libwinpthread-1.dll Release\
-        shell: cmd
+          New-Item -ItemType Directory -Path "Release" -Force
+          Copy-Item -Path "build\Calc3D.exe" -Destination "Release\"
+          & "C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe" "Release\Calc3D.exe"
+          Copy-Item -Path "C:\Qt\Tools\mingw1310_64\bin\libgcc_s_seh-1.dll" -Destination "Release\"
+          Copy-Item -Path "C:\Qt\Tools\mingw1310_64\bin\libstdc++-6.dll" -Destination "Release\"
+          Copy-Item -Path "C:\Qt\Tools\mingw1310_64\bin\libwinpthread-1.dll" -Destination "Release\"
 
       - name: Archive Release
+        shell: pwsh
         run: |
-          cd Release
-          7z a Calc3D_Release.zip *
-          dir
-        shell: cmd
+          Set-Location -Path "Release"
+          & "7z" a "Calc3D_Release.zip" *
+          Get-ChildItem
 
       - name: Get Release URL
         id: get_release
+        shell: pwsh
         run: |
           Write-Host "Fetching release URL for tag 1.0.0b"
           $headers = @{
@@ -71,9 +62,9 @@ jobs:
           $releaseUrl = $response.url
           Write-Host "Found Release URL: $releaseUrl"
           echo "RELEASE_URL=$releaseUrl" >> $env:GITHUB_ENV
-        shell: pwsh
 
       - name: Upload to Gitea Release
+        shell: pwsh
         run: |
           Write-Host "Uploading to Gitea"
           $uploadUrl = "${{ env.RELEASE_URL }}/assets?name=Calc3D_Release.zip"
@@ -83,4 +74,3 @@ jobs:
             "Content-Type" = "multipart/form-data"
           }
           Invoke-RestMethod -Uri $uploadUrl -Headers $headers -Method Post -Form @{attachment = Get-Item "Release/Calc3D_Release.zip"} -Verbose
-        shell: pwsh
