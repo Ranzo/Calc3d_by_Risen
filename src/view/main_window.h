@@ -43,5 +43,6 @@ class MainWindow : public QMainWindow {
 
   void refreshPrinterList();
   void refreshPlasticList();
+  void setValidators();
 };
 #endif  // MAINWINDOW_H

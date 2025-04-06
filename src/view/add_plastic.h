@@ -22,24 +22,24 @@ class AddPlasticDialog : public QDialog {
   explicit AddPlasticDialog(QWidget *parent = nullptr);
   ~AddPlasticDialog();
 
-  QString getPresetName() const { return ui->input_name->toPlainText(); }
-
-  double getWeight() const { return ui->input_weight->value(); }
-
-  double getPlasticPrice() const { return ui->input_price->value(); }
+  QString getPresetName() const { return ui->input_name->text().trimmed(); }
+  int getWeight() const { return ui->input_weight->text().toInt(); }
+  double getPlasticPrice() const {
+    return ui->input_price->text().replace(",", ".").toDouble();
+  }
 
   void setEditMode(QHash<QString, QVariant> &preset);
   void setAddMode();
 
  signals:
-  void plasticAdded(const QString &name, double weight, double cost);
-  void plasticEdited(const QString &oldName, const QString &newName,
-                     double weight, double cost);
+  void plasticAdded(const QString &name, int weight, double cost);
+  void plasticEdited(const QString &oldName, const QString &newName, int weight,
+                     double cost);
 
  private:
   Ui::AddPlastic *ui;
   QString oldName;
-  PlasticDialogStatus status =  PlasticDialogStatus::Add;
+  PlasticDialogStatus status = PlasticDialogStatus::Add;
 };
 
 #endif  // ADDPLASTICDIALOG_H
