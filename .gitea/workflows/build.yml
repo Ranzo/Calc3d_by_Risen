@@ -81,10 +81,10 @@ jobs:
       - name: Upload to Gitea Release
         run: |
           echo "Uploading to Gitea"
-          echo "URL: https://%{{ secrets.HOST }}/api/v1/repos/%{{ secrets.ORG }}/%{{ secrets.REPO }}/releases/1.0.0b/assets?name=Calc3D_Release.zip"
+          echo "URL: https://%HOST%/api/v1/repos/%ORG%/%REPO%/releases/tag/1.0.0b/assets?name=Calc3D_Release.zip"
           cd Release
           curl -X POST \
-            "https://%{{ secrets.HOST }}/api/v1/repos/%{{ secrets.ORG }}/%{{ secrets.REPO }}/releases/1.0.0b/assets?name=Calc3D_Release.zip" \
+            "https://%HOST%/api/v1/repos/%ORG%/%REPO%/releases/tag/1.0.0b/assets?name=Calc3D_Release.zip" \
             -H "Authorization: token %{{ secrets.ACCESS_TOKEN }}" \
             -H "Content-Type: multipart/form-data" \
             -F "attachment=@Calc3D_Release.zip" \
