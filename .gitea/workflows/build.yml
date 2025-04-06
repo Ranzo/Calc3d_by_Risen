@@ -9,56 +9,46 @@ jobs:
   build-and-release:
     runs-on: win_builder
     steps:
-      - name: Debug Info
-        run: |
-          echo "Starting pipeline"
-          echo "Ref: ${{ gitea.ref }}"
-          echo "Branch: ${{ gitea.ref_name }}"
-          echo "Commit: ${{ gitea.sha }}"
-          echo "HOST: ${{ secrets.HOST }}"
-          echo "ORG: ${{ secrets.ORG }}"
-          echo "REPO: ${{ secrets.REPO }}"
-        shell: cmd
 
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up MinGW
-        run: |
-          set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
-          echo "MinGW path set"
-        shell: cmd
-
-      - name: Configure CMake
-        run: |
-          mkdir build
-          cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
-        shell: cmd
-
-      - name: Build with MinGW
-        run: |
-          cd build
-          mingw32-make
-        shell: cmd
-
-      - name: Prepare Release
-        run: |
-          mkdir Release
-          copy build\Calc3D.exe Release\
-          C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe Release\Calc3D.exe
-          copy C:\Qt\Tools\mingw1310_64\bin\libgcc_s_seh-1.dll Release\
-          copy C:\Qt\Tools\mingw1310_64\bin\libstdc++-6.dll Release\
-          copy C:\Qt\Tools\mingw1310_64\bin\libwinpthread-1.dll Release\
-        shell: cmd
-
-      - name: Archive Release
-        run: |
-          cd Release
-          7z a Calc3D_Release.zip *
-          dir
-
-        shell: cmd
+#      - name: Set up MinGW
+#        run: |
+#          set PATH=C:\Qt\Tools\mingw1310_64\bin;%PATH%
+#          echo "MinGW path set"
+#        shell: cmd
+#
+#      - name: Configure CMake
+#        run: |
+#          mkdir build
+#          cd build
+#          cmake -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:\Qt\6.9.0\mingw_64" ../src
+#        shell: cmd
+#
+#      - name: Build with MinGW
+#        run: |
+#          cd build
+#          mingw32-make
+#        shell: cmd
+#
+#      - name: Prepare Release
+#        run: |
+#          mkdir Release
+#          copy build\Calc3D.exe Release\
+#          C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe Release\Calc3D.exe
+#          copy C:\Qt\Tools\mingw1310_64\bin\libgcc_s_seh-1.dll Release\
+#          copy C:\Qt\Tools\mingw1310_64\bin\libstdc++-6.dll Release\
+#          copy C:\Qt\Tools\mingw1310_64\bin\libwinpthread-1.dll Release\
+#        shell: cmd
+#
+#      - name: Archive Release
+#        run: |
+#          cd Release
+#          7z a Calc3D_Release.zip *
+#          dir
+#
+#        shell: cmd
 
 #      - name: Create Gitea Release
 #        run: |
@@ -76,21 +66,21 @@ jobs:
         run: |
           echo "Fetching release ID for tag 1.0.0b"
           curl -X GET \
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" \
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" \
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
             -H "Accept: application/json" \
-            -o releases.json
-          for /f "tokens=2 delims=:," %%i in ('findstr /C:"\"tag_name\": \"1.0.0b\"" releases.json -A 1 ^| findstr "id"') do set RELEASE_ID=%%i
+            -o release.json
+          for /f "tokens=2 delims=:," %%i in ('findstr "id" release.json') do set RELEASE_ID=%%i
           echo "RELEASE_ID=%RELEASE_ID%" >> %GITHUB_ENV%
           echo "Found Release ID: %RELEASE_ID%"
           
-          echo "Uploading to Gitea"
-          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
-          cd Release
-          curl -X POST \
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" \
-            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
-            -H "Content-Type: multipart/form-data" \
-            -F "attachment=@Calc3D_Release.zip" \
-            -v
+#          echo "Uploading to Gitea"
+#          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
+#          cd Release
+#          curl -X POST \
+#            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip" \
+#            -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
+#            -H "Content-Type: multipart/form-data" \
+#            -F "attachment=@Calc3D_Release.zip" \
+#            -v
         shell: cmd
