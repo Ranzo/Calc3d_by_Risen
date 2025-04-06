@@ -18,13 +18,13 @@ bool PlasticDB::init() {
       "CREATE TABLE IF NOT EXISTS plastics ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT,"
       "name TEXT UNIQUE,"
-      "weight REAL,"
+      "weight INTEGER,"
       "cost REAL)");
 
   return true;
 }
 
-bool PlasticDB::addPlastic(const QString &name, double weight, double cost) {
+bool PlasticDB::addPlastic(const QString &name, int weight, double cost) {
   QSqlQuery query(db);
   query.prepare(
       "INSERT INTO plastics (name, weight, cost) VALUES (:name, :weight, "
@@ -62,7 +62,7 @@ bool PlasticDB::deletePlasticByName(const QString &name) {
 }
 
 bool PlasticDB::updatePlasticByName(const QString &oldName,
-                                    const QString &newName, double weight,
+                                    const QString &newName, int weight,
                                     double cost) {
   QSqlQuery query(db);
 
@@ -100,7 +100,7 @@ QHash<QString, QVariant> PlasticDB::getPlasticByName(const QString &name) {
 
   if (query.next()) {
     printerData["name"] = query.value("name").toString();
-    printerData["weight"] = query.value("weight").toDouble();
+    printerData["weight"] = query.value("weight").toInt();
     printerData["cost"] = query.value("cost").toDouble();
   }
 

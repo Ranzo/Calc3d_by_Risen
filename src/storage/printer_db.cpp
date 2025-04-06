@@ -18,14 +18,14 @@ bool PrinterDB::init() {
       "CREATE TABLE IF NOT EXISTS printers ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT,"
       "name TEXT UNIQUE,"
-      "power REAL,"
+      "power INTEGER,"
       "age REAL,"
       "cost REAL)");
 
   return true;
 }
 
-bool PrinterDB::addPrinter(const QString &name, double power, double age,
+bool PrinterDB::addPrinter(const QString &name, int power, double age,
                            double cost) {
   QSqlQuery query(db);
   query.prepare(
@@ -65,7 +65,7 @@ bool PrinterDB::deletePrinterByName(const QString &name) {
 }
 
 bool PrinterDB::updatePrinterByName(const QString &oldName,
-                                    const QString &newName, double power,
+                                    const QString &newName, int power,
                                     int age, double cost) {
   QSqlQuery query(db);
 
@@ -105,7 +105,7 @@ QHash<QString, QVariant> PrinterDB::getPrinterByName(const QString &name) {
 
   if (query.next()) {
     printerData["name"] = query.value("name").toString();
-    printerData["power"] = query.value("power").toDouble();
+    printerData["power"] = query.value("power").toInt();
     printerData["age"] = query.value("age").toDouble();
     printerData["cost"] = query.value("cost").toDouble();
   }

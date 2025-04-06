@@ -1,9 +1,9 @@
 #include "calculating.h"
 
 // Функция cost_prise
-double cost_prise(double p, double t, double h, double md, double d, double st, double mk, double am, double post, int x) {
-    p = fabs(p);  // номинальная мощность принтера
-    t = fabs(t);  // время печати, в минутах
+double cost_prise(int p, int t, double h, double md, double d, double st, int mk, double am, double post, int x) {
+    p = abs(p);  // номинальная мощность принтера
+    t = abs(t);  // время печати, в минутах
     h = fabs(h);  // тариф электроэнергии
     md = fabs(md);  // вес детали
     d = (d < 1) ? 1 : fabs(d);  // коэффициент выбраковки
@@ -27,7 +27,7 @@ double calculating(double cost, double mod, double marg) {
 }
 
 // Функция amortization
-double amortization(double a, double t, double spi) {
+double amortization(double a, int t, double spi) {
 
     // количество минут в году
     double minutes_in_year = 525600;    

@@ -5,7 +5,7 @@ std::shared_ptr<Facade> Facade::GetInstance() {
   return instance;
 }
 
-bool Facade::addPrinter(const QString &name, double power, int age,
+bool Facade::addPrinter(const QString &name, int power, int age,
                         double cost) {
   return printerDB->addPrinter(name, power, age, cost);
 }
@@ -17,7 +17,7 @@ bool Facade::deletePrinterByName(const QString &name) {
 }
 
 void Facade::updatePrinterByName(const QString &oldName, const QString &newName,
-                                 double power, int age, double cost) {
+                                 int power, int age, double cost) {
   printerDB->updatePrinterByName(oldName, newName, power, age, cost);
 }
 
@@ -37,20 +37,23 @@ std::pair<double, double> Facade::calculate(const QString &printerName,
 
   // Заполнение структуры Params
   Params params;
-  params.p = printerData["power"].toDouble();  // номинальная мощность
+  params.p = printerData["power"].toInt();  // номинальная мощность
   params.t = min;                              // время печати
   params.h = settingsData["tarif"].toDouble();  // тариф
   params.md = detailWeight;                     // вес детали
   params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
   params.st = plasticData["cost"].toDouble();  // стоимость катушки
-  params.mk = plasticData["weight"].toDouble();  // вес катушки
+  params.mk = plasticData["weight"].toInt();  // вес катушки
+  if (params.mk < 1e-10 || params.mk < quantity * detailWeight) { 
+    
+  }
   params.a = printerData["cost"].toDouble();  // стоимость принтера
   params.post = post;                         // постобработка
   params.x = quantity;                        // количество
   params.marge = settingsData["overprice"].toDouble();  // наценка
   params.mod = mod;                            // моделирование
   params.spi = printerData["age"].toDouble();  // срок использования
-
+  
   return Calculator::calculateCostAndTotalPrice(params);
 }
 
@@ -82,7 +85,7 @@ Facade::Facade() {
   }
 }
 
-bool Facade::addPlastic(const QString &name, double weight, double cost) {
+bool Facade::addPlastic(const QString &name, int weight, double cost) {
   return plasticDB->addPlastic(name, weight, cost);
 }
 
@@ -93,7 +96,7 @@ bool Facade::deletePlasticByName(const QString &name) {
 }
 
 void Facade::updatePlasticByName(const QString &oldName, const QString &newName,
-                                 double weight, double cost) {
+                                 int weight, double cost) {
   plasticDB->updatePlasticByName(oldName, newName, weight, cost);
 }
 

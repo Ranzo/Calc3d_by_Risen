@@ -28,7 +28,7 @@ double Calculator::calcTotalPrice(Params& param, double costPrice) {
 }
 
 // Функция amortization
-double Calculator::calcAmortization(double a, double t, double spi) {
+double Calculator::calcAmortization(double a, int t, double spi) {
   // Если СПИ установлен на 0, то присваеваем 1 (год)
   double year_norm = (!spi) ? 100 : 100 / spi;
 
