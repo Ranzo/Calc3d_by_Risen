@@ -42,5 +42,6 @@ class MainWindow : public QMainWindow {
   std::shared_ptr<Facade> facade;
 
   void refreshPrinterList();
+  void refreshPlasticList();
 };
 #endif  // MAINWINDOW_H

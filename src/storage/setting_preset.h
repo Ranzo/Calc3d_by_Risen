@@ -4,8 +4,7 @@ class SettingPreset {
  public:
   explicit SettingPreset(const QString& dir);
 
-  bool updateSettings(double tarif, double qTrash, double pricePlastik,
-                      double overprice, int weightPlastik);
+  bool updateSettings(double tarif, double qTrash, double overprice);
 
   QHash<QString, QVariant> getSettings();
 

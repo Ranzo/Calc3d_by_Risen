@@ -9,9 +9,9 @@
 #include <string>
 
 #include "calculator.h"
-#include "plastic_db.h"
-#include "printer_db.h"
-#include "setting_preset.h"
+#include "../storage/plastic_db.h"
+#include "../storage/printer_db.h"
+#include "../storage/setting_preset.h"
 
 class FacadeException : public std::runtime_error {
  public:
@@ -46,12 +46,12 @@ class Facade {
   QHash<QString, QVariant> getPlasticByName(const QString &name);
 
   // Функции для работы с пресетами
-  void updateSettings(double tarif, double qTrash, double pricePlastik,
-                      double overprice, int weightPlastik);
+  void updateSettings(double tarif, double qTrash, double overprice);
   QHash<QString, QVariant> getSettings();
 
   // Функции для расчетов
-  std::pair<double, double> calculate(const QString &printerName, int hrs,
+  std::pair<double, double> calculate(const QString &printerName,
+                                      const QString &plasticName, int hrs,
                                       int min, double detailWeight,
                                       int quantity, double post, double mod);
 

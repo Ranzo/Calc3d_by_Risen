@@ -31,7 +31,7 @@ DeletePlasticDialog::~DeletePlasticDialog() { delete ui; }
 
 void DeletePlasticDialog::setupTable() {
   ui->tableWidget->setColumnCount(1);
-  ui->tableWidget->setHorizontalHeaderLabels({"Выберите принтер"});
+  ui->tableWidget->setHorizontalHeaderLabels({"Выберите катушку"});
   ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
   ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
   ui->tableWidget->horizontalHeader()->setStretchLastSection(true);

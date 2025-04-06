@@ -6,15 +6,12 @@ SettingPreset::SettingPreset(const QString& dir)
 }
 
 bool SettingPreset::updateSettings(double tarif, double qTrash,
-                                   double pricePlastik, double overprice,
-                                   int weightPlastik) {
+                                   double overprice) {
   QSettings settings(filePath, format);
 
   settings.setValue("tarif", tarif);
   settings.setValue("qTrash", qTrash);
-  settings.setValue("pricePlastik", pricePlastik);
   settings.setValue("overprice", overprice);
-  settings.setValue("weightPlastik", weightPlastik);
 
   if (settings.status() != QSettings::NoError) {
     qCritical() << "Error saving settings";
@@ -30,9 +27,7 @@ QHash<QString, QVariant> SettingPreset::getSettings() {
 
   settingData["tarif"] = settings.value("tarif", 0.0).toDouble();
   settingData["qTrash"] = settings.value("qTrash", 0.0).toDouble();
-  settingData["pricePlastik"] = settings.value("pricePlastik", 0.0).toDouble();
   settingData["overprice"] = settings.value("overprice", 0.0).toDouble();
-  settingData["weightPlastik"] = settings.value("weightPlastik", 0).toInt();
 
   return settingData;
 }

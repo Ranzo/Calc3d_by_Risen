@@ -25,27 +25,26 @@ QHash<QString, QVariant> Facade::getPrinterByName(const QString &name) {
   return printerDB->getPrinterByName(name);
 }
 
-std::pair<double, double> Facade::calculate(const QString &printerName, int hrs,
+std::pair<double, double> Facade::calculate(const QString &printerName, const QString &plasticName,int hrs,
                                             int min, double detailWeight,
                                             int quantity, double post,
                                             double mod) {
   auto printerData = printerDB->getPrinterByName(printerName);
+  auto plasticData = plasticDB->getPlasticByName(plasticName);
   auto settingsData = settingPreset->getSettings();
   min = hrs * 60 + min;
 
   return Calculator::calculateCostAndTotalPrice(
       printerData["power"].toDouble(), min, settingsData["tarif"].toDouble(),
       detailWeight, settingsData["qTrash"].toDouble(),
-      settingsData["pricePlastik"].toDouble(),
-      settingsData["weightPlastik"].toDouble(), printerData["cost"].toDouble(),
+      plasticData["cost"].toDouble(),
+      plasticData["weight"].toDouble(), printerData["cost"].toDouble(),
       post, quantity, settingsData["overprice"].toDouble(), mod,
       printerData["age"].toDouble());
 }
 
-void Facade::updateSettings(double tarif, double qTrash, double pricePlastik,
-                            double overprice, int weightPlastik) {
-  settingPreset->updateSettings(tarif, qTrash, pricePlastik, overprice,
-                                weightPlastik);
+void Facade::updateSettings(double tarif, double qTrash, double overprice) {
+  settingPreset->updateSettings(tarif, qTrash, overprice);
 }
 
 QHash<QString, QVariant> Facade::getSettings() {
@@ -55,7 +54,7 @@ QHash<QString, QVariant> Facade::getSettings() {
 Facade::Facade() {
   QString dir =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QDir().mkpath(dir); // создает, если папки не было
+  QDir().mkpath(dir);  // создает, если папки не было
 
   try {
     printerDB = std::make_unique<PrinterDB>(dir);

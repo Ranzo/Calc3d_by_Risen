@@ -24,15 +24,9 @@ class PrinterSettingsDialog : public QDialog {
     return ui->input_q_trash->value();
   }
 
-  inline double getFilamentCost() const {
-    return ui->input_price_pastik->value();
-  }
-
   inline double getMarkupPercent() const {
     return ui->input_overprice->value();
   }
-
-  inline int getFilamentWeight() const { return ui->plastik_menu->value(); }
 
   // Методы установки значений
   inline void setTariff(double value) { ui->input_tarif->setValue(value); }
@@ -41,23 +35,14 @@ class PrinterSettingsDialog : public QDialog {
     ui->input_q_trash->setValue(value);
   }
 
-  inline void setFilamentCost(double value) {
-    ui->input_price_pastik->setValue(value);
-  }
-
   inline void setMarkupPercent(double value) {
     ui->input_overprice->setValue(value);
-  }
-
-  inline void setFilamentWeight(int value) {
-    ui->plastik_menu->setValue(value);
   }
 
   void loadSettings(QHash<QString, QVariant> settings);
 
  signals:
-  void settingsSaved(double tarif, double qTrash, double pricePlastik,
-                     double overprice, int weightPlastik);
+  void settingsSaved(double tarif, double qTrash, double overprice);
 
  private:
   Ui::PrinterSettingsDialog *ui;
