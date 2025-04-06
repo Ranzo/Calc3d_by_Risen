@@ -57,13 +57,7 @@ jobs:
           cd Release
           7z a Calc3D_Release.zip *
           dir
-        shell: cmd
 
-      - name: Check Branch Condition
-        run: |
-          echo "Checking branch condition"
-          echo "Gitea ref: ${{ gitea.ref }}"
-          if "%{{ gitea.ref }}"=="refs/heads/master" (echo "Branch is master") else (echo "Branch is not master")
         shell: cmd
 
 #      - name: Create Gitea Release
@@ -81,10 +75,10 @@ jobs:
       - name: Upload to Gitea Release
         run: |
           echo "Uploading to Gitea"
-          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tag/1.0.0b/assets?name=Calc3D_Release.zip"
+          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/1.0.0b/assets?name=Calc3D_Release.zip"
           cd Release
           curl -X POST \
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tag/1.0.0b/assets?name=Calc3D_Release.zip" \
+            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/1.0.0b/assets?name=Calc3D_Release.zip" \
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
             -H "Content-Type: multipart/form-data" \
             -F "attachment=@Calc3D_Release.zip" \
