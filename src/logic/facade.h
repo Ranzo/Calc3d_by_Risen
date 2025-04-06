@@ -8,10 +8,10 @@
 #include <stdexcept>
 #include <string>
 
-#include "calculator.h"
 #include "../storage/plastic_db.h"
 #include "../storage/printer_db.h"
 #include "../storage/setting_preset.h"
+#include "calculator.h"
 
 class FacadeException : public std::runtime_error {
  public:

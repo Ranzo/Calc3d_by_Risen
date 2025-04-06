@@ -25,7 +25,8 @@ QHash<QString, QVariant> Facade::getPrinterByName(const QString &name) {
   return printerDB->getPrinterByName(name);
 }
 
-std::pair<double, double> Facade::calculate(const QString &printerName, const QString &plasticName,int hrs,
+std::pair<double, double> Facade::calculate(const QString &printerName,
+                                            const QString &plasticName, int hrs,
                                             int min, double detailWeight,
                                             int quantity, double post,
                                             double mod) {
@@ -34,13 +35,23 @@ std::pair<double, double> Facade::calculate(const QString &printerName, const QS
   auto settingsData = settingPreset->getSettings();
   min = hrs * 60 + min;
 
-  return Calculator::calculateCostAndTotalPrice(
-      printerData["power"].toDouble(), min, settingsData["tarif"].toDouble(),
-      detailWeight, settingsData["qTrash"].toDouble(),
-      plasticData["cost"].toDouble(),
-      plasticData["weight"].toDouble(), printerData["cost"].toDouble(),
-      post, quantity, settingsData["overprice"].toDouble(), mod,
-      printerData["age"].toDouble());
+  // Заполнение структуры Params
+  Params params;
+  params.p = printerData["power"].toDouble();  // номинальная мощность
+  params.t = min;                              // время печати
+  params.h = settingsData["tarif"].toDouble();  // тариф
+  params.md = detailWeight;                     // вес детали
+  params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
+  params.st = plasticData["cost"].toDouble();  // стоимость катушки
+  params.mk = plasticData["weight"].toDouble();  // вес катушки
+  params.a = printerData["cost"].toDouble();  // стоимость принтера
+  params.post = post;                         // постобработка
+  params.x = quantity;                        // количество
+  params.marge = settingsData["overprice"].toDouble();  // наценка
+  params.mod = mod;                            // моделирование
+  params.spi = printerData["age"].toDouble();  // срок использования
+
+  return Calculator::calculateCostAndTotalPrice(params);
 }
 
 void Facade::updateSettings(double tarif, double qTrash, double overprice) {

@@ -5,7 +5,7 @@
 
 class PlasticDB {
  public:
-  PlasticDB(const QString &path);
+  explicit PlasticDB(const QString &path);
   bool init();
   bool addPlastic(const QString &name, double weight, double cost);
   QHash<QString, QVariant> getPlasticByName(const QString &name);

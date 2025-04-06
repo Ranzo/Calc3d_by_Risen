@@ -5,7 +5,7 @@
 
 class PrinterDB {
  public:
-  PrinterDB(const QString &path);
+  explicit PrinterDB(const QString &path);
   bool init();
   bool addPrinter(const QString &name, double power, double age, double cost);
   QHash<QString, QVariant> getPrinterByName(const QString &name);

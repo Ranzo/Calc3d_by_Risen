@@ -3,32 +3,44 @@
 #include <cmath>
 #include <utility>
 
+// p -
+// h -
+// d -
+// st - стоимость катушки
+// mk - вес катушки
+// md - вес детали
+// marge -
+// x - количество экземпляров
+// mod -
+// t -
+// a - стоимость принтера
+// spi -
+struct Params {
+  double p;      // номинальная мощность принтера
+  double t;      // время печати, в минутах
+  double h;      // тариф электроэнергии
+  double md;     //
+  double d;      // коэффициент выбраковки
+  double st;     //
+  double mk;     //
+  double a;      //
+  double post;   //
+  int x;         //
+  double marge;  // наценка
+  double mod;    // стоимость моделирования
+  double spi;    // срок полезного использования
+};
+
 class Calculator {
  public:
   Calculator() = delete;
 
-  // p - номинальная мощность принтера
-  // h - тариф электроэнергии
-  // d - коэффициент выбраковки
-  // st - стоимость катушки
-  // mk - вес катушки
-  // md - вес детали
-  // marge - наценка
-  // x - количество экземпляров
-  // mod - стоимость моделирования
-  // t - время печати, в минутах
-  // a - стоимость принтера
-  // spi - срок полезного использования
-  static std::pair<double, double> calculateCostAndTotalPrice(
-      double p, int t, double h, double md, double d, double st, double mk,
-      double a, double post, int x, double marge, double mod, double spi);
+  static std::pair<double, double> calculateCostAndTotalPrice(Params& param);
 
  private:
-  static double calcCostPrice(double p, double t, double h, double md, double d,
-                              double st, double mk, double am, double post,
-                              int x);
+  static double calcCostPrice(Params& param);
 
-  static double calcTotalPrice(double cost, double mod, double margin);
+  static double calcTotalPrice(Params& param, double costPrice);
 
   static double calcAmortization(double a, double t, double spi);
 
