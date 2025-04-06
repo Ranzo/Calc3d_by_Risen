@@ -2,8 +2,8 @@ name: Build and Release Calc3D
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
 
 jobs:
   build-and-release:
@@ -13,7 +13,8 @@ jobs:
         run: |
           echo "Starting pipeline"
           echo "Ref: ${{ gitea.ref }}"
-          echo "Tag: ${{ gitea.ref_name }}"
+          echo "Branch: ${{ gitea.ref_name }}"
+          echo "Commit: ${{ gitea.sha }}"
           echo "HOST: ${{ secrets.HOST }}"
         shell: cmd
 
@@ -56,11 +57,11 @@ jobs:
           dir
         shell: cmd
 
-      - name: Check Tag Condition
+      - name: Check Branch Condition
         run: |
-          echo "Checking tag condition"
+          echo "Checking branch condition"
           echo "Gitea ref: ${{ gitea.ref }}"
-          if startswith "${{ gitea.ref }}" "refs/tags/v"; then echo "Tag matches"; else echo "Tag does not match"; fi
+          if "${{ gitea.ref }}" == "refs/heads/master" (echo "Branch is master") else (echo "Branch is not master")
         shell: cmd
 
       - name: Create Gitea Release
@@ -70,7 +71,7 @@ jobs:
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases" \
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"tag_name\":\"1.0.0b\",\"name\":\"Release 1.0.0b\",\"body\":\"Beta release of Calc3D\"}" \
+            -d "{\"tag_name\":\"1.0.0b\",\"target_commitish\":\"${{ gitea.sha }}\",\"name\":\"Release 1.0.0b\",\"body\":\"Auto-generated release from master push\"}" \
             -v
         shell: cmd
 
