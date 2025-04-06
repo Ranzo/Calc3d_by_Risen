@@ -1,36 +1,34 @@
 #include "calculator.h"
 
 std::pair<double, double> Calculator::calculateCostAndTotalPrice(
-    double p, int t, double h, double md, double d, double st, double mk,
-    double a, double post, int x, double marge, double mod, double spi) {
-  double amortization = calcAmortization(a, t, spi);
-  double costPrice =
-      calcCostPrice(p, t, h, md, d, st, mk, amortization, post, x);
-  double totalPrice = calcTotalPrice(costPrice, mod, marge);
+    Params& param) {
+  double costPrice = calcCostPrice(param);
+  double totalPrice = calcTotalPrice(param, costPrice);
 
   return {costPrice, totalPrice};
 }
 
-double Calculator::calcCostPrice(double p, double t, double h, double md,
-                                 double d, double st, double mk, double am,
-                                 double post, int x) {
-  d = (d < 1) ? 1 : fabs(d);  // коэффициент выбраковки
+double Calculator::calcCostPrice(Params& param) {
+  param.d = (param.d < 1) ? 1 : param.d;  // коэффициент выбраковки
 
+  double am = calcAmortization(param.a, param.t, param.spi);
   double result =
-      ((p / 1000) * (t / 60) * h + (md * d * (st / mk)) + (am + post)) * x;
+      ((param.p / 1000) * (param.t / 60) * param.h +
+       (param.md * param.d * (param.st / param.mk)) + (am + param.post)) *
+      param.x;
   return std::round(result * 100) /
          100;  // округление до 2 знаков после запятой
 }
 
 // Функция calculating
-double Calculator::calcTotalPrice(double cost, double mod, double margin) {
-  double result = (margin / 100 * cost + cost) + mod;
+double Calculator::calcTotalPrice(Params& param, double costPrice) {
+  double result = (param.marge / 100 * costPrice + costPrice) + param.mod;
   return std::round(result * 100) /
          100;  // округление до 2 знаков после запятой
 }
 
 // Функция amortization
-double Calculator::calcAmortization(double a, double t, double spi) {
+double Calculator::calcAmortization(double a, int t, double spi) {
   // Если СПИ установлен на 0, то присваеваем 1 (год)
   double year_norm = (!spi) ? 100 : 100 / spi;
 

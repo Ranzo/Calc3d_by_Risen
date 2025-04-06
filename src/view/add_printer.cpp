@@ -29,6 +29,7 @@ AddPrinterDialog::AddPrinterDialog(QWidget* parent)
 
 void AddPrinterDialog::setAddMode() {
   status = PresetDialogStatus::Add;
+  setWindowTitle("Добавить принтер");
 
   ui->input_name->clear();
   ui->input_power->setValue(0.0);
@@ -38,6 +39,7 @@ void AddPrinterDialog::setAddMode() {
 
 void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
   status = PresetDialogStatus::Edit;
+  setWindowTitle("Изменить принтер");
 
   if (preset.contains("name")) {
     ui->input_name->setText(preset["name"].toString());

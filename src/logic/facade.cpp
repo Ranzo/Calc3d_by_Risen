@@ -5,8 +5,7 @@ std::shared_ptr<Facade> Facade::GetInstance() {
   return instance;
 }
 
-bool Facade::addPrinter(const QString &name, double power, int age,
-                        double cost) {
+bool Facade::addPrinter(const QString &name, int power, int age, double cost) {
   return printerDB->addPrinter(name, power, age, cost);
 }
 
@@ -17,7 +16,7 @@ bool Facade::deletePrinterByName(const QString &name) {
 }
 
 void Facade::updatePrinterByName(const QString &oldName, const QString &newName,
-                                 double power, int age, double cost) {
+                                 int power, int age, double cost) {
   printerDB->updatePrinterByName(oldName, newName, power, age, cost);
 }
 
@@ -25,27 +24,82 @@ QHash<QString, QVariant> Facade::getPrinterByName(const QString &name) {
   return printerDB->getPrinterByName(name);
 }
 
-std::pair<double, double> Facade::calculate(const QString &printerName, int hrs,
+std::pair<double, double> Facade::calculate(const QString &printerName,
+                                            const QString &plasticName, int hrs,
                                             int min, double detailWeight,
                                             int quantity, double post,
                                             double mod) {
   auto printerData = printerDB->getPrinterByName(printerName);
+  auto plasticData = plasticDB->getPlasticByName(plasticName);
   auto settingsData = settingPreset->getSettings();
+
+  if (min < 0 || hrs < 0)
+    throw FacadeException("Проверьте правильность запонения полей времени");
   min = hrs * 60 + min;
 
-  return Calculator::calculateCostAndTotalPrice(
-      printerData["power"].toDouble(), min, settingsData["tarif"].toDouble(),
-      detailWeight, settingsData["qTrash"].toDouble(),
-      settingsData["pricePlastik"].toDouble(),
-      settingsData["weightPlastik"].toDouble(), printerData["cost"].toDouble(),
-      post, quantity, settingsData["overprice"].toDouble(), mod,
-      printerData["age"].toDouble());
+  // Заполнение структуры Params
+  Params params;
+  params.p = printerData["power"].toInt();       // номинальная мощность
+  params.t = min;                                // время печати
+  params.h = settingsData["tarif"].toDouble();   // тариф
+  params.md = detailWeight;                      // вес детали
+  params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
+  params.st = plasticData["cost"].toDouble();    // стоимость катушки
+  params.mk = plasticData["weight"].toInt();     // вес катушки
+  params.a = printerData["cost"].toDouble();     // стоимость принтера
+  params.post = post;                            // постобработка
+  params.x = quantity;                           // количество
+  params.marge = settingsData["overprice"].toDouble();  // наценка
+  params.mod = mod;                                     // моделирование
+  params.spi = printerData["age"].toDouble();           // срок использования
+
+  checkParams(params);
+
+  return Calculator::calculateCostAndTotalPrice(params);
 }
 
-void Facade::updateSettings(double tarif, double qTrash, double pricePlastik,
-                            double overprice, int weightPlastik) {
-  settingPreset->updateSettings(tarif, qTrash, pricePlastik, overprice,
-                                weightPlastik);
+void Facade::checkParams(Params &param) {
+  if (param.p < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Мощность");
+  if (param.t < 1)
+    throw FacadeException("Проверьте правильность заполнения полей времени");
+  if (param.h < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Тариф");
+  if (param.md <= 0.01)
+    throw FacadeException("Проверьте правильность заполнения поля Вес детали");
+  if (param.d < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Коэффициент выбраковки");
+  if (param.st < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость катушки");
+  if (param.mk < 1)
+    throw FacadeException("Проверьте правильность заполнения поля Вес катушки");
+  if (param.mk < param.md * param.x)
+    throw FacadeException(
+        QString("В катушке недостаточно пластика для печати %1 деталей")
+            .arg(param.x));
+  if (param.a < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость принтера");
+  if (param.post < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость постобработки");
+  if (param.x < 1)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Количество деталей");
+  if (param.marge < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Наценка");
+  if (param.mod < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Моделирование");
+  if (param.spi < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Срок полезного использования");
+}
+
+void Facade::updateSettings(double tarif, double qTrash, double overprice) {
+  settingPreset->updateSettings(tarif, qTrash, overprice);
 }
 
 QHash<QString, QVariant> Facade::getSettings() {
@@ -55,7 +109,7 @@ QHash<QString, QVariant> Facade::getSettings() {
 Facade::Facade() {
   QString dir =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QDir().mkpath(dir); // создает, если папки не было
+  QDir().mkpath(dir);  // создает, если папки не было
 
   try {
     printerDB = std::make_unique<PrinterDB>(dir);
@@ -72,7 +126,7 @@ Facade::Facade() {
   }
 }
 
-bool Facade::addPlastic(const QString &name, double weight, double cost) {
+bool Facade::addPlastic(const QString &name, int weight, double cost) {
   return plasticDB->addPlastic(name, weight, cost);
 }
 
@@ -83,7 +137,7 @@ bool Facade::deletePlasticByName(const QString &name) {
 }
 
 void Facade::updatePlasticByName(const QString &oldName, const QString &newName,
-                                 double weight, double cost) {
+                                 int weight, double cost) {
   plasticDB->updatePlasticByName(oldName, newName, weight, cost);
 }
 

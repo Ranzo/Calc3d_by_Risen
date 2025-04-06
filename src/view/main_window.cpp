@@ -18,24 +18,27 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   deletePlasticDialog = new DeletePlasticDialog(this);
 
   refreshPrinterList();
+  refreshPlasticList();
+
   printerSettings->loadSettings(facade->getSettings());
 
   connect(ui->settings_2, &QAction::triggered, this,
           [this]() { printerSettings->exec(); });
+
   connect(ui->add_printer, &QAction::triggered, this, [this]() {
     addPrinterDialog->setAddMode();
     addPrinterDialog->exec();
+  });
+
+  connect(ui->add_plastic, &QAction::triggered, this, [this]() {
+    addPlasticDialog->setAddMode();
+    addPlasticDialog->exec();
   });
 
   connect(ui->del_printer, &QAction::triggered, this, [this]() {
     QList<QString> printers = facade->getPrinterList();
 
     deletePrinterDialog->exec();
-  });
-
-  connect(ui->add_plastic, &QAction::triggered, this, [this]() {
-    addPlasticDialog->setAddMode();
-    addPlasticDialog->exec();
   });
 
   connect(ui->del_plastic, &QAction::triggered, this, [this]() {
@@ -56,13 +59,19 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   //    Action with buttons
   connect(ui->get_result_btn, &QPushButton::clicked, this, [this]() {
     QString printerName = ui->printer_menu->currentText();
-    auto [cost, total] = facade->calculate(
-        printerName, ui->input_hours->value(), ui->input_minutes->value(),
-        ui->input_gram->value(), ui->input_things->value(),
-        ui->input_post->value(), ui->input_mod->value());
+    QString plasticName = ui->plastic_menu->currentText();
+    try {
+      auto [cost, total] =
+          facade->calculate(printerName, plasticName, ui->input_hours->value(),
+                            ui->input_minutes->value(), ui->input_gram->value(),
+                            ui->input_things->value(), ui->input_post->value(),
+                            ui->input_mod->value());
 
-    ui->lcd_result_total->display(QString::number(total, 'f', 2));
-    ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
+      ui->lcd_result_total->display(QString::number(total, 'f', 2));
+      ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
+    } catch (const FacadeException &exc) {
+      QMessageBox::warning(this, "Ошибка", exc.what());
+    }
   });
 
   connect(ui->exit_btn, &QPushButton::clicked, this, [this]() { close(); });
@@ -100,18 +109,48 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
             refreshPrinterList();
           });
 
+  connect(addPlasticDialog, &AddPlasticDialog::plasticAdded, this,
+          [this](const QString &name, double weight, double cost) {
+            if (facade->addPlastic(name, weight, cost))
+              refreshPlasticList();
+            else
+              QMessageBox::warning(this, "Ошибка",
+                                   "Не удалось добавить катушку");
+          });
+
+  connect(deletePlasticDialog, &DeletePlasticDialog::deleteRequested, this,
+          [this](const QString &name) {
+            if (facade->deletePlasticByName(name))
+              refreshPlasticList();
+            else
+              QMessageBox::warning(this, "Ошибка",
+                                   "Не удалось удалить катушку");
+          });
+
+  connect(deletePlasticDialog, &DeletePlasticDialog::editRequested, this,
+          [this](const QString &name) {
+            auto preset = facade->getPlasticByName(name);
+            addPlasticDialog->setEditMode(preset);
+            addPlasticDialog->exec();
+          });
+
+  connect(addPlasticDialog, &AddPlasticDialog::plasticEdited, this,
+          [this](const QString &oldName, const QString &newName, double weight,
+                 double cost) {
+            facade->updatePlasticByName(oldName, newName, weight, cost);
+            refreshPlasticList();
+          });
+
   connect(printerSettings, &PrinterSettingsDialog::settingsSaved, this,
-          [this](double tarif, double qTrash, double pricePlastik,
-                 double overprice, int weightPlastik) {
-            facade->updateSettings(tarif, qTrash, pricePlastik, overprice,
-                                   weightPlastik);
+          [this](double tarif, double qTrash, double overprice) {
+            facade->updateSettings(tarif, qTrash, overprice);
           });
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::refreshPrinterList() {
-  bool wasEmpty = ui->printer_menu->count() == 0;
+  bool isEmpty = (ui->printer_menu->count() == 0);
   QString currentPrinter = ui->printer_menu->currentText();
 
   QList<QString> printers = facade->getPrinterList();
@@ -122,11 +161,32 @@ void MainWindow::refreshPrinterList() {
     ui->printer_menu->setCurrentIndex(-1);
     ui->printer_menu->setPlaceholderText("Выбор принтера");
   } else {
-    if (wasEmpty) {
+    if (isEmpty) {
       ui->printer_menu->setCurrentIndex(0);
     } else {
       int idx = ui->printer_menu->findText(currentPrinter);
       ui->printer_menu->setCurrentIndex(idx != -1 ? idx : -1);
+    }
+  }
+}
+
+void MainWindow::refreshPlasticList() {
+  bool isEmpty = (ui->plastic_menu->count() == 0);
+  QString currentPrinter = ui->plastic_menu->currentText();
+
+  QList<QString> plastics = facade->getPlasticList();
+  ui->plastic_menu->clear();
+  ui->plastic_menu->addItems(QStringList::fromList(plastics));
+  deletePlasticDialog->loadPlastics(plastics);
+  if (plastics.isEmpty()) {
+    ui->plastic_menu->setCurrentIndex(-1);
+    ui->plastic_menu->setPlaceholderText("Выбор катушки");
+  } else {
+    if (isEmpty) {
+      ui->plastic_menu->setCurrentIndex(0);
+    } else {
+      int idx = ui->plastic_menu->findText(currentPrinter);
+      ui->plastic_menu->setCurrentIndex(idx != -1 ? idx : -1);
     }
   }
 }

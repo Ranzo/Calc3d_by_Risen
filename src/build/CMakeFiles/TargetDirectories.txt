@@ -1,8 +1,0 @@
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/Calc3D.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/edit_cache.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/rebuild_cache.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/list_install_components.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/install.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/install/local.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/install/strip.dir
-/home/risen/python_develop/Calc3D_by_Risen/src/build/CMakeFiles/Calc3D_autogen.dir

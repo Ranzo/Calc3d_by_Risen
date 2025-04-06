@@ -27,6 +27,7 @@ AddPlasticDialog::AddPlasticDialog(QWidget* parent)
 
 void AddPlasticDialog::setAddMode() {
   status = PlasticDialogStatus::Add;
+  setWindowTitle("Добавить катушку");
 
   ui->input_name->clear();
   ui->input_weight->setValue(0.0);
@@ -35,7 +36,8 @@ void AddPlasticDialog::setAddMode() {
 
 void AddPlasticDialog::setEditMode(QHash<QString, QVariant>& preset) {
   status = PlasticDialogStatus::Edit;
-
+  setWindowTitle("Изменить катушку");
+  
   if (preset.contains("name")) {
     ui->input_name->setText(preset["name"].toString());
     oldName = ui->input_name->toPlainText().trimmed();

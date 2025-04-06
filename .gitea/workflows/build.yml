@@ -50,8 +50,7 @@ jobs:
       - name: Create and Upload Gitea Release
         run: |
           git fetch --tags
-          set TAG_NAME=1.0.0b
-          echo "Using tag: %TAG_NAME%"
+          set TAG_NAME=1.0.0b          
           curl -v -X GET ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/%TAG_NAME%" > release.json 2>&1
@@ -72,8 +71,7 @@ jobs:
           if not defined RELEASE_ID (
             echo "Failed to find or create release for tag %TAG_NAME%"
             exit /b 1
-          )
-          echo "Release ID: %RELEASE_ID%"
+          )         
           dir Release\Calc3D_Release.zip
           curl -v -X POST ^
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" ^
