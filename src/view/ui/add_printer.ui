@@ -50,7 +50,7 @@
               <string notr="true">background-color: rgb(0, 80, 0);</string>
             </property>
             <property name="text">
-              <string>Отмена</string>
+              <string>Закрыть</string>
             </property>
           </widget>
         </item>

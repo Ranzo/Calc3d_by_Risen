@@ -13,7 +13,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   updateInfo = new UpdatesDialog(this);
   printerSettings = new PrinterSettingsDialog(this);
   addPrinterDialog = new AddPrinterDialog(this);
-  deletePrinterDialog = new DeletePrinterDialog(this);
+  // deletePlasticDialog = new DeletePrinterDialog(this);
   addPlasticDialog = new AddPlasticDialog(this);
   deletePlasticDialog = new DeletePlasticDialog(this);
 
@@ -39,12 +39,13 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
 
   connect(ui->del_printer, &QAction::triggered, this, [this]() {
     QList<QString> printers = facade->getPrinterList();
-
-    deletePrinterDialog->exec();
+    deletePlasticDialog->loadList(ElemType::Printer, printers);
+    deletePlasticDialog->exec();
   });
 
   connect(ui->del_plastic, &QAction::triggered, this, [this]() {
     QList<QString> plastics = facade->getPlasticList();
+    deletePlasticDialog->loadList(ElemType::Plastic, plastics);
 
     deletePlasticDialog->exec();
   });
@@ -90,22 +91,6 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось добавить принтер");
           });
 
-  connect(deletePrinterDialog, &DeletePrinterDialog::deleteRequested, this,
-          [this](const QString &name) {
-            if (facade->deletePrinterByName(name))
-              refreshPrinterList();
-            else
-              QMessageBox::warning(this, "Ошибка",
-                                   "Не удалось удалить принтер");
-          });
-
-  connect(deletePrinterDialog, &DeletePrinterDialog::editRequested, this,
-          [this](const QString &name) {
-            auto preset = facade->getPrinterByName(name);
-            addPrinterDialog->setEditMode(preset);
-            addPrinterDialog->exec();
-          });
-
   connect(addPrinterDialog, &AddPrinterDialog::printerEdited, this,
           [this](const QString &oldName, const QString &newName, double power,
                  int age, double cost) {
@@ -122,8 +107,8 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось добавить катушку");
           });
 
-  connect(deletePlasticDialog, &DeletePlasticDialog::deleteRequested, this,
-          [this](const QString &name) {
+  connect(deletePlasticDialog, &DeletePlasticDialog::deletePlasticRequested,
+          this, [this](const QString &name) {
             if (facade->deletePlasticByName(name))
               refreshPlasticList();
             else
@@ -131,7 +116,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось удалить катушку");
           });
 
-  connect(deletePlasticDialog, &DeletePlasticDialog::editRequested, this,
+  connect(deletePlasticDialog, &DeletePlasticDialog::editPlasticRequested, this,
           [this](const QString &name) {
             auto preset = facade->getPlasticByName(name);
             addPlasticDialog->setEditMode(preset);
@@ -160,14 +145,15 @@ void MainWindow::refreshPrinterList() {
   QList<QString> printers = facade->getPrinterList();
   ui->printer_menu->clear();
   ui->printer_menu->addItems(QStringList::fromList(printers));
-  deletePrinterDialog->loadPresets(printers);
+  deletePlasticDialog->loadList(ElemType::Printer, printers);
   if (printers.isEmpty()) {
     ui->printer_menu->setCurrentIndex(-1);
     ui->printer_menu->setPlaceholderText("Выбор принтера");
-  } else {
-    if (isEmpty) {
+    return;
+
+    if (isEmpty)
       ui->printer_menu->setCurrentIndex(0);
-    } else {
+    else {
       int idx = ui->printer_menu->findText(currentPrinter);
       ui->printer_menu->setCurrentIndex(idx != -1 ? idx : -1);
     }
@@ -181,14 +167,15 @@ void MainWindow::refreshPlasticList() {
   QList<QString> plastics = facade->getPlasticList();
   ui->plastic_menu->clear();
   ui->plastic_menu->addItems(QStringList::fromList(plastics));
-  deletePlasticDialog->loadPlastics(plastics);
+  deletePlasticDialog->loadList(ElemType::Plastic, plastics);
   if (plastics.isEmpty()) {
     ui->plastic_menu->setCurrentIndex(-1);
     ui->plastic_menu->setPlaceholderText("Выбор катушки");
-  } else {
-    if (isEmpty) {
+    return;
+
+    if (isEmpty)
       ui->plastic_menu->setCurrentIndex(0);
-    } else {
+    else {
       int idx = ui->plastic_menu->findText(currentPrinter);
       ui->plastic_menu->setCurrentIndex(idx != -1 ? idx : -1);
     }

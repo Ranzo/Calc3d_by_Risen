@@ -9,8 +9,7 @@
 #include "about_dialog.h"
 #include "add_plastic.h"
 #include "add_printer.h"
-#include "delete_plastic.h"
-#include "delete_printer.h"
+#include "delete_list.h"
 #include "formula_dialog.h"
 #include "printer_settings.h"
 #include "update_dialog.h"
@@ -35,7 +34,7 @@ class MainWindow : public QMainWindow {
   UpdatesDialog *updateInfo;
   PrinterSettingsDialog *printerSettings;
   AddPrinterDialog *addPrinterDialog;
-  DeletePrinterDialog *deletePrinterDialog;
+  // DeletePrinterDialog *deletePrinterDialog;
   AddPlasticDialog *addPlasticDialog;
   DeletePlasticDialog *deletePlasticDialog;
 
