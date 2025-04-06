@@ -70,9 +70,9 @@ jobs:
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
             -H "Accept: application/json" \
             -o release.json
-          for /f "tokens=2 delims=:," %%i in ('findstr "id" release.json') do set RELEASE_ID=%%i
-          echo "RELEASE_ID=%RELEASE_ID%" >> %GITHUB_ENV%
-          echo "Found Release ID: %RELEASE_ID%"
+#          for /f "tokens=2 delims=:," %%i in ('findstr "id" release.json') do set RELEASE_ID=%%i
+#          echo "RELEASE_ID=%RELEASE_ID%" >> %GITHUB_ENV%
+#          echo "Found Release ID: %RELEASE_ID%"
           
 #          echo "Uploading to Gitea"
 #          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
