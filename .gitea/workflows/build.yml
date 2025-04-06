@@ -67,7 +67,7 @@ jobs:
           echo "Fetching release ID for tag 1.0.0b"
           echo "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" \
           curl -X GET \
-            "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" \
+            "https://git.corp.s21party.ru/api/v1/repos/risen/Calc3D_by_Risen/releases/tags/1.0.0b" \
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
             -H "Accept: application/json" \
             -o release.json
