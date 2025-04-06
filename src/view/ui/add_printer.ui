@@ -78,12 +78,12 @@
         <string>Срок полезного использования, лет</string>
       </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="input_age">
+    <widget class="QLineEdit" name="input_age">
       <property name="geometry">
         <rect>
-          <x>290</x>
+          <x>270</x>
           <y>90</y>
-          <width>71</width>
+          <width>91</width>
           <height>20</height>
         </rect>
       </property>
@@ -96,24 +96,14 @@
       <property name="font">
         <font>
           <pointsize>10</pointsize>
-          <bold>true</bold>
           <stylestrategy>PreferAntialias</stylestrategy>
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
-      <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::UpDownArrows</enum>
-      </property>
-      <property name="minimum">
-        <double>0.000000000000000</double>
-      </property>
-      <property name="maximum">
-        <double>99999.000000000000000</double>
-      </property>
-      <property name="value">
-        <double>0.000000000000000</double>
+      <property name="placeholderText">
+        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="power_printer_2">
@@ -138,12 +128,12 @@
         <string>Стоимость принетра, руб</string>
       </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="input_price">
+    <widget class="QLineEdit" name="input_price">
       <property name="geometry">
         <rect>
-          <x>290</x>
+          <x>270</x>
           <y>120</y>
-          <width>71</width>
+          <width>91</width>
           <height>20</height>
         </rect>
       </property>
@@ -156,24 +146,14 @@
       <property name="font">
         <font>
           <pointsize>10</pointsize>
-          <bold>true</bold>
           <stylestrategy>PreferAntialias</stylestrategy>
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
-      <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::UpDownArrows</enum>
-      </property>
-      <property name="minimum">
-        <double>0.000000000000000</double>
-      </property>
-      <property name="maximum">
-        <double>99999.000000000000000</double>
-      </property>
-      <property name="value">
-        <double>0.000000000000000</double>
+      <property name="placeholderText">
+        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="power_printer_3">
@@ -198,12 +178,12 @@
         <string>Мощность принтера, Вт</string>
       </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="input_power">
+    <widget class="QLineEdit" name="input_power">
       <property name="geometry">
         <rect>
-          <x>290</x>
+          <x>270</x>
           <y>60</y>
-          <width>71</width>
+          <width>91</width>
           <height>20</height>
         </rect>
       </property>
@@ -216,24 +196,14 @@
       <property name="font">
         <font>
           <pointsize>10</pointsize>
-          <bold>true</bold>
           <stylestrategy>PreferAntialias</stylestrategy>
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
-      <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::UpDownArrows</enum>
-      </property>
-      <property name="minimum">
-        <double>0.000000000000000</double>
-      </property>
-      <property name="maximum">
-        <double>99999.000000000000000</double>
-      </property>
-      <property name="value">
-        <double>0.000000000000000</double>
+      <property name="placeholderText">
+        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="power_printer_4">
@@ -255,10 +225,10 @@
         <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-        <string>Название пресета</string>
+        <string>Название принтера</string>
       </property>
     </widget>
-    <widget class="QTextEdit" name="input_name">
+    <widget class="QLineEdit" name="input_name">
       <property name="enabled">
         <bool>true</bool>
       </property>
@@ -270,60 +240,20 @@
           <height>21</height>
         </rect>
       </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
       <property name="font">
         <font>
           <pointsize>10</pointsize>
           <stylestrategy>PreferAntialias</stylestrategy>
-          <kerning>false</kerning>
         </font>
       </property>
-      <property name="tabletTracking">
-        <bool>false</bool>
-      </property>
-      <property name="acceptDrops">
-        <bool>true</bool>
-      </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
-      </property>
-      <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-      </property>
-      <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="autoFormatting">
-        <set>QTextEdit::AutoBulletList</set>
-      </property>
-      <property name="tabChangesFocus">
-        <bool>true</bool>
-      </property>
-      <property name="documentTitle">
-        <string notr="true"/>
-      </property>
-      <property name="undoRedoEnabled">
-        <bool>false</bool>
-      </property>
-      <property name="lineWrapMode">
-        <enum>QTextEdit::WidgetWidth</enum>
-      </property>
-      <property name="markdown">
-        <string/>
-      </property>
-      <property name="acceptRichText">
-        <bool>false</bool>
-      </property>
-      <property name="cursorWidth">
-        <number>1</number>
-      </property>
-      <property name="textInteractionFlags">
-        <set>Qt::TextEditorInteraction</set>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
       <property name="placeholderText">
         <string>Название принтера</string>

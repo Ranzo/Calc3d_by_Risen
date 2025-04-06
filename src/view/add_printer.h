@@ -22,26 +22,30 @@ class AddPrinterDialog : public QDialog {
   explicit AddPrinterDialog(QWidget *parent = nullptr);
   ~AddPrinterDialog();
 
-  QString getPresetName() const { return ui->input_name->toPlainText(); }
+  QString getPresetName() const { return ui->input_name->text(); }
 
-  double getPower() const { return ui->input_power->value(); }
+  int getPower() const { return ui->input_power->text().toInt(); }
 
-  double getLifespan() const { return ui->input_age->value(); }
+  double getLifespan() const {
+    return ui->input_age->text().replace(",", ".").toDouble();
+  }
 
-  double getPrinterPrice() const { return ui->input_price->value(); }
+  double getPrinterPrice() const {
+    return ui->input_price->text().replace(",", ".").toDouble();
+  }
 
   void setEditMode(QHash<QString, QVariant> &preset);
   void setAddMode();
 
  signals:
-  void printerAdded(const QString &name, double power, double age, double cost);
-  void printerEdited(const QString &oldName, const QString &newName,
-                     double power, double age, double cost);
+  void printerAdded(const QString &name, int power, double age, double cost);
+  void printerEdited(const QString &oldName, const QString &newName, int power,
+                     double age, double cost);
 
  private:
   Ui::AddPrinter *ui;
   QString oldName;
-  PresetDialogStatus status =  PresetDialogStatus::Add;
+  PresetDialogStatus status = PresetDialogStatus::Add;
 };
 
 #endif  // ADDPRINTERDIALOG_H

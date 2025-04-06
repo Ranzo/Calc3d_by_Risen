@@ -51,7 +51,7 @@
         </item>
       </layout>
     </widget>
-    <widget class="QLabel" name="power_printer_4">
+    <widget class="QLabel" name="power_plastic_4">
       <property name="geometry">
         <rect>
           <x>20</x>
@@ -73,7 +73,7 @@
         <string>Название катушки</string>
       </property>
     </widget>
-    <widget class="QTextEdit" name="input_name">
+    <widget class="QLineEdit" name="input_name">
       <property name="geometry">
         <rect>
           <x>180</x>
@@ -82,13 +82,20 @@
           <height>21</height>
         </rect>
       </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
       <property name="font">
         <font>
           <pointsize>10</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
       <property name="placeholderText">
         <string>Название катушки</string>
@@ -116,12 +123,12 @@
         <string>Вес, г</string>
       </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="input_weight">
+    <widget class="QLineEdit" name="input_weight">
       <property name="geometry">
         <rect>
-          <x>290</x>
+          <x>270</x>
           <y>60</y>
-          <width>71</width>
+          <width>91</width>
           <height>20</height>
         </rect>
       </property>
@@ -131,13 +138,10 @@
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
-      <property name="minimum">
-        <double>0.000000000000000</double>
-      </property>
-      <property name="maximum">
-        <double>99999.000000000000000</double>
+      <property name="placeholderText">
+        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="cost_label">
@@ -162,12 +166,12 @@
         <string>Стоимость, руб</string>
       </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="input_price">
+    <widget class="QLineEdit" name="input_price">
       <property name="geometry">
         <rect>
-          <x>290</x>
+          <x>270</x>
           <y>90</y>
-          <width>71</width>
+          <width>91</width>
           <height>20</height>
         </rect>
       </property>
@@ -177,13 +181,10 @@
         </font>
       </property>
       <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77);</string>
+        <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
       </property>
-      <property name="minimum">
-        <double>0.000000000000000</double>
-      </property>
-      <property name="maximum">
-        <double>99999.000000000000000</double>
+      <property name="placeholderText">
+        <string>0</string>
       </property>
     </widget>
   </widget>

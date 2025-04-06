@@ -47,7 +47,7 @@
           <rect>
             <x>20</x>
             <y>310</y>
-            <width>171</width>
+            <width>181</width>
             <height>17</height>
           </rect>
         </property>
@@ -289,7 +289,7 @@
           <string>Себестоимость</string>
         </property>
       </widget>
-      <widget class="QSpinBox" name="input_hours">
+      <widget class="QLineEdit" name="input_hours">
         <property name="geometry">
           <rect>
             <x>180</x>
@@ -298,46 +298,16 @@
             <height>20</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            padding-right: 5px;  
-            text-align: right; 
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhDigitsOnly</set>
-        </property>
-        <property name="minimum">
-          <number>0</number>
-        </property>
-        <property name="maximum">
-          <number>999</number>
-        </property>
-        <property name="value">
-          <number>0</number>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
       <widget class="QLabel" name="text_time_hours">
@@ -365,7 +335,7 @@
           <string>ч.</string>
         </property>
       </widget>
-      <widget class="QSpinBox" name="input_minutes">
+      <widget class="QLineEdit" name="input_minutes">
         <property name="geometry">
           <rect>
             <x>260</x>
@@ -374,46 +344,16 @@
             <height>21</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            padding-right: 5px;
-            text-align: right; 
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhDigitsOnly</set>
-        </property>
-        <property name="minimum">
-          <number>0</number>
-        </property>
-        <property name="maximum">
-          <number>999</number>
-        </property>
-        <property name="value">
-          <number>0</number>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
       <widget class="QLabel" name="text_time_minuts">
@@ -441,7 +381,7 @@
           <string>мин.</string>
         </property>
       </widget>
-      <widget class="QSpinBox" name="input_gram">
+      <widget class="QLineEdit" name="input_gram">
         <property name="geometry">
           <rect>
             <x>230</x>
@@ -450,49 +390,19 @@
             <height>20</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            padding-right: 15px;  
-            text-align: right;                                                                                                                                                                                                                         <!-- Увеличен отступ для 5 цифр -->
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhDigitsOnly</set>
-        </property>
-        <property name="minimum">
-          <number>0</number>
-        </property>
-        <property name="maximum">
-          <number>99999</number>
-        </property>
-        <property name="value">
-          <number>0</number>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
-      <widget class="QSpinBox" name="input_things">
+      <widget class="QLineEdit" name="input_things">
         <property name="geometry">
           <rect>
             <x>230</x>
@@ -501,160 +411,58 @@
             <height>20</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            padding-right: 15px;
-            text-align: right; 
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhDigitsOnly</set>
-        </property>
-        <property name="minimum">
-          <number>0</number>
-        </property>
-        <property name="maximum">
-          <number>100000</number>
-        </property>
-        <property name="value">
-          <number>0</number>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
-      <widget class="QDoubleSpinBox" name="input_mod">
+      <widget class="QLineEdit" name="input_mod">
         <property name="geometry">
           <rect>
             <x>220</x>
-            <y>370</y>
+            <y>375</y>
             <width>95</width>
             <height>20</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            padding-right: 15px;
-            text-align: right; 
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhFormattedNumbersOnly</set>
-        </property>
-        <property name="decimals">
-          <number>2</number>
-        </property>
-        <property name="minimum">
-          <double>0.00</double>
-        </property>
-        <property name="maximum">
-          <double>100000.00</double>
-        </property>
-        <property name="singleStep">
-          <double>1.00</double>
-        </property>
-        <property name="value">
-          <double>0.00</double>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
-      <widget class="QDoubleSpinBox" name="input_post">
+      <widget class="QLineEdit" name="input_post">
         <property name="geometry">
           <rect>
             <x>220</x>
-            <y>400</y>
+            <y>405</y>
             <width>95</width>
             <height>20</height>
           </rect>
         </property>
-        <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-          </sizepolicy>
-        </property>
         <property name="font">
           <font>
             <pointsize>10</pointsize>
-            <bold>true</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
         </property>
-        <property name="acceptDrops">
-          <bool>false</bool>
-        </property>
-        <property name="toolTipDuration">
-          <number>0</number>
-        </property>
-        <property name="autoFillBackground">
-          <bool>false</bool>
-        </property>
         <property name="styleSheet">
-          <string notr="true">
-            background-color: rgb(77, 77, 77);
-            text-align: right; 
-            padding-right: 15px;
-          </string>
+          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
         </property>
-        <property name="inputMethodHints">
-          <set>Qt::InputMethodHint::ImhFormattedNumbersOnly</set>
-        </property>
-        <property name="decimals">
-          <number>2</number>          <!-- 2 знака после запятой -->
-        </property>
-        <property name="minimum">
-          <double>0.00</double>
-        </property>
-        <property name="maximum">
-          <double>100000.00</double>
-        </property>
-        <property name="singleStep">
-          <double>1.00</double>
-        </property>
-        <property name="value">
-          <double>0.00</double>
+        <property name="placeholderText">
+          <string>0</string>
         </property>
       </widget>
       <widget class="QLabel" name="text_gram">
@@ -890,7 +698,7 @@
         <property name="geometry">
           <rect>
             <x>20</x>
-            <y>370</y>
+            <y>375</y>
             <width>141</width>
             <height>17</height>
           </rect>
@@ -915,7 +723,7 @@
         <property name="geometry">
           <rect>
             <x>20</x>
-            <y>400</y>
+            <y>405</y>
             <width>121</width>
             <height>17</height>
           </rect>
