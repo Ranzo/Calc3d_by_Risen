@@ -60,14 +60,18 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   connect(ui->get_result_btn, &QPushButton::clicked, this, [this]() {
     QString printerName = ui->printer_menu->currentText();
     QString plasticName = ui->plastic_menu->currentText();
-    auto [cost, total] =
-        facade->calculate(printerName, plasticName, ui->input_hours->value(),
-                          ui->input_minutes->value(), ui->input_gram->value(),
-                          ui->input_things->value(), ui->input_post->value(),
-                          ui->input_mod->value());
+    try {
+      auto [cost, total] =
+          facade->calculate(printerName, plasticName, ui->input_hours->value(),
+                            ui->input_minutes->value(), ui->input_gram->value(),
+                            ui->input_things->value(), ui->input_post->value(),
+                            ui->input_mod->value());
 
-    ui->lcd_result_total->display(QString::number(total, 'f', 2));
-    ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
+      ui->lcd_result_total->display(QString::number(total, 'f', 2));
+      ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
+    } catch (const FacadeException &exc) {
+      QMessageBox::warning(this, "Ошибка", exc.what());
+    }
   });
 
   connect(ui->exit_btn, &QPushButton::clicked, this, [this]() { close(); });

@@ -61,4 +61,6 @@ class Facade {
   std::unique_ptr<SettingPreset> settingPreset;
 
   Facade();
+
+  void checkParams(Params &param);
 };

@@ -5,8 +5,7 @@ std::shared_ptr<Facade> Facade::GetInstance() {
   return instance;
 }
 
-bool Facade::addPrinter(const QString &name, int power, int age,
-                        double cost) {
+bool Facade::addPrinter(const QString &name, int power, int age, double cost) {
   return printerDB->addPrinter(name, power, age, cost);
 }
 
@@ -33,28 +32,70 @@ std::pair<double, double> Facade::calculate(const QString &printerName,
   auto printerData = printerDB->getPrinterByName(printerName);
   auto plasticData = plasticDB->getPlasticByName(plasticName);
   auto settingsData = settingPreset->getSettings();
+
+  if (min < 0 || hrs < 0)
+    throw FacadeException("Проверьте правильность запонения полей времени");
   min = hrs * 60 + min;
 
   // Заполнение структуры Params
   Params params;
-  params.p = printerData["power"].toInt();  // номинальная мощность
-  params.t = min;                              // время печати
-  params.h = settingsData["tarif"].toDouble();  // тариф
-  params.md = detailWeight;                     // вес детали
+  params.p = printerData["power"].toInt();       // номинальная мощность
+  params.t = min;                                // время печати
+  params.h = settingsData["tarif"].toDouble();   // тариф
+  params.md = detailWeight;                      // вес детали
   params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
-  params.st = plasticData["cost"].toDouble();  // стоимость катушки
-  params.mk = plasticData["weight"].toInt();  // вес катушки
-  if (params.mk < 1e-10 || params.mk < quantity * detailWeight) { 
-    
-  }
-  params.a = printerData["cost"].toDouble();  // стоимость принтера
-  params.post = post;                         // постобработка
-  params.x = quantity;                        // количество
+  params.st = plasticData["cost"].toDouble();    // стоимость катушки
+  params.mk = plasticData["weight"].toInt();     // вес катушки
+  params.a = printerData["cost"].toDouble();     // стоимость принтера
+  params.post = post;                            // постобработка
+  params.x = quantity;                           // количество
   params.marge = settingsData["overprice"].toDouble();  // наценка
-  params.mod = mod;                            // моделирование
-  params.spi = printerData["age"].toDouble();  // срок использования
-  
+  params.mod = mod;                                     // моделирование
+  params.spi = printerData["age"].toDouble();           // срок использования
+
+  checkParams(params);
+
   return Calculator::calculateCostAndTotalPrice(params);
+}
+
+void Facade::checkParams(Params &param) {
+  if (param.p < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Мощность");
+  if (param.t < 1)
+    throw FacadeException("Проверьте правильность заполнения полей времени");
+  if (param.h < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Тариф");
+  if (param.md <= 0.01)
+    throw FacadeException("Проверьте правильность заполнения поля Вес детали");
+  if (param.d < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Коэффициент выбраковки");
+  if (param.st < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость катушки");
+  if (param.mk < 1)
+    throw FacadeException("Проверьте правильность заполнения поля Вес катушки");
+  if (param.mk < param.md * param.x)
+    throw FacadeException(
+        QString("В катушке недостаточно пластика для печати %1 деталей")
+            .arg(param.x));
+  if (param.a < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость принтера");
+  if (param.post < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Стоимость постобработки");
+  if (param.x < 1)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Количество деталей");
+  if (param.marge < 0)
+    throw FacadeException("Проверьте правильность заполнения поля Наценка");
+  if (param.mod < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Моделирование");
+  if (param.spi < 0)
+    throw FacadeException(
+        "Проверьте правильность заполнения поля Срок полезного использования");
 }
 
 void Facade::updateSettings(double tarif, double qTrash, double overprice) {
