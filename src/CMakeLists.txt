@@ -45,16 +45,17 @@ set(MAIN_SOURCES
         view/ui/add_plastic.ui
         view/ui/del_plastic.ui
 
-        logic/printer_db.cpp
-        logic/printer_db.h
-        logic/plastic_db.cpp
-        logic/plastic_db.h
+        storage/printer_db.cpp
+        storage/printer_db.h
+        storage/plastic_db.cpp
+        storage/plastic_db.h
+        storage/setting_preset.cpp
+        storage/setting_preset.h
+
         logic/calculator.cpp
         logic/calculator.h
         logic/facade.cpp
-        logic/facade.h 
-        logic/setting_preset.cpp
-        logic/setting_preset.h
+        logic/facade.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

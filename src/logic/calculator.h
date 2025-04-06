@@ -3,34 +3,34 @@
 #include <cmath>
 #include <utility>
 
+struct Params {
+  int p;         // номинальная мощность принтера
+  int t;         // время печати, в минутах
+  double h;      // тариф электроэнергии
+  double md;     // вес детали
+  double d;      // коэффициент выбраковки
+  double st;     // стоимость катушки
+  int mk;        // вес катушки
+  double a;      // стоимость принтера
+  double post;   // стоимость постобработки
+  int x;         // количество экземпляров
+  double marge;  // наценка
+  double mod;    // стоимость моделирования
+  double spi;    // срок полезного использования
+};
+
 class Calculator {
  public:
   Calculator() = delete;
 
-  // p - номинальная мощность принтера
-  // h - тариф электроэнергии
-  // d - коэффициент выбраковки
-  // st - стоимость катушки
-  // mk - вес катушки
-  // md - вес детали
-  // marge - наценка
-  // x - количество экземпляров
-  // mod - стоимость моделирования
-  // t - время печати, в минутах
-  // a - стоимость принтера
-  // spi - срок полезного использования
-  static std::pair<double, double> calculateCostAndTotalPrice(
-      double p, int t, double h, double md, double d, double st, double mk,
-      double a, double post, int x, double marge, double mod, double spi);
+  static std::pair<double, double> calculateCostAndTotalPrice(Params& param);
 
  private:
-  static double calcCostPrice(double p, double t, double h, double md, double d,
-                              double st, double mk, double am, double post,
-                              int x);
+  static double calcCostPrice(Params& param);
 
-  static double calcTotalPrice(double cost, double mod, double margin);
+  static double calcTotalPrice(Params& param, double costPrice);
 
-  static double calcAmortization(double a, double t, double spi);
+  static double calcAmortization(double a, int t, double spi);
 
  private:
   static constexpr double MINUTES_PER_YEAR = 525600.0;

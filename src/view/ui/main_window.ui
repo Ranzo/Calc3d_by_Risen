@@ -1025,12 +1025,12 @@
     </action>
     <action name="add_plastic">
       <property name="text">
-        <string>Добавить принтер</string>
+        <string>Добавить катушку</string>
       </property>
     </action>
     <action name="del_plastic">
       <property name="text">
-        <string>Удалить/изменить принтер</string>
+        <string>Удалить/изменить катушку</string>
       </property>
     </action>
     <action name="action_3">

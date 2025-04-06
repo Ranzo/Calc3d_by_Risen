@@ -8,10 +8,10 @@
 #include <stdexcept>
 #include <string>
 
+#include "../storage/plastic_db.h"
+#include "../storage/printer_db.h"
+#include "../storage/setting_preset.h"
 #include "calculator.h"
-#include "plastic_db.h"
-#include "printer_db.h"
-#include "setting_preset.h"
 
 class FacadeException : public std::runtime_error {
  public:
@@ -30,28 +30,28 @@ class Facade {
   static std::shared_ptr<Facade> GetInstance();
 
   // Функции для работы с принтерами
-  bool addPrinter(const QString &name, double power, int age, double cost);
+  bool addPrinter(const QString &name, int power, int age, double cost);
   QList<QString> getPrinterList();
   bool deletePrinterByName(const QString &name);
   void updatePrinterByName(const QString &oldName, const QString &newName,
-                           double power, int weight, double cost);
+                           int power, int weight, double cost);
   QHash<QString, QVariant> getPrinterByName(const QString &name);
 
   // Функции для работы с катушками
-  bool addPlastic(const QString &name, double weight, double cost);
+  bool addPlastic(const QString &name, int weight, double cost);
   QList<QString> getPlasticList();
   bool deletePlasticByName(const QString &name);
   void updatePlasticByName(const QString &oldName, const QString &newName,
-                           double weight, double cost);
+                           int weight, double cost);
   QHash<QString, QVariant> getPlasticByName(const QString &name);
 
   // Функции для работы с пресетами
-  void updateSettings(double tarif, double qTrash, double pricePlastik,
-                      double overprice, int weightPlastik);
+  void updateSettings(double tarif, double qTrash, double overprice);
   QHash<QString, QVariant> getSettings();
 
   // Функции для расчетов
-  std::pair<double, double> calculate(const QString &printerName, int hrs,
+  std::pair<double, double> calculate(const QString &printerName,
+                                      const QString &plasticName, int hrs,
                                       int min, double detailWeight,
                                       int quantity, double post, double mod);
 
@@ -61,4 +61,6 @@ class Facade {
   std::unique_ptr<SettingPreset> settingPreset;
 
   Facade();
+
+  void checkParams(Params &param);
 };
