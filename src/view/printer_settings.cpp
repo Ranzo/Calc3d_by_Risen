@@ -7,10 +7,27 @@ PrinterSettingsDialog::PrinterSettingsDialog(QWidget *parent)
   ui->setupUi(this);
   setFixedSize(size());
 
+  // Валидатор дробные 0.00 - 9,999,999.99
+  QRegularExpression doubleRegex("^(0|([1-9]\\d{0,6}))([.,]\\d{2})?$");
+
+  ui->input_tarif->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+  ui->input_q_trash->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+  ui->input_overprice->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+
   connect(ui->save, &QPushButton::clicked, this, [this]() {
-    double tarif = ui->input_tarif->value();
-    double qTrash = ui->input_q_trash->value();
-    double overprice = ui->input_overprice->value();
+    bool checkTarif, checkQTrash, checkOverprice;
+
+    double tarif = ui->input_tarif->text().toDouble(&checkTarif);
+    double qTrash = ui->input_q_trash->text().toDouble(&checkQTrash);
+    double overprice = ui->input_overprice->text().toDouble(&checkOverprice);
+
+    if (!checkTarif || !checkQTrash || !checkOverprice) {
+      QMessageBox::warning(this, "Ошибка", "Проверьте корректность данных");
+      return;
+    }
 
     emit settingsSaved(tarif, qTrash, overprice);
     accept();
@@ -25,11 +42,12 @@ void PrinterSettingsDialog::loadSettings(QHash<QString, QVariant> settings) {
     return;
   }
   if (settings.contains("tarif"))
-    ui->input_tarif->setValue(settings.value("tarif").toDouble());
+    ui->input_tarif->setText(QString::number(settings["tarif"].toDouble()));
   if (settings.contains("qTrash"))
-    ui->input_q_trash->setValue(settings.value("qTrash").toDouble());
+    ui->input_q_trash->setText(QString::number(settings["qTrash"].toDouble()));
   if (settings.contains("overprice"))
-    ui->input_overprice->setValue(settings.value("overprice").toDouble());
+    ui->input_overprice->setText(
+        QString::number(settings["overprice"].toDouble()));
 }
 
 PrinterSettingsDialog::~PrinterSettingsDialog() { delete ui; }

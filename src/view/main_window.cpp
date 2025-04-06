@@ -20,6 +20,8 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   refreshPrinterList();
   refreshPlasticList();
 
+  setValidators();
+
   printerSettings->loadSettings(facade->getSettings());
 
   connect(ui->settings_2, &QAction::triggered, this,
@@ -61,11 +63,13 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
     QString printerName = ui->printer_menu->currentText();
     QString plasticName = ui->plastic_menu->currentText();
     try {
-      auto [cost, total] =
-          facade->calculate(printerName, plasticName, ui->input_hours->value(),
-                            ui->input_minutes->value(), ui->input_gram->value(),
-                            ui->input_things->value(), ui->input_post->value(),
-                            ui->input_mod->value());
+      auto [cost, total] = facade->calculate(
+          printerName, plasticName, ui->input_hours->text().toInt(),
+          ui->input_minutes->text().toInt(),
+          ui->input_gram->text().replace(",", ".").toDouble(),
+          ui->input_things->text().toInt(),
+          ui->input_post->text().replace(",", ".").toDouble(),
+          ui->input_mod->text().replace(",", ".").toDouble());
 
       ui->lcd_result_total->display(QString::number(total, 'f', 2));
       ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
@@ -189,4 +193,22 @@ void MainWindow::refreshPlasticList() {
       ui->plastic_menu->setCurrentIndex(idx != -1 ? idx : -1);
     }
   }
+}
+
+void MainWindow::setValidators() {
+  QRegularExpression integerRegex("^(0|[1-9]\\d{0,6})$");
+  QRegularExpression doubleRegex("^(0|([1-9]\\d{0,6}))([.,]\\d{2})?$");
+
+  ui->input_hours->setValidator(
+      new QRegularExpressionValidator(integerRegex, this));
+  ui->input_minutes->setValidator(
+      new QRegularExpressionValidator(integerRegex, this));
+  ui->input_gram->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+  ui->input_things->setValidator(
+      new QRegularExpressionValidator(integerRegex, this));
+  ui->input_post->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+  ui->input_mod->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
 }

@@ -7,21 +7,36 @@ AddPrinterDialog::AddPrinterDialog(QWidget* parent)
   ui->setupUi(this);
   setFixedSize(size());
 
-  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
-    QString name = ui->input_name->toPlainText().trimmed();
-    double power = ui->input_power->value();
-    double age = ui->input_age->value();
-    double cost = ui->input_price->value();
+  // Валидатор целые числа 0-9,999,999
+  QRegularExpression integerRegex("^(0|[1-9]\\d{0,6})$");
+  // Валидатор дробные 0.00 - 9,999,999.99
+  QRegularExpression doubleRegex("^(0|([1-9]\\d{0,6}))([.,]\\d{2})?$");
 
-    if (name.isEmpty())
-      QMessageBox::warning(this, "Ошибка", "Заполните все поля");
-    else {
-      if (status == PresetDialogStatus::Edit)
-        emit printerEdited(oldName, name, power, age, cost);
-      else
-        emit printerAdded(name, power, age, cost);
-      close();
+  ui->input_power->setValidator(
+      new QRegularExpressionValidator(integerRegex, this));
+  ui->input_age->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+  ui->input_price->setValidator(
+      new QRegularExpressionValidator(doubleRegex, this));
+
+  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
+    QString name = ui->input_name->text().trimmed();
+
+    bool checkPower, checkPrice, checkAge;
+    double power = ui->input_power->text().toInt(&checkPower);
+    double age = ui->input_age->text().toDouble(&checkAge);
+    double cost = ui->input_price->text().toDouble(&checkPrice);
+
+    if (name.isEmpty() || !checkPower || !checkAge || !checkPrice) {
+      QMessageBox::warning(this, "Ошибка", "Проверьте корректность данных");
+      return;
     }
+
+    if (status == PresetDialogStatus::Edit)
+      emit printerEdited(oldName, name, power, age, cost);
+    else
+      emit printerAdded(name, power, age, cost);
+    close();
   });
 
   connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
@@ -32,9 +47,9 @@ void AddPrinterDialog::setAddMode() {
   setWindowTitle("Добавить принтер");
 
   ui->input_name->clear();
-  ui->input_power->setValue(0.0);
-  ui->input_age->setValue(0.0);
-  ui->input_price->setValue(0.0);
+  ui->input_power->clear();
+  ui->input_age->clear();
+  ui->input_price->clear();
 }
 
 void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
@@ -43,13 +58,15 @@ void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
 
   if (preset.contains("name")) {
     ui->input_name->setText(preset["name"].toString());
-    oldName = ui->input_name->toPlainText().trimmed();
+    oldName = preset["name"].toString();
   }
   if (preset.contains("power"))
-    ui->input_power->setValue(preset["power"].toDouble());
-  if (preset.contains("age")) ui->input_age->setValue(preset["age"].toInt());
+    ui->input_power->setText(QString::number(preset["weight"].toInt()));
+  if (preset.contains("age"))
+    ui->input_age->setText(QString::number(preset["age"].toInt()));
   if (preset.contains("cost"))
-    ui->input_price->setValue(preset["cost"].toDouble());
+    ui->input_price->setText(
+        QString::number(preset["cost"].toDouble(), 'f', 2));
 }
 
 AddPrinterDialog::~AddPrinterDialog() { delete ui; }
