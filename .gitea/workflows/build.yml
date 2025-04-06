@@ -71,9 +71,11 @@ jobs:
             "https://git.corp.s21party.ru/api/v1/repos/risen/Calc3D_by_Risen/releases/tags/1.0.0b" ^            
             -H "Accept: application/json" ^
             -o release.json
-          for /f "tokens=2 delims=:," %%i in ('findstr /C:"\"url\"" release.json') do set URL=%%i
-          echo "URL=%URL%" >> %GITHUB_ENV%
-          echo "Found Release ID: %URL%"
+          for /f "tokens=2 delims=:," %%i in ('findstr /C:"\"url\"" release.json') do set "RELEASE_URL=%%i"
+          set "RELEASE_URL=%RELEASE_URL:"=%
+          set "RELEASE_URL=%RELEASE_URL:,=%"
+          echo "RELEASE_URL=%RELEASE_URL%" >> %GITHUB_ENV%
+          echo "Found Release URL: %RELEASE_URL%"%"
           
 #          echo "Uploading to Gitea"
 #          echo "URL: https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/%RELEASE_ID%/assets?name=Calc3D_Release.zip"
