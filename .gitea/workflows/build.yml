@@ -65,6 +65,7 @@ jobs:
       - name: Upload to Gitea Release
         run: |
           echo "Fetching release ID for tag 1.0.0b"
+          echo "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" \
           curl -X GET \
             "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" \
             -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
