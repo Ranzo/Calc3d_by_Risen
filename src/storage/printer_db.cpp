@@ -17,10 +17,10 @@ bool PrinterDB::init() {
   query.exec(
       "CREATE TABLE IF NOT EXISTS printers ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "name TEXT NOT NULL UNIQUE,"
-      "power REAL NOT NULL,"
-      "age REAL NOT NULL,"
-      "cost REAL NOT NULL)");
+      "name TEXT UNIQUE,"
+      "power REAL,"
+      "age REAL,"
+      "cost REAL)");
 
   return true;
 }

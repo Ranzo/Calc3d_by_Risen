@@ -17,9 +17,9 @@ bool PlasticDB::init() {
   query.exec(
       "CREATE TABLE IF NOT EXISTS plastics ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "name TEXT NOT NULL UNIQUE,"
-      "weight REAL NOT NULL,"
-      "cost REAL NOT NULL)");
+      "name TEXT UNIQUE,"
+      "weight REAL,"
+      "cost REAL)");
 
   return true;
 }
