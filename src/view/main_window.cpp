@@ -61,6 +61,13 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   connect(ui->get_result_btn, &QPushButton::clicked, this, [this]() {
     QString printerName = ui->printer_menu->currentText();
     QString plasticName = ui->plastic_menu->currentText();
+
+    if (printerName.isEmpty() || plasticName.isEmpty()) {
+      QMessageBox::warning(this, "Ошибка",
+                           "Убедитесь, что принтер и катушка выбраны");
+      return;
+    }
+
     try {
       auto [cost, total] = facade->calculate(
           printerName, plasticName, ui->input_hours->text().toInt(),
@@ -180,13 +187,12 @@ void MainWindow::refreshPrinterList() {
     ui->printer_menu->setCurrentIndex(-1);
     ui->printer_menu->setPlaceholderText("Выбор принтера");
     return;
-
-    if (isEmpty)
-      ui->printer_menu->setCurrentIndex(0);
-    else {
-      int idx = ui->printer_menu->findText(currentPrinter);
-      ui->printer_menu->setCurrentIndex(idx != -1 ? idx : -1);
-    }
+  }
+  if (isEmpty)
+    ui->printer_menu->setCurrentIndex(0);
+  else {
+    int idx = ui->printer_menu->findText(currentPrinter);
+    ui->printer_menu->setCurrentIndex(idx != -1 ? idx : -1);
   }
 }
 
@@ -202,13 +208,12 @@ void MainWindow::refreshPlasticList() {
     ui->plastic_menu->setCurrentIndex(-1);
     ui->plastic_menu->setPlaceholderText("Выбор катушки");
     return;
-
-    if (isEmpty)
-      ui->plastic_menu->setCurrentIndex(0);
-    else {
-      int idx = ui->plastic_menu->findText(currentPrinter);
-      ui->plastic_menu->setCurrentIndex(idx != -1 ? idx : -1);
-    }
+  }
+  if (isEmpty)
+    ui->plastic_menu->setCurrentIndex(0);
+  else {
+    int idx = ui->plastic_menu->findText(currentPrinter);
+    ui->plastic_menu->setCurrentIndex(idx != -1 ? idx : -1);
   }
 }
 
