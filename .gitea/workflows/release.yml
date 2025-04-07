@@ -8,7 +8,7 @@ on:
 
 jobs:
   release:
-    runs-on: testing-bots
+    runs-on: lin-builder
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Download variables and Linux artifact

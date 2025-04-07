@@ -59,7 +59,7 @@ jobs:
           path: Release/${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}.zip
 
   build-linux:
-    runs-on: testing-bots
+    runs-on: lin-builder
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
