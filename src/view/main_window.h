@@ -34,9 +34,8 @@ class MainWindow : public QMainWindow {
   UpdatesDialog *updateInfo;
   PrinterSettingsDialog *printerSettings;
   AddPrinterDialog *addPrinterDialog;
-  // DeletePrinterDialog *deletePrinterDialog;
   AddPlasticDialog *addPlasticDialog;
-  DeletePlasticDialog *deletePlasticDialog;
+  DeleteListDialog *deleteListDialog;
 
   std::shared_ptr<Facade> facade;
 

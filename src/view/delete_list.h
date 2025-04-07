@@ -2,6 +2,7 @@
 #define DELLISTDIALOG_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QTableWidgetItem>
 
 namespace Ui {
@@ -10,12 +11,12 @@ class DelList;
 
 enum class ElemType { Printer, Plastic };
 
-class DeletePlasticDialog : public QDialog {
+class DeleteListDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit DeletePlasticDialog(QWidget *parent = nullptr);
-  ~DeletePlasticDialog();
+  explicit DeleteListDialog(QWidget *parent = nullptr);
+  ~DeleteListDialog();
 
   void loadList(ElemType type, const QList<QString> &data);
 
@@ -28,6 +29,7 @@ class DeletePlasticDialog : public QDialog {
 
  private:
   ElemType elemType;
+  static constexpr int iconSize = 35;
 
   void setupTable();
   Ui::DelList *ui;

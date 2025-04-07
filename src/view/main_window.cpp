@@ -3,8 +3,7 @@
 #include "ui/ui_main_window.h"
 
 MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-  facade = fcd;
+    : QMainWindow(parent), ui(new Ui::MainWindow), facade(fcd) {
   ui->setupUi(this);
   setFixedSize(373, 521);
 
@@ -13,9 +12,8 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   updateInfo = new UpdatesDialog(this);
   printerSettings = new PrinterSettingsDialog(this);
   addPrinterDialog = new AddPrinterDialog(this);
-  // deletePlasticDialog = new DeletePrinterDialog(this);
   addPlasticDialog = new AddPlasticDialog(this);
-  deletePlasticDialog = new DeletePlasticDialog(this);
+  deleteListDialog = new DeleteListDialog(this);
 
   refreshPrinterList();
   refreshPlasticList();
@@ -39,15 +37,15 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
 
   connect(ui->del_printer, &QAction::triggered, this, [this]() {
     QList<QString> printers = facade->getPrinterList();
-    deletePlasticDialog->loadList(ElemType::Printer, printers);
-    deletePlasticDialog->exec();
+    deleteListDialog->loadList(ElemType::Printer, printers);
+    deleteListDialog->exec();
   });
 
   connect(ui->del_plastic, &QAction::triggered, this, [this]() {
     QList<QString> plastics = facade->getPlasticList();
-    deletePlasticDialog->loadList(ElemType::Plastic, plastics);
+    deleteListDialog->loadList(ElemType::Plastic, plastics);
 
-    deletePlasticDialog->exec();
+    deleteListDialog->exec();
   });
 
   connect(ui->action_3, &QAction::triggered, this, [this]() { close(); });
@@ -107,8 +105,15 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось добавить катушку");
           });
 
-  connect(deletePlasticDialog, &DeletePlasticDialog::deletePlasticRequested,
-          this, [this](const QString &name) {
+  connect(addPlasticDialog, &AddPlasticDialog::plasticEdited, this,
+          [this](const QString &oldName, const QString &newName, double weight,
+                 double cost) {
+            facade->updatePlasticByName(oldName, newName, weight, cost);
+            refreshPlasticList();
+          });
+
+  connect(deleteListDialog, &DeleteListDialog::deletePlasticRequested, this,
+          [this](const QString &name) {
             if (facade->deletePlasticByName(name))
               refreshPlasticList();
             else
@@ -116,18 +121,27 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
                                    "Не удалось удалить катушку");
           });
 
-  connect(deletePlasticDialog, &DeletePlasticDialog::editPlasticRequested, this,
+  connect(deleteListDialog, &DeleteListDialog::editPlasticRequested, this,
           [this](const QString &name) {
             auto preset = facade->getPlasticByName(name);
             addPlasticDialog->setEditMode(preset);
             addPlasticDialog->exec();
           });
 
-  connect(addPlasticDialog, &AddPlasticDialog::plasticEdited, this,
-          [this](const QString &oldName, const QString &newName, double weight,
-                 double cost) {
-            facade->updatePlasticByName(oldName, newName, weight, cost);
-            refreshPlasticList();
+  connect(deleteListDialog, &DeleteListDialog::deletePrinterRequested, this,
+          [this](const QString &name) {
+            if (facade->deletePrinterByName(name))
+              refreshPrinterList();
+            else
+              QMessageBox::warning(this, "Ошибка",
+                                   "Не удалось удалить принтер");
+          });
+
+  connect(deleteListDialog, &DeleteListDialog::editPrinterRequested, this,
+          [this](const QString &name) {
+            auto preset = facade->getPrinterByName(name);
+            addPrinterDialog->setEditMode(preset);
+            addPrinterDialog->exec();
           });
 
   connect(printerSettings, &PrinterSettingsDialog::settingsSaved, this,
@@ -145,7 +159,7 @@ void MainWindow::refreshPrinterList() {
   QList<QString> printers = facade->getPrinterList();
   ui->printer_menu->clear();
   ui->printer_menu->addItems(QStringList::fromList(printers));
-  deletePlasticDialog->loadList(ElemType::Printer, printers);
+  deleteListDialog->loadList(ElemType::Printer, printers);
   if (printers.isEmpty()) {
     ui->printer_menu->setCurrentIndex(-1);
     ui->printer_menu->setPlaceholderText("Выбор принтера");
@@ -167,7 +181,7 @@ void MainWindow::refreshPlasticList() {
   QList<QString> plastics = facade->getPlasticList();
   ui->plastic_menu->clear();
   ui->plastic_menu->addItems(QStringList::fromList(plastics));
-  deletePlasticDialog->loadList(ElemType::Plastic, plastics);
+  deleteListDialog->loadList(ElemType::Plastic, plastics);
   if (plastics.isEmpty()) {
     ui->plastic_menu->setCurrentIndex(-1);
     ui->plastic_menu->setPlaceholderText("Выбор катушки");

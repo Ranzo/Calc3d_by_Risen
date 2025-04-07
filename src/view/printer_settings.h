@@ -2,8 +2,8 @@
 #define PrinterSettingsDialog_H
 
 #include <QDialog>
-#include <QMessageBox>
 #include <QDoubleValidator>
+#include <QMessageBox>
 
 #include "ui/ui_printer_settings.h"
 
