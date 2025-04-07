@@ -75,7 +75,7 @@ jobs:
           Invoke-RestMethod -Uri $uploadUrl -Headers $headers -Method Post -Form @{attachment = Get-Item "Release/Calc3D_Release.zip"} -Verbose
 
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: testing-bots
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
