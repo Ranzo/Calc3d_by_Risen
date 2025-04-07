@@ -41,19 +41,19 @@ std::pair<double, double> Facade::calculate(const QString &printerName,
 
   // Заполнение структуры Params
   Params params;
-  params.p = printerData["power"].toInt();       // номинальная мощность
-  params.t = min;                                // время печати
-  params.h = settingsData["tarif"].toDouble();   // тариф
-  params.md = detailWeight;                      // вес детали
+  params.p = printerData["power"].toInt();  // номинальная мощность
+  params.t = min;                           // время печати
+  params.h = settingsData["tarif"].toDouble();  // тариф
+  params.md = detailWeight;                     // вес детали
   params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
-  params.st = plasticData["cost"].toDouble();    // стоимость катушки
-  params.mk = plasticData["weight"].toInt();     // вес катушки
-  params.a = printerData["cost"].toDouble();     // стоимость принтера
-  params.post = post;                            // постобработка
-  params.x = quantity;                           // количество
+  params.st = plasticData["cost"].toDouble();  // стоимость катушки
+  params.mk = plasticData["weight"].toInt();  // вес катушки
+  params.a = printerData["cost"].toDouble();  // стоимость принтера
+  params.post = post;                         // постобработка
+  params.x = quantity;                        // количество
   params.marge = settingsData["overprice"].toDouble();  // наценка
-  params.mod = mod;                                     // моделирование
-  params.spi = printerData["age"].toDouble();           // срок использования
+  params.mod = mod;                            // моделирование
+  params.spi = printerData["age"].toDouble();  // срок использования
 
   checkParams(params);
 
@@ -147,4 +147,12 @@ void Facade::updatePlasticByName(const QString &oldName, const QString &newName,
 
 QHash<QString, QVariant> Facade::getPlasticByName(const QString &name) {
   return plasticDB->getPlasticByName(name);
+}
+
+QHash<QString, QVariant> Facade::getUserLastChoice() {
+  return settingPreset->getUserLastChoice();
+}
+
+void Facade::updateUserChoice(QString &printer, QString &plastic) {
+  settingPreset->updateUserChoice(printer, plastic);
 }

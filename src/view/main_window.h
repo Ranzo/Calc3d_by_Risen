@@ -27,8 +27,12 @@ class MainWindow : public QMainWindow {
   MainWindow(std::shared_ptr<Facade> facade, QWidget *parent = nullptr);
   ~MainWindow();
 
+ protected:
+  void closeEvent(QCloseEvent *event) override;
+
  private:
   Ui::MainWindow *ui;
+
   AboutDialog *progInfo;
   FormulaDialog *formulaInfo;
   UpdatesDialog *updateInfo;
@@ -42,5 +46,7 @@ class MainWindow : public QMainWindow {
   void refreshPrinterList();
   void refreshPlasticList();
   void setValidators();
+  void setLastChoice();
+  void saveLastChoice();
 };
 #endif  // MAINWINDOW_H

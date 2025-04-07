@@ -31,3 +31,20 @@ QHash<QString, QVariant> SettingPreset::getSettings() {
 
   return settingData;
 }
+
+QHash<QString, QVariant> SettingPreset::getUserLastChoice() {
+  QHash<QString, QVariant> settingData;
+  QSettings settings(filePath, format);
+
+  settingData["lastPrinter"] = settings.value("lastPrinter", "").toString();
+  settingData["lastPlastic"] = settings.value("lastPlastic", "").toString();
+
+  return settingData;
+}
+
+void SettingPreset::updateUserChoice(QString& printer, QString& plastic) {
+  QSettings settings(filePath, format);
+
+  settings.setValue("lastPrinter", printer);
+  settings.setValue("lastPlastic", plastic);
+}

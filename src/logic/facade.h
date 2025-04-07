@@ -55,6 +55,10 @@ class Facade {
                                       int min, double detailWeight,
                                       int quantity, double post, double mod);
 
+  QHash<QString, QVariant> getUserLastChoice();
+
+  void updateUserChoice(QString &printer, QString &plastic);
+
  private:
   std::unique_ptr<PrinterDB> printerDB;
   std::unique_ptr<PlasticDB> plasticDB;

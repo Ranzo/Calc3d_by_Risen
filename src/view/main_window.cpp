@@ -18,6 +18,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   refreshPrinterList();
   refreshPlasticList();
 
+  setLastChoice();
   setValidators();
 
   printerSettings->loadSettings(facade->getSettings());
@@ -48,7 +49,10 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
     deleteListDialog->exec();
   });
 
-  connect(ui->action_3, &QAction::triggered, this, [this]() { close(); });
+  connect(ui->action_3, &QAction::triggered, this, [this]() {
+    saveLastChoice();
+    close();
+  });
 
   //    Action with menu "Помощь"
   connect(ui->check_update, &QAction::triggered, this,
@@ -84,7 +88,10 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
     }
   });
 
-  connect(ui->exit_btn, &QPushButton::clicked, this, [this]() { close(); });
+  connect(ui->exit_btn, &QPushButton::clicked, this, [this]() {
+    saveLastChoice();
+    close();
+  });
 
   // Ловля стороних сигналов
   connect(addPrinterDialog, &AddPrinterDialog::printerAdded, this,
@@ -173,6 +180,11 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
           });
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+  saveLastChoice();
+  event->accept();
+}
+
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::refreshPrinterList() {
@@ -233,4 +245,24 @@ void MainWindow::setValidators() {
       new QRegularExpressionValidator(doubleRegex, this));
   ui->input_mod->setValidator(
       new QRegularExpressionValidator(doubleRegex, this));
+}
+
+void MainWindow::setLastChoice() {
+  auto userChoice = facade->getUserLastChoice();
+
+  QString lastPrinter = userChoice["lastPrinter"].toString();
+  auto printerIndx = ui->printer_menu->findText(lastPrinter);
+  if (!lastPrinter.isEmpty() && printerIndx != -1)
+    ui->printer_menu->setCurrentIndex(printerIndx);
+
+  QString lastPlastic = userChoice["lastPlastic"].toString();
+  auto plasticIndx = ui->plastic_menu->findText(lastPlastic);
+  if (!lastPlastic.isEmpty() && plasticIndx != -1)
+    ui->plastic_menu->setCurrentIndex(plasticIndx);
+}
+
+void MainWindow::saveLastChoice() {
+  QString printer = ui->printer_menu->currentText().trimmed();
+  QString plastic = ui->plastic_menu->currentText().trimmed();
+  facade->updateUserChoice(printer, plastic);
 }
