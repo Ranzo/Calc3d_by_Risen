@@ -8,6 +8,10 @@ class SettingPreset {
 
   QHash<QString, QVariant> getSettings();
 
+  QHash<QString, QVariant> getUserLastChoice();
+
+  void updateUserChoice(QString& printer, QString& plastic);
+
  private:
   QString filePath;
   QSettings::Format format = QSettings::NativeFormat;

@@ -15,9 +15,13 @@
 
 class FacadeException : public std::runtime_error {
  public:
-  explicit FacadeException(const QString &message)
-      : std::runtime_error(message.toLocal8Bit().data()) {}
+  explicit FacadeException(const QString &msg)
+      : std::runtime_error(msg.toLocal8Bit().data()), message(msg) {}
   virtual ~FacadeException() noexcept = default;
+  const QString &getMessage() const { return message; }
+
+ private:
+  QString message;
 };
 
 class Facade {
@@ -30,17 +34,17 @@ class Facade {
   static std::shared_ptr<Facade> GetInstance();
 
   // Функции для работы с принтерами
-  bool addPrinter(const QString &name, int power, int age, double cost);
+  void addPrinter(const QString &name, int power, int age, double cost);
   QList<QString> getPrinterList();
-  bool deletePrinterByName(const QString &name);
+  void deletePrinterByName(const QString &name);
   void updatePrinterByName(const QString &oldName, const QString &newName,
                            int power, int weight, double cost);
   QHash<QString, QVariant> getPrinterByName(const QString &name);
 
   // Функции для работы с катушками
-  bool addPlastic(const QString &name, int weight, double cost);
+  void addPlastic(const QString &name, int weight, double cost);
   QList<QString> getPlasticList();
-  bool deletePlasticByName(const QString &name);
+  void deletePlasticByName(const QString &name);
   void updatePlasticByName(const QString &oldName, const QString &newName,
                            int weight, double cost);
   QHash<QString, QVariant> getPlasticByName(const QString &name);
@@ -54,6 +58,10 @@ class Facade {
                                       const QString &plasticName, int hrs,
                                       int min, double detailWeight,
                                       int quantity, double post, double mod);
+
+  QHash<QString, QVariant> getUserLastChoice();
+
+  void updateUserChoice(QString &printer, QString &plastic);
 
  private:
   std::unique_ptr<PrinterDB> printerDB;

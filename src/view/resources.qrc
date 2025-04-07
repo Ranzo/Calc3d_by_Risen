@@ -17,5 +17,9 @@
         <file>img/quantity.png</file>
         <file>img/time.png</file>
         <file>img/weight.png</file>
+        <file>img/edit_note.svg</file>
+        <file>img/delete.svg</file>
+        <file>img/edit_note.png</file>
+        <file>img/delete.png</file>
   </qresource>
 </RCC>

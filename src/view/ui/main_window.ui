@@ -304,7 +304,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -350,7 +350,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -374,7 +374,7 @@
         <property name="styleSheet">
           <string notr="true">
           color: rgb(255, 255, 255);
-          text-align: right; 
+          qproperty-alignment: 'AlignRight'; 
           </string>
         </property>
         <property name="text">
@@ -396,7 +396,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -417,7 +417,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -438,7 +438,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -459,7 +459,7 @@
           </font>
         </property>
         <property name="styleSheet">
-          <string notr="true">background-color: rgb(77, 77, 77); text-align: right;</string>
+          <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
         </property>
         <property name="placeholderText">
           <string>0</string>
@@ -483,7 +483,7 @@
         <property name="styleSheet">
           <string notr="true">
           color: rgb(255, 255, 255);
-          text-align: right; 
+          qproperty-alignment: 'AlignRight'; 
           </string>
         </property>
         <property name="text">
@@ -508,7 +508,7 @@
         <property name="styleSheet">
           <string notr="true">
           color: rgb(255, 255, 255);
-          text-align: right; 
+          qproperty-alignment: 'AlignRight'; 
           </string>
         </property>
         <property name="text">
@@ -533,7 +533,7 @@
         <property name="styleSheet">
           <string notr="true">
           color: rgb(255, 255, 255);
-          text-align: right; 
+          qproperty-alignment: 'AlignRight'; 
           </string>
         </property>
         <property name="text">
@@ -558,7 +558,7 @@
         <property name="styleSheet">
           <string notr="true">
           color: rgb(255, 255, 255);
-          text-align: right; 
+          qproperty-alignment: 'AlignRight'; 
           </string>
         </property>
         <property name="text">

@@ -27,21 +27,26 @@ class MainWindow : public QMainWindow {
   MainWindow(std::shared_ptr<Facade> facade, QWidget *parent = nullptr);
   ~MainWindow();
 
+ protected:
+  void closeEvent(QCloseEvent *event) override;
+
  private:
   Ui::MainWindow *ui;
+
   AboutDialog *progInfo;
   FormulaDialog *formulaInfo;
   UpdatesDialog *updateInfo;
   PrinterSettingsDialog *printerSettings;
   AddPrinterDialog *addPrinterDialog;
-  // DeletePrinterDialog *deletePrinterDialog;
   AddPlasticDialog *addPlasticDialog;
-  DeletePlasticDialog *deletePlasticDialog;
+  DeleteListDialog *deleteListDialog;
 
   std::shared_ptr<Facade> facade;
 
   void refreshPrinterList();
   void refreshPlasticList();
   void setValidators();
+  void setLastChoice();
+  void saveLastChoice();
 };
 #endif  // MAINWINDOW_H
