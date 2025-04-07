@@ -1,9 +1,4 @@
-name: Build Calc3D
-
-env:
-  RELEASE_TAG: 1.0.0b
-  RELEASE_NAME: Calc3D_by_Risen
-  QT_VERSION: 6.9.0
+name: Build and Release Calc3D
 
 on:
   push:
@@ -11,9 +6,10 @@ on:
       - master
 
 jobs:
-  build-windows:
+  build-and-release:
     runs-on: win_builder
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -50,79 +46,31 @@ jobs:
         shell: pwsh
         run: |
           Set-Location -Path "Release"
-          $zipName = "${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}.zip"
-          & "7z" a $zipName *
+          & "7z" a "Calc3D_Release.zip" *
+          Get-ChildItem
 
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}
-          path: Release/${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}.zip
-
-  build-linux:
-    runs-on: lin-builder
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
+      - name: Get Release URL
+        id: get_release
+        shell: pwsh
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential cmake libgl1-mesa-dev dpkg-dev wget file patchelf g++ libglu1-mesa-dev
-          wget -q "https://download.qt.io/archive/qt/${{ env.QT_VERSION }}/${{ env.QT_VERSION }}/qt-opensource-linux-x64-${{ env.QT_VERSION }}.run"
-          chmod +x qt-opensource-linux-x64-${{ env.QT_VERSION }}.run
-          ./qt-opensource-linux-x64-${{ env.QT_VERSION }}.run --script qt-installer-noninteractive.qs --platform minimal --verbose
-          sudo mv Qt /opt/Qt
-          echo "/opt/Qt/${{ env.QT_VERSION }}/gcc_64/bin" >> $GITHUB_PATH
-          echo "CMAKE_PREFIX_PATH=/opt/Qt/${{ env.QT_VERSION }}/gcc_64/lib/cmake" >> $GITHUB_ENV
+          Write-Host "Fetching release URL for tag 1.0.0b"
+          $headers = @{
+            "Authorization" = "token ${{ secrets.ACCESS_TOKEN }}"
+            "Accept" = "application/json"
+          }
+          $response = Invoke-RestMethod -Uri "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" -Headers $headers -Method Get
+          $releaseUrl = $response.url
+          Write-Host "Found Release URL: $releaseUrl"
+          echo "RELEASE_URL=$releaseUrl" >> $env:GITHUB_ENV
 
-      - name: Install linuxdeployqt
+      - name: Upload to Gitea Release
+        shell: pwsh
         run: |
-          wget -q https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
-          chmod +x linuxdeployqt-continuous-x86_64.AppImage
-          ./linuxdeployqt-continuous-x86_64.AppImage --appimage-extract
-          sudo mv squashfs-root/usr /opt/linuxdeployqt
-          sudo ln -sf /opt/linuxdeployqt/bin/linuxdeployqt /usr/local/bin/linuxdeployqt
-
-      - name: Configure CMake
-        run: |
-          mkdir -p build
-          cd build
-          cmake -DCMAKE_PREFIX_PATH=/opt/Qt/${{ env.QT_VERSION }}/gcc_64/lib/cmake/Qt6 ../src
-
-      - name: Build
-        run: |
-          cd build
-          make -j$(nproc)
-
-      - name: Prepare AppDir structure
-        run: |
-          mkdir -p AppDir/usr/bin
-          mkdir -p AppDir/usr/lib
-          mkdir -p AppDir/usr/share/applications
-          mkdir -p AppDir/usr/share/icons/hicolor/64x64/apps
-          cp build/Calc3D AppDir/usr/bin/
-          chmod +x AppDir/usr/bin/Calc3D
-          echo "[Desktop Entry]" > AppDir/usr/share/applications/calc3d.desktop
-          echo "Name=Calc3D" >> AppDir/usr/share/applications/calc3d.desktop
-          echo "Exec=Calc3D" >> AppDir/usr/share/applications/calc3d.desktop
-          echo "Type=Application" >> AppDir/usr/share/applications/calc3d.desktop
-          echo "Terminal=false" >> AppDir/usr/share/applications/calc3d.desktop
-          echo "Categories=Utility;" >> AppDir/usr/share/applications/calc3d.desktop
-
-      - name: Bundle dependencies with linuxdeployqt
-        run: |
-          linuxdeployqt AppDir/usr/share/applications/calc3d.desktop -bundle-non-qt-libs -no-copy-copyright-files
-
-      - name: Prepare Debian package structure
-        run: |
-          mkdir -p deb_package/DEBIAN
-          mkdir -p deb_package/usr
-          cp -r AppDir/usr/* deb_package/usr/
-          chmod +x deb_package/usr/bin/Calc3D
-          echo "Package: calc3d" > deb_package/DEBIAN/control
-          echo "Version: ${{ env.RELEASE_TAG }}" >> deb_package/DEBIAN/control
-          echo "Section: utils" >> deb_package/DEBIAN/control
-          echo "Priority: optional" >> deb_package/DEBIAN/control
-          echo "Architecture: amd64" >> deb_package/DEBIAN/control
-          echo "Maintainer
+          Write-Host "Uploading to Gitea"
+          $uploadUrl = "${{ env.RELEASE_URL }}/assets?name=Calc3D_Release.zip"
+          Write-Host "URL: $uploadUrl"
+          $headers = @{
+            "Authorization" = "token ${{ secrets.ACCESS_TOKEN }}"
+            "Content-Type" = "multipart/form-data"
+          }
+          Invoke-RestMethod -Uri $uploadUrl -Headers $headers -Method Post -Form @{attachment = Get-Item "Release/Calc3D_Release.zip"} -Verbose
