@@ -19,7 +19,7 @@ AddPrinterDialog::AddPrinterDialog(QWidget* parent)
   ui->input_price->setValidator(
       new QRegularExpressionValidator(doubleRegex, this));
 
-  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
+  connect(ui->actButton, &QPushButton::clicked, this, [this]() {
     QString name = ui->input_name->text().trimmed();
 
     bool checkPower, checkPrice, checkAge;
@@ -39,7 +39,7 @@ AddPrinterDialog::AddPrinterDialog(QWidget* parent)
     close();
   });
 
-  connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
+  connect(ui->rejectButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 void AddPrinterDialog::setAddMode() {
@@ -61,7 +61,7 @@ void AddPrinterDialog::setEditMode(QHash<QString, QVariant>& preset) {
     oldName = preset["name"].toString();
   }
   if (preset.contains("power"))
-    ui->input_power->setText(QString::number(preset["weight"].toInt()));
+    ui->input_power->setText(QString::number(preset["power"].toInt()));
   if (preset.contains("age"))
     ui->input_age->setText(QString::number(preset["age"].toInt()));
   if (preset.contains("cost"))

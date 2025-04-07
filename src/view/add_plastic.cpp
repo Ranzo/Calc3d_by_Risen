@@ -17,7 +17,7 @@ AddPlasticDialog::AddPlasticDialog(QWidget* parent)
   ui->input_price->setValidator(
       new QRegularExpressionValidator(doubleRegex, this));
 
-  connect(ui->pushButton, &QPushButton::clicked, this, [this]() {
+  connect(ui->actButton, &QPushButton::clicked, this, [this]() {
     QString name = ui->input_name->text().trimmed();
 
     bool checkWeight, checkPrice;
@@ -38,7 +38,7 @@ AddPlasticDialog::AddPlasticDialog(QWidget* parent)
     close();
   });
 
-  connect(ui->pushButton_2, &QPushButton::clicked, this, &QDialog::reject);
+  connect(ui->rejectButton, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 void AddPlasticDialog::setAddMode() {
