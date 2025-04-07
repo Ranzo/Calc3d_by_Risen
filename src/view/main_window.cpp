@@ -84,7 +84,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
       ui->lcd_result_total->display(QString::number(total, 'f', 2));
       ui->lcd_result_cost->display(QString::number(cost, 'f', 2));
     } catch (const FacadeException &exc) {
-      QMessageBox::warning(this, "Ошибка", exc.what());
+      QMessageBox::warning(this, "Ошибка", exc.getMessage());
     }
   });
 
@@ -100,7 +100,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->addPrinter(name, power, age, cost);
               refreshPrinterList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -111,7 +111,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->updatePrinterByName(oldName, newName, power, age, cost);
               refreshPrinterList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -121,7 +121,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->addPlastic(name, weight, cost);
               refreshPlasticList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -132,7 +132,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->updatePlasticByName(oldName, newName, weight, cost);
               refreshPlasticList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -142,7 +142,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->deletePlasticByName(name);
               refreshPlasticList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -159,7 +159,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
               facade->deletePrinterByName(name);
               refreshPrinterList();
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 
@@ -175,7 +175,7 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
             try {
               facade->updateSettings(tarif, qTrash, overprice);
             } catch (const FacadeException &exc) {
-              QMessageBox::warning(this, "Ошибка", exc.what());
+              QMessageBox::warning(this, "Ошибка", exc.getMessage());
             }
           });
 }

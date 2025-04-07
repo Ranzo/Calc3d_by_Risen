@@ -15,9 +15,13 @@
 
 class FacadeException : public std::runtime_error {
  public:
-  explicit FacadeException(const QString &message)
-      : std::runtime_error(message.toLocal8Bit().data()) {}
+  explicit FacadeException(const QString &msg)
+      : std::runtime_error(msg.toLocal8Bit().data()), message(msg) {}
   virtual ~FacadeException() noexcept = default;
+  const QString &getMessage() const { return message; }
+
+ private:
+  QString message;
 };
 
 class Facade {
