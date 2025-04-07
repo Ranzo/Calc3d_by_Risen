@@ -65,8 +65,8 @@ bool PrinterDB::deletePrinterByName(const QString &name) {
 }
 
 bool PrinterDB::updatePrinterByName(const QString &oldName,
-                                    const QString &newName, int power,
-                                    int age, double cost) {
+                                    const QString &newName, int power, int age,
+                                    double cost) {
   QSqlQuery query(db);
 
   query.prepare(

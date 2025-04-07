@@ -82,43 +82,54 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
   // Ловля стороних сигналов
   connect(addPrinterDialog, &AddPrinterDialog::printerAdded, this,
           [this](const QString &name, double power, int age, double cost) {
-            if (facade->addPrinter(name, power, age, cost))
+            try {
+              facade->addPrinter(name, power, age, cost);
               refreshPrinterList();
-            else
-              QMessageBox::warning(this, "Ошибка",
-                                   "Не удалось добавить принтер");
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(addPrinterDialog, &AddPrinterDialog::printerEdited, this,
           [this](const QString &oldName, const QString &newName, double power,
                  int age, double cost) {
-            facade->updatePrinterByName(oldName, newName, power, age, cost);
-            refreshPrinterList();
+            try {
+              facade->updatePrinterByName(oldName, newName, power, age, cost);
+              refreshPrinterList();
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(addPlasticDialog, &AddPlasticDialog::plasticAdded, this,
           [this](const QString &name, double weight, double cost) {
-            if (facade->addPlastic(name, weight, cost))
+            try {
+              facade->addPlastic(name, weight, cost);
               refreshPlasticList();
-            else
-              QMessageBox::warning(this, "Ошибка",
-                                   "Не удалось добавить катушку");
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(addPlasticDialog, &AddPlasticDialog::plasticEdited, this,
           [this](const QString &oldName, const QString &newName, double weight,
                  double cost) {
-            facade->updatePlasticByName(oldName, newName, weight, cost);
-            refreshPlasticList();
+            try {
+              facade->updatePlasticByName(oldName, newName, weight, cost);
+              refreshPlasticList();
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(deleteListDialog, &DeleteListDialog::deletePlasticRequested, this,
           [this](const QString &name) {
-            if (facade->deletePlasticByName(name))
+            try {
+              facade->deletePlasticByName(name);
               refreshPlasticList();
-            else
-              QMessageBox::warning(this, "Ошибка",
-                                   "Не удалось удалить катушку");
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(deleteListDialog, &DeleteListDialog::editPlasticRequested, this,
@@ -130,11 +141,12 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
 
   connect(deleteListDialog, &DeleteListDialog::deletePrinterRequested, this,
           [this](const QString &name) {
-            if (facade->deletePrinterByName(name))
+            try {
+              facade->deletePrinterByName(name);
               refreshPrinterList();
-            else
-              QMessageBox::warning(this, "Ошибка",
-                                   "Не удалось удалить принтер");
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 
   connect(deleteListDialog, &DeleteListDialog::editPrinterRequested, this,
@@ -146,7 +158,11 @@ MainWindow::MainWindow(std::shared_ptr<Facade> fcd, QWidget *parent)
 
   connect(printerSettings, &PrinterSettingsDialog::settingsSaved, this,
           [this](double tarif, double qTrash, double overprice) {
-            facade->updateSettings(tarif, qTrash, overprice);
+            try {
+              facade->updateSettings(tarif, qTrash, overprice);
+            } catch (const FacadeException &exc) {
+              QMessageBox::warning(this, "Ошибка", exc.what());
+            }
           });
 }
 

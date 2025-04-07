@@ -30,17 +30,17 @@ class Facade {
   static std::shared_ptr<Facade> GetInstance();
 
   // Функции для работы с принтерами
-  bool addPrinter(const QString &name, int power, int age, double cost);
+  void addPrinter(const QString &name, int power, int age, double cost);
   QList<QString> getPrinterList();
-  bool deletePrinterByName(const QString &name);
+  void deletePrinterByName(const QString &name);
   void updatePrinterByName(const QString &oldName, const QString &newName,
                            int power, int weight, double cost);
   QHash<QString, QVariant> getPrinterByName(const QString &name);
 
   // Функции для работы с катушками
-  bool addPlastic(const QString &name, int weight, double cost);
+  void addPlastic(const QString &name, int weight, double cost);
   QList<QString> getPlasticList();
-  bool deletePlasticByName(const QString &name);
+  void deletePlasticByName(const QString &name);
   void updatePlasticByName(const QString &oldName, const QString &newName,
                            int weight, double cost);
   QHash<QString, QVariant> getPlasticByName(const QString &name);

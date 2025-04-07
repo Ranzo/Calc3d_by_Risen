@@ -5,19 +5,21 @@ std::shared_ptr<Facade> Facade::GetInstance() {
   return instance;
 }
 
-bool Facade::addPrinter(const QString &name, int power, int age, double cost) {
-  return printerDB->addPrinter(name, power, age, cost);
+void Facade::addPrinter(const QString &name, int power, int age, double cost) {
+  if (!printerDB->addPrinter(name, power, age, cost))
+    throw FacadeException("Принтер с таким именем уже существует");
 }
 
 QList<QString> Facade::getPrinterList() { return printerDB->getPrinterList(); }
 
-bool Facade::deletePrinterByName(const QString &name) {
-  return printerDB->deletePrinterByName(name);
+void Facade::deletePrinterByName(const QString &name) {
+  printerDB->deletePrinterByName(name);
 }
 
 void Facade::updatePrinterByName(const QString &oldName, const QString &newName,
                                  int power, int age, double cost) {
-  printerDB->updatePrinterByName(oldName, newName, power, age, cost);
+  if (!printerDB->updatePrinterByName(oldName, newName, power, age, cost))
+    throw FacadeException("Объект не был обновлен");
 }
 
 QHash<QString, QVariant> Facade::getPrinterByName(const QString &name) {
@@ -126,19 +128,21 @@ Facade::Facade() {
   }
 }
 
-bool Facade::addPlastic(const QString &name, int weight, double cost) {
-  return plasticDB->addPlastic(name, weight, cost);
+void Facade::addPlastic(const QString &name, int weight, double cost) {
+  if (!plasticDB->addPlastic(name, weight, cost))
+    throw FacadeException("Катушка с таким именем уже существует");
 }
 
 QList<QString> Facade::getPlasticList() { return plasticDB->getPlasticList(); }
 
-bool Facade::deletePlasticByName(const QString &name) {
-  return plasticDB->deletePlasticByName(name);
+void Facade::deletePlasticByName(const QString &name) {
+  plasticDB->deletePlasticByName(name);
 }
 
 void Facade::updatePlasticByName(const QString &oldName, const QString &newName,
                                  int weight, double cost) {
-  plasticDB->updatePlasticByName(oldName, newName, weight, cost);
+  if (!plasticDB->updatePlasticByName(oldName, newName, weight, cost))
+    throw FacadeException("Объект не был обновлен");
 }
 
 QHash<QString, QVariant> Facade::getPlasticByName(const QString &name) {
