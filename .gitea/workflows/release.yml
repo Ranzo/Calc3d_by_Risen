@@ -8,19 +8,19 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: testing-bots
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Download variables
+      - name: Download variables and Linux artifact
         uses: actions/download-artifact@v3
         with:
-          name: build-vars
-          path: vars
+          name: linux-artifacts
+          path: artifacts
 
       - name: Set environment variables
         run: |
-          echo "RELEASE_TAG=$(cat vars/vars.env | grep RELEASE_TAG | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "RELEASE_NAME=$(cat vars/vars.env | grep RELEASE_NAME | cut -d '=' -f2)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$(cat artifacts/vars.env | grep RELEASE_TAG | cut -d '=' -f2)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$(cat artifacts/vars.env | grep RELEASE_NAME | cut -d '=' -f2)" >> $GITHUB_ENV
 
       - name: Download Windows Artifact
         uses: actions/download-artifact@v3
@@ -28,38 +28,24 @@ jobs:
           name: ${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}
           path: windows_release
 
-      - name: Download Linux Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}
-          path: linux_release
-
-      - name: Download Windows Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}
-          path: windows_release
-
-      - name: Download Linux Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}
-          path: linux_release
+      - name: Prepare Linux Artifact
+        run: |
+          mv artifacts/${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}_amd64.deb ./linux_release/
 
       - name: Get Release URL
         id: get_release
         run: |
-          echo "Fetching release URL for tag 1.0.0b"
+          echo "Fetching release URL for tag ${{ env.RELEASE_TAG }}"
           curl -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
                -H "Accept: application/json" \
-               "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/1.0.0b" > release.json
+               "https://${{ secrets.HOST }}/api/v1/repos/${{ secrets.ORG }}/${{ secrets.REPO }}/releases/tags/${{ env.RELEASE_TAG }}" > release.json
+          
           RELEASE_URL=$(jq -r '.url' release.json)
           echo "Found Release URL: $RELEASE_URL"
           echo "RELEASE_URL=$RELEASE_URL" >> $GITHUB_ENV
 
       - name: Upload Windows Release to Gitea
         run: |
-          echo "Uploading Windows artifact to Gitea"
           UPLOAD_URL="${{ env.RELEASE_URL }}/assets?name=${{ env.RELEASE_NAME }}_Windows_${{ env.RELEASE_TAG }}.zip"
           curl -X POST \
                -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \
@@ -69,7 +55,6 @@ jobs:
 
       - name: Upload Linux Release to Gitea
         run: |
-          echo "Uploading Linux artifact to Gitea"
           UPLOAD_URL="${{ env.RELEASE_URL }}/assets?name=${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}_amd64.deb"
           curl -X POST \
                -H "Authorization: token ${{ secrets.ACCESS_TOKEN }}" \

@@ -132,17 +132,15 @@ jobs:
           name: ${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}
           path: ${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}_amd64.deb
 
-  store-vars:
-    runs-on: ubuntu-latest
-    needs: [ build-windows, build-linux ]
-    steps:
       - name: Save variables
         run: |
           echo "RELEASE_TAG=${{ env.RELEASE_TAG }}" >> vars.env
           echo "RELEASE_NAME=${{ env.RELEASE_NAME }}" >> vars.env
 
-      - name: Upload variables artifact
+      - name: Upload variables and package
         uses: actions/upload-artifact@v3
         with:
-          name: build-vars
-          path: vars.env
+          name: linux-artifacts
+          path: |
+            ${{ env.RELEASE_NAME }}_Linux_${{ env.RELEASE_TAG }}_amd64.deb
+            vars.env
