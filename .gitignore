@@ -8,3 +8,4 @@ __pycache__
 /.vscode
 src/build/*
 VALGRIND
+calc3d

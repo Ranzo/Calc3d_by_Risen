@@ -12,11 +12,12 @@ double Calculator::calcCostPrice(Params& param) {
   param.d = (param.d < 1) ? 1 : param.d;  // коэффициент выбраковки
 
   double am = calcAmortization(param.a, param.t, param.spi);
-  double result =
-      ((param.p / 1000) * (param.t / 60) * param.h +
-       (param.md * param.d * (param.st / param.mk)) + (am + param.post)) *
-      param.x;
-  return std::round(result * 100) /
+  double electricity = (param.p / 1000.0) * (param.t / 60.0) * param.h; // Юль, тут нужно из инта к даблу прводить, иначер езультат равен 0
+  double material = param.md * param.d * (param.st / param.mk);
+  double other = am + param.post;
+  double result = (electricity + material + other) * param.x;
+
+  return round(result * 100) /
          100;  // округление до 2 знаков после запятой
 }
 

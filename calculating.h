@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // Объявления функций
 double cost_prise(double p, double t, double h, double md, double d, double st, double mk, double am, double post, int x);

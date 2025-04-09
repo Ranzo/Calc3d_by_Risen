@@ -44,7 +44,8 @@ double amortization(double a, double t, double spi, int year) {
     double year_am = a * year_norm / 100;
 
     //Считаем амортизацию за минуту и умножаем на время печати
-    double am_per_minute = year_am / minutes_in_year * (t*60);
+    double am_per_minute = year_am / minutes_in_year * t;
+    // printf("%f", t);
 
     return am_per_minute;  // округление до 2 знаков после запятой
 }
