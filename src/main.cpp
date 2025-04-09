@@ -7,6 +7,7 @@ int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
   try {
     auto facade = Facade::GetInstance();
+    facade->updateSettings(1.5, 1, 100);
     MainWindow window(facade);
     window.show();
     return app.exec();

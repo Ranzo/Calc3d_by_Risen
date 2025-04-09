@@ -15,5 +15,5 @@ class SettingPreset {
 
  private:
   QString filePath;
-  QSettings::Format format = QSettings::NativeFormat;
+  QSettings::Format format = QSettings::IniFormat;
 };
