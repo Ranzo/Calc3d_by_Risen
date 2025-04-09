@@ -3,6 +3,7 @@
 #include "view/main_window.h"
 
 int main(int argc, char *argv[]) {
+  QLocale::setDefault(QLocale::C);
   QApplication app(argc, argv);
   try {
     auto facade = Facade::GetInstance();

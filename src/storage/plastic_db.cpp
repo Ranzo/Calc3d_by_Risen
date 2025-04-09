@@ -1,7 +1,7 @@
 #include "plastic_db.h"
 
 PlasticDB::PlasticDB(const QString &dir) {
-  QString dbPath = dir + "/plastics.sqlite";
+  QString dbPath = dir + QDir::separator() + "plastics.sqlite";
   qDebug() << "PlasticDB path:" << dbPath;
   db = QSqlDatabase::addDatabase("QSQLITE", "plastics_db");
   db.setDatabaseName(dbPath);

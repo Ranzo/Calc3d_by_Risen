@@ -1,7 +1,7 @@
 #include "setting_preset.h"
 
 SettingPreset::SettingPreset(const QString& dir)
-    : filePath(dir + "/settings_preset.xml") {
+    : filePath(dir + QDir::separator() + "settings_preset.xml") {
   qDebug() << "Setting preset file path:" << filePath;
 }
 

@@ -1,7 +1,7 @@
 #include "printer_db.h"
 
 PrinterDB::PrinterDB(const QString &dir) {
-  QString dbPath = dir + "/printers.sqlite";
+  QString dbPath = dir + QDir::separator() + "printers.sqlite";
   qDebug() << "PrinterDB path:" << dbPath;
   db = QSqlDatabase::addDatabase("QSQLITE", "printers_db");
   db.setDatabaseName(dbPath);
