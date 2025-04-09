@@ -61,13 +61,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     MANUAL_FINALIZATION
     ${MAIN_SOURCES}
     ${RESOURCES}
-    ../app.rc
+    app.rc
 )
 else()
     add_executable(Calc3D
     ${MAIN_SOURCES}
     ${RESOURCES}
-    ../app.rc
+    app.rc
 )
 endif()
 
