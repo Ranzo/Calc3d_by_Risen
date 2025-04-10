@@ -25,7 +25,8 @@ AddPrinterDialog::AddPrinterDialog(QWidget* parent)
     bool checkPower, checkPrice, checkAge;
     double power = ui->input_power->text().toInt(&checkPower);
     double age = ui->input_age->text().replace(",", ".").toDouble(&checkAge);
-    double cost = ui->input_price->text().replace(",", ".").toDouble(&checkPrice);
+    double cost =
+        ui->input_price->text().replace(",", ".").toDouble(&checkPrice);
 
     if (name.isEmpty() || !checkPower || !checkAge || !checkPrice) {
       QMessageBox::warning(this, "Ошибка", "Проверьте корректность данных");

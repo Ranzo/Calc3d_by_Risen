@@ -130,6 +130,37 @@
           <string>Пластик</string>
         </property>
       </widget>
+      <widget class="QComboBox" name="printer_menu">
+        <property name="geometry">
+          <rect>
+            <x>181</x>
+            <y>170</y>
+            <width>171</width>
+            <height>25</height>
+          </rect>
+        </property>
+        <property name="styleSheet">
+          <string notr="true">alternate-background-color: rgb(77, 77, 77);</string>
+        </property>
+        <property name="acceptDrops">
+          <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+          <string notr="true">alternate-background-color: rgb(77, 77, 77);</string>
+        </property>
+        <property name="currentText">
+          <string/>
+        </property>
+        <property name="currentIndex">
+          <number>-1</number>
+        </property>
+        <property name="insertPolicy">
+          <enum>QComboBox::InsertPolicy::NoInsert</enum>
+        </property>
+        <property name="placeholderText">
+          <string>Выбор принтера</string>
+        </property>
+      </widget>
       <widget class="QComboBox" name="plastic_menu">
         <property name="geometry">
           <rect>
@@ -181,37 +212,6 @@
         </property>
         <property name="text">
           <string>Принтер</string>
-        </property>
-      </widget>
-      <widget class="QComboBox" name="printer_menu">
-        <property name="geometry">
-          <rect>
-            <x>181</x>
-            <y>170</y>
-            <width>171</width>
-            <height>25</height>
-          </rect>
-        </property>
-        <property name="styleSheet">
-          <string notr="true">alternate-background-color: rgb(77, 77, 77);</string>
-        </property>
-        <property name="acceptDrops">
-          <bool>true</bool>
-        </property>
-        <property name="styleSheet">
-          <string notr="true">alternate-background-color: rgb(77, 77, 77);</string>
-        </property>
-        <property name="currentText">
-          <string/>
-        </property>
-        <property name="currentIndex">
-          <number>-1</number>
-        </property>
-        <property name="insertPolicy">
-          <enum>QComboBox::InsertPolicy::NoInsert</enum>
-        </property>
-        <property name="placeholderText">
-          <string>Выбор принтера</string>
         </property>
       </widget>
       <widget class="QLCDNumber" name="lcd_result_total">

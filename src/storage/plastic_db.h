@@ -1,8 +1,8 @@
 #include <QDebug>
+#include <QDir>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QDir>
 
 class PlasticDB {
  public:
@@ -14,6 +14,7 @@ class PlasticDB {
   QList<QString> getPlasticList();
   bool updatePlasticByName(const QString &oldName, const QString &newName,
                            int weight, double cost);
+  int getPlasticCount();
 
  private:
   QSqlDatabase db;

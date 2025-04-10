@@ -79,7 +79,7 @@ bool PlasticDB::updatePlasticByName(const QString &oldName,
   query.bindValue(":cost", cost);
 
   if (!query.exec()) {
-    qCritical() << "Error updating printer:" << oldName;
+    qWarning() << "Error updating printer:" << oldName;
     return false;
   }
 
@@ -105,4 +105,18 @@ QHash<QString, QVariant> PlasticDB::getPlasticByName(const QString &name) {
   }
 
   return printerData;
+}
+
+int PlasticDB::getPlasticCount() {
+  QSqlQuery query(db);
+  query.prepare("SELECT COUNT(*) FROM plastics;");
+
+  if (!query.exec()) {
+    qWarning() << "Error counting plastics: " << query.lastError().text();
+    return -1;
+  }
+
+  if (query.next()) return query.value(0).toInt();
+
+  return 0;
 }

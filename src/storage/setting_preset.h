@@ -1,5 +1,5 @@
-#include <QSettings>
 #include <QDir>
+#include <QSettings>
 
 class SettingPreset {
  public:

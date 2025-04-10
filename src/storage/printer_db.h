@@ -1,8 +1,8 @@
 #include <QDebug>
+#include <QDir>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QDir>
 
 class PrinterDB {
  public:
@@ -14,6 +14,7 @@ class PrinterDB {
   QList<QString> getPrinterList();
   bool updatePrinterByName(const QString &oldName, const QString &newName,
                            int power, int age, double cost);
+  int getPrinterCount();
 
  private:
   QSqlDatabase db;

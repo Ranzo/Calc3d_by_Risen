@@ -6,6 +6,9 @@ std::shared_ptr<Facade> Facade::GetInstance() {
 }
 
 void Facade::addPrinter(const QString &name, int power, int age, double cost) {
+  if (printerDB->getPrinterCount() >= 2)
+    throw FacadeException("Доступно хранение не более двух моделей");
+
   if (!printerDB->addPrinter(name, power, age, cost))
     throw FacadeException("Принтер с таким именем уже существует");
 }
@@ -41,19 +44,19 @@ std::pair<double, double> Facade::calculate(const QString &printerName,
 
   // Заполнение структуры Params
   Params params;
-  params.p = printerData["power"].toInt();  // номинальная мощность
-  params.t = min;                           // время печати
-  params.h = settingsData["tarif"].toDouble();  // тариф
-  params.md = detailWeight;                     // вес детали
+  params.p = printerData["power"].toInt();       // номинальная мощность
+  params.t = min;                                // время печати
+  params.h = settingsData["tarif"].toDouble();   // тариф
+  params.md = detailWeight;                      // вес детали
   params.d = settingsData["qTrash"].toDouble();  // коэффициент выбраковки
-  params.st = plasticData["cost"].toDouble();  // стоимость катушки
-  params.mk = plasticData["weight"].toInt();  // вес катушки
-  params.a = printerData["cost"].toDouble();  // стоимость принтера
-  params.post = post;                         // постобработка
-  params.x = quantity;                        // количество
+  params.st = plasticData["cost"].toDouble();    // стоимость катушки
+  params.mk = plasticData["weight"].toInt();     // вес катушки
+  params.a = printerData["cost"].toDouble();     // стоимость принтера
+  params.post = post;                            // постобработка
+  params.x = quantity;                           // количество
   params.marge = settingsData["overprice"].toDouble();  // наценка
-  params.mod = mod;                            // моделирование
-  params.spi = printerData["age"].toDouble();  // срок использования
+  params.mod = mod;                                     // моделирование
+  params.spi = printerData["age"].toDouble();           // срок использования
 
   checkParams(params);
 
@@ -129,6 +132,9 @@ Facade::Facade() {
 }
 
 void Facade::addPlastic(const QString &name, int weight, double cost) {
+  if (plasticDB->getPlasticCount() >= 2)
+    throw FacadeException("Доступно хранение не более двух моделей");
+
   if (!plasticDB->addPlastic(name, weight, cost))
     throw FacadeException("Катушка с таким именем уже существует");
 }

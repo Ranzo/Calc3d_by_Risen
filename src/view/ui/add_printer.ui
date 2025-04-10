@@ -24,38 +24,6 @@
         <normaloff>:/img/logo-1.png</normaloff>
       </iconset>
     </property>
-    <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-        <rect>
-          <x>20</x>
-          <y>160</y>
-          <width>341</width>
-          <height>27</height>
-        </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-          <widget class="QPushButton" name="actButton">
-            <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 80, 0);</string>
-            </property>
-            <property name="text">
-              <string>Сохранить</string>
-            </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="QPushButton" name="rejectButton">
-            <property name="styleSheet">
-              <string notr="true">background-color: rgb(0, 80, 0);</string>
-            </property>
-            <property name="text">
-              <string>Закрыть</string>
-            </property>
-          </widget>
-        </item>
-      </layout>
-    </widget>
     <widget class="QLabel" name="power_printer">
       <property name="geometry">
         <rect>
@@ -76,34 +44,6 @@
       </property>
       <property name="text">
         <string>Срок полезного использования, лет</string>
-      </property>
-    </widget>
-    <widget class="QLineEdit" name="input_age">
-      <property name="geometry">
-        <rect>
-          <x>270</x>
-          <y>90</y>
-          <width>91</width>
-          <height>20</height>
-        </rect>
-      </property>
-      <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-        </sizepolicy>
-      </property>
-      <property name="font">
-        <font>
-          <pointsize>10</pointsize>
-          <stylestrategy>PreferAntialias</stylestrategy>
-        </font>
-      </property>
-      <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
-      </property>
-      <property name="placeholderText">
-        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="power_printer_2">
@@ -128,34 +68,6 @@
         <string>Стоимость принетра, руб</string>
       </property>
     </widget>
-    <widget class="QLineEdit" name="input_price">
-      <property name="geometry">
-        <rect>
-          <x>270</x>
-          <y>120</y>
-          <width>91</width>
-          <height>20</height>
-        </rect>
-      </property>
-      <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-        </sizepolicy>
-      </property>
-      <property name="font">
-        <font>
-          <pointsize>10</pointsize>
-          <stylestrategy>PreferAntialias</stylestrategy>
-        </font>
-      </property>
-      <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
-      </property>
-      <property name="placeholderText">
-        <string>0</string>
-      </property>
-    </widget>
     <widget class="QLabel" name="power_printer_3">
       <property name="geometry">
         <rect>
@@ -176,34 +88,6 @@
       </property>
       <property name="text">
         <string>Мощность принтера, Вт</string>
-      </property>
-    </widget>
-    <widget class="QLineEdit" name="input_power">
-      <property name="geometry">
-        <rect>
-          <x>270</x>
-          <y>60</y>
-          <width>91</width>
-          <height>20</height>
-        </rect>
-      </property>
-      <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-        </sizepolicy>
-      </property>
-      <property name="font">
-        <font>
-          <pointsize>10</pointsize>
-          <stylestrategy>PreferAntialias</stylestrategy>
-        </font>
-      </property>
-      <property name="styleSheet">
-        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
-      </property>
-      <property name="placeholderText">
-        <string>0</string>
       </property>
     </widget>
     <widget class="QLabel" name="power_printer_4">
@@ -258,6 +142,122 @@
       <property name="placeholderText">
         <string>Название принтера</string>
       </property>
+    </widget>
+    <widget class="QLineEdit" name="input_power">
+      <property name="geometry">
+        <rect>
+          <x>270</x>
+          <y>60</y>
+          <width>91</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
+      </property>
+      <property name="placeholderText">
+        <string>0</string>
+      </property>
+    </widget>
+    <widget class="QLineEdit" name="input_age">
+      <property name="geometry">
+        <rect>
+          <x>270</x>
+          <y>90</y>
+          <width>91</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
+      </property>
+      <property name="placeholderText">
+        <string>0</string>
+      </property>
+    </widget>
+    <widget class="QLineEdit" name="input_price">
+      <property name="geometry">
+        <rect>
+          <x>270</x>
+          <y>120</y>
+          <width>91</width>
+          <height>20</height>
+        </rect>
+      </property>
+      <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+        </sizepolicy>
+      </property>
+      <property name="font">
+        <font>
+          <pointsize>10</pointsize>
+          <stylestrategy>PreferAntialias</stylestrategy>
+        </font>
+      </property>
+      <property name="styleSheet">
+        <string notr="true">background-color: rgb(77, 77, 77); qproperty-alignment: 'AlignRight';</string>
+      </property>
+      <property name="placeholderText">
+        <string>0</string>
+      </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+        <rect>
+          <x>20</x>
+          <y>160</y>
+          <width>341</width>
+          <height>27</height>
+        </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+          <widget class="QPushButton" name="actButton">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Сохранить</string>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QPushButton" name="rejectButton">
+            <property name="styleSheet">
+              <string notr="true">background-color: rgb(0, 80, 0);</string>
+            </property>
+            <property name="text">
+              <string>Закрыть</string>
+            </property>
+          </widget>
+        </item>
+      </layout>
     </widget>
   </widget>
   <resources/>

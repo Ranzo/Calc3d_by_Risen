@@ -20,9 +20,12 @@ PrinterSettingsDialog::PrinterSettingsDialog(QWidget *parent)
   connect(ui->save, &QPushButton::clicked, this, [this]() {
     bool checkTarif, checkQTrash, checkOverprice;
 
-    double tarif = ui->input_tarif->text().replace(",", ".").toDouble(&checkTarif);
-    double qTrash = ui->input_q_trash->text().replace(",", ".").toDouble(&checkQTrash);
-    double overprice = ui->input_overprice->text().replace(",", ".").toDouble(&checkOverprice);
+    double tarif =
+        ui->input_tarif->text().replace(",", ".").toDouble(&checkTarif);
+    double qTrash =
+        ui->input_q_trash->text().replace(",", ".").toDouble(&checkQTrash);
+    double overprice =
+        ui->input_overprice->text().replace(",", ".").toDouble(&checkOverprice);
 
     if (!checkTarif || !checkQTrash || !checkOverprice) {
       QMessageBox::warning(this, "Ошибка", "Проверьте корректность данных");
