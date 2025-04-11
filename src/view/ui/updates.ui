@@ -60,7 +60,7 @@
         <string>Версия на сайте:</string>
       </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="local_ver">
       <property name="geometry">
         <rect>
           <x>250</x>
@@ -75,11 +75,8 @@
           <bold>true</bold>
         </font>
       </property>
-      <property name="text">
-        <string>1.0.0</string>
-      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="remote_ver">
       <property name="geometry">
         <rect>
           <x>250</x>
@@ -94,9 +91,6 @@
           <bold>true</bold>
         </font>
       </property>
-      <property name="text">
-        <string>1.0.0</string>
-      </property>
     </widget>
     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
@@ -109,7 +103,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="websiteButton">
             <property name="styleSheet">
               <string notr="true">background-color: rgb(0, 80, 0);</string>
             </property>
@@ -119,7 +113,7 @@
           </widget>
         </item>
         <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="exitButton">
             <property name="styleSheet">
               <string notr="true">background-color: rgb(0, 80, 0);</string>
             </property>

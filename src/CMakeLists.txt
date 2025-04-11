@@ -14,6 +14,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -O2")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 
 qt_add_resources(RESOURCES 
   "view/resources.qrc"
@@ -71,7 +72,7 @@ else()
 )
 endif()
 
-target_link_libraries(Calc3D PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql)
+target_link_libraries(Calc3D PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::Network)
 
 set_target_properties(Calc3D PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
